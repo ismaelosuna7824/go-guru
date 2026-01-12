@@ -225,6 +225,14 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
                     >
                         <span>☕</span> Buy Me a Coffee
                     </a>
+                    <a
+                        href="https://github.com/ismaelosuna7824/go-guru"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="social-link"
+                    >
+                        <span>🐙</span> GitHub Repo
+                    </a>
                     <button
                         onClick={() => {
                             if (window.confirm('¿Estás seguro de borrar todo tu progreso?')) {

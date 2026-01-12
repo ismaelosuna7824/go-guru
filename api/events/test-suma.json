@@ -1,0 +1,3 @@
+{
+  "body": "{\"code\":\"package main\\n\\nimport \\\"fmt\\\"\\n\\nfunc main() {\\n    a := 5\\n    b := 3\\n    suma := a + b\\n    fmt.Println(suma)\\n}\",\"expectedOutput\":\"8\"}"
+}

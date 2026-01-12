@@ -1,0 +1,3 @@
+{
+  "body": "{\"code\":\"package main\\n\\nimport \\\"fmt\\\"\\n\\nfunc main() {\\n    var nombre string = \\\"Go\\\"\\n    var edad int = 15\\n    fmt.Printf(\\\"%s tiene %d años\\\", nombre, edad)\\n}\",\"expectedOutput\":\"/^Go tiene \\\\d+ años$/\"}"
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { logTopicView } from '../firebase';
 import { useProgress } from '../context/ProgressContext';
+import CodePlayground from './CodePlayground';
 
 const parseFormattedText = (text) => {
     if (!text) return null;
@@ -278,14 +279,11 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                         {topic.exercise.question}
                     </p>
 
-                    <div className="code-container" style={{ marginTop: 0 }}>
-                        <pre
-                            className="code-content"
-                            style={{ whiteSpace: 'pre-wrap', minHeight: 'auto' }}
-                        >
-                            {topic.exercise.initialCode || '// Write your code here...'}
-                        </pre>
-                    </div>
+                    <CodePlayground
+                        key={topic.id}
+                        initialCode={topic.exercise.initialCode || '// Write your code here...'}
+                        expectedOutput={topic.exercise.expectedOutput}
+                    />
 
                     {/* Solution Section */}
                     <div style={{ marginTop: 'var(--spacing-lg)' }}>

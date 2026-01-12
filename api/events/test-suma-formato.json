@@ -1,0 +1,3 @@
+{
+  "body": "{\"code\":\"package main\\n\\nimport \\\"fmt\\\"\\n\\nfunc main() {\\n    a := 10\\n    b := 20\\n    fmt.Printf(\\\"La suma es: %d\\\", a + b)\\n}\",\"expectedOutput\":\"/^La suma es: \\\\d+$/\"}"
+}

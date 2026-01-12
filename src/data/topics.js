@@ -117,7 +117,8 @@ import "fmt"
 
 func main() {
     fmt.Println("Hola, Antigravity")
-}`
+}`,
+            expectedOutput: "/^Hola, .+/"
         }
     },
     {
@@ -182,7 +183,8 @@ func main() {
         },
         exercise: {
             question: "Declara una variable compleja `c` con valor 5 + 5i e imprime su tipo.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    c := 5 + 5i\n    fmt.Printf("%T", c)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    c := 5 + 5i\n    fmt.Printf("%T", c)\n}`,
+            expectedOutput: "complex128"
         }
     },
     {
@@ -258,7 +260,8 @@ func main() {
         },
         exercise: {
             question: "Usa el operador Left Shift `<<` para calcular 2 elevado a la 5 (2^5).", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Tu cálculo\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println(1 << 5)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println(1 << 5)\n}`,
+            expectedOutput: "32"
         }
     },
     {
@@ -320,7 +323,8 @@ func TestGetZeroValue(t *testing.T) {
         },
         exercise: {
             question: "Declara una variable entera llamada `x` con valor 5 usando la sintaxis corta `:=` e imprímela.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Tu código aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    x := 5\n    fmt.Println(x)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    x := 5\n    fmt.Println(x)\n}`,
+            expectedOutput: "5"
         }
     },
     {
@@ -371,7 +375,8 @@ func TestCircleArea(t *testing.T) {
         },
         exercise: {
             question: "Declara una constante `Pi` con valor 3.1416 e imprime su valor.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Declara Pi aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    const Pi = 3.1416\n    fmt.Println(Pi)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    const Pi = 3.1416\n    fmt.Println(Pi)\n}`,
+            expectedOutput: "3.1416"
         }
     },
     {
@@ -453,7 +458,8 @@ func main() {
 }`,
         exercise: {
             question: "Usa un bucle `for` para imprimir los números del 1 al 5.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Escribe tu bucle aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    for i := 1; i <= 5; i++ {\n        fmt.Println(i)\n    }\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    for i := 1; i <= 5; i++ {\n        fmt.Println(i)\n    }\n}`,
+            expectedOutput: "1\n2\n3\n4\n5"
         }
     },
     {
@@ -526,7 +532,8 @@ func main() {
 }`,
         exercise: {
             question: "Escribe un `if` que imprima 'Mayor' si una variable `edad` (defínela como 18) es mayor o igual a 18.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    edad := 18\n    // Tu if aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    edad := 18\n    if edad >= 18 {\n        fmt.Println("Mayor")\n    }\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    edad := 18\n    if edad >= 18 {\n        fmt.Println("Mayor")\n    }\n}`,
+            expectedOutput: "Mayor"
         }
     },
     {
@@ -616,7 +623,8 @@ func main() {
 }`,
         exercise: {
             question: "Crea un switch para una variable `dia` (con valor 'Lunes') que imprima 'Inicio de semana' si es 'Lunes'.", initialCode: `package main\\n\\nimport "fmt"\\n\\nfunc main() {\\n    dia := "Lunes"\\n    // Tu switch aquí\\n}`,
-            solution: `package main\\n\\nimport "fmt"\\n\\nfunc main() {\\n    dia := "Lunes"\\n    switch dia {\\n    case "Lunes":\\n        fmt.Println("Inicio de semana")\\n    }\\n}`
+            solution: `package main\\n\\nimport "fmt"\\n\\nfunc main() {\\n    dia := "Lunes"\\n    switch dia {\\n    case "Lunes":\\n        fmt.Println("Inicio de semana")\\n    }\\n}`,
+            expectedOutput: "Inicio de semana"
         }
     },
     {
@@ -695,7 +703,8 @@ func main() {
 }`,
         exercise: {
             question: "Crea un array de 3 enteros con valores 1, 2, 3 e imprime el segundo elemento.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Tu código aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    a := [3]int{1, 2, 3}\n    fmt.Println(a[1])\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    a := [3]int{1, 2, 3}\n    fmt.Println(a[1])\n}`,
+            expectedOutput: "2"
         }
     },
     {
@@ -786,7 +795,8 @@ func main() {
 }`,
         exercise: {
             question: "Crea un slice de strings, agrégale 'Go' y 'Lang', e imprímelo.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    s := make([]string, 0)\n    // Tu código aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    s := make([]string, 0)\n    s = append(s, "Go", "Lang")\n    fmt.Println(s)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    s := make([]string, 0)\n    s = append(s, "Go", "Lang")\n    fmt.Println(s)\n}`,
+            expectedOutput: "[Go Lang]"
         }
     },
     {
@@ -849,7 +859,8 @@ func main() {
         },
         exercise: {
             question: "Crea un slice de `int` usando `make` con longitud 2 y capacidad 5, e imprime su capacidad.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    s := make([]int, 2, 5)\n    fmt.Println(cap(s))\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    s := make([]int, 2, 5)\n    fmt.Println(cap(s))\n}`,
+            expectedOutput: "5"
         }
     },
     {
@@ -932,7 +943,8 @@ func TestCountFrequency(t *testing.T) {
         },
         exercise: {
             question: "Crea un mapa donde la clave sea el nombre de una fruta y el valor su color. Añade 'Manzana': 'Roja'.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Tu mapa aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    frutas := make(map[string]string)\n    frutas["Manzana"] = "Roja"\n    fmt.Println(frutas)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    frutas := make(map[string]string)\n    frutas["Manzana"] = "Roja"\n    fmt.Println(frutas)\n}`,
+            expectedOutput: "map[Manzana:Roja]"
         }
     },
     {
@@ -990,7 +1002,8 @@ func TestMultiply(t *testing.T) {
         },
         exercise: {
             question: "Escribe una función `resta` que tome dos enteros y devuelva su diferencia.", initialCode: `package main\n\nimport "fmt"\n\n// Tu función aquí\n\nfunc main() {\n    fmt.Println(resta(10, 5))\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc resta(a int, b int) int {\n    return a - b\n}\n\nfunc main() {\n    fmt.Println(resta(10, 5))\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc resta(a int, b int) int {\n    return a - b\n}\n\nfunc main() {\n    fmt.Println(resta(10, 5))\n}`,
+            expectedOutput: "5"
         }
     },
     {
@@ -1067,7 +1080,8 @@ func TestSafeDivide(t *testing.T) {
         },
         exercise: {
             question: "Escribe una función que devuelva dos strings: 'Hola' y 'Mundo'.", initialCode: `package main\n\nimport "fmt"\n\n// Tu función aquí\n\nfunc main() {\n    // Llama a tu función\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc saludar() (string, string) {\n    return "Hola", "Mundo"\n}\n\nfunc main() {\n    a, b := saludar()\n    fmt.Println(a, b)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc saludar() (string, string) {\n    return "Hola", "Mundo"\n}\n\nfunc main() {\n    a, b := saludar()\n    fmt.Println(a, b)\n}`,
+            expectedOutput: "Hola Mundo"
         }
     },
     {
@@ -1144,7 +1158,8 @@ func TestSum(t *testing.T) {
         },
         exercise: {
             question: "Modifica la función variádica `sum` para que multiplique los números en lugar de sumarlos.", initialCode: `package main\n\nimport "fmt"\n\nfunc mult(nums ...int) {\n    total := 1\n    // Tu lógica aquí\n    fmt.Println(total)\n}\n\nfunc main() {\n    mult(2, 3, 4)\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc mult(nums ...int) {\n    total := 1\n    for _, num := range nums {\n        total *= num\n    }\n    fmt.Println(total)\n}\n\nfunc main() {\n    mult(2, 3, 4)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc mult(nums ...int) {\n    total := 1\n    for _, num := range nums {\n        total *= num\n    }\n    fmt.Println(total)\n}\n\nfunc main() {\n    mult(2, 3, 4)\n}`,
+            expectedOutput: "24"
         }
     },
     {
@@ -1225,7 +1240,8 @@ func TestMakeCounter(t *testing.T) {
         },
         exercise: {
             question: "Crea un closure que actúe como contador, incrementando de 10 en 10.", initialCode: `package main\n\nimport "fmt"\n\nfunc contador() func() int {\n    i := 0\n    // Tu código aquí\n}\n\nfunc main() {\n    c := contador()\n    fmt.Println(c())\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc contador() func() int {\n    i := 0\n    return func() int {\n        i += 10\n        return i\n    }\n}\n\nfunc main() {\n    c := contador()\n    fmt.Println(c())\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc contador() func() int {\n    i := 0\n    return func() int {\n        i += 10\n        return i\n    }\n}\n\nfunc main() {\n    c := contador()\n    fmt.Println(c())\n}`,
+            expectedOutput: "10"
         }
     },
     {
@@ -1300,7 +1316,8 @@ func TestFactorial(t *testing.T) {
         },
         exercise: {
             question: "Escribe una función recursiva `countdown` que imprima los números desde n hasta 1. (Usa 5 como ejemplo).", initialCode: `package main\n\nimport "fmt"\n\nfunc countdown(n int) {\n    // Tu lógica recursiva aquí\n}\n\nfunc main() {\n    countdown(5)\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc countdown(n int) {\n    if n > 0 {\n        fmt.Println(n)\n        countdown(n - 1)\n    }\n}\n\nfunc main() {\n    countdown(5)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc countdown(n int) {\n    if n > 0 {\n        fmt.Println(n)\n        countdown(n - 1)\n    }\n}\n\nfunc main() {\n    countdown(5)\n}`,
+            expectedOutput: "5\n4\n3\n2\n1"
         }
     },
     {
@@ -1370,7 +1387,8 @@ func TestSumWithRange(t *testing.T) {
         },
         exercise: {
             question: "Itera sobre el slice `['a', 'b', 'c']` e imprime cada índice y su valor.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    chars := []string{"a", "b", "c"}\n    // Tu bucle range aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    chars := []string{"a", "b", "c"}\n    for i, char := range chars {\n        fmt.Println(i, char)\n    }\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    chars := []string{"a", "b", "c"}\n    for i, char := range chars {\n        fmt.Println(i, char)\n    }\n}`,
+            expectedOutput: "0 a\n1 b\n2 c"
         }
     },
     {
@@ -1461,7 +1479,8 @@ func TestIncrement(t * testing.T) {
         exercise: {
             question: "Crea una función que tome un puntero a entero y duplique su valor.", initialCode: `package main\n\nimport "fmt"\n\nfunc duplicar(n * int) {
 \n    // Tu lógica aquí\n}\n\nfunc main() {\n    x := 5\n    duplicar(&x)\n    fmt.Println(x) // Debería imprimir 10\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc duplicar(n *int) {\n    *n = *n * 2\n}\n\nfunc main() {\n    x := 5\n    duplicar(&x)\n    fmt.Println(x)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc duplicar(n *int) {\n    *n = *n * 2\n}\n\nfunc main() {\n    x := 5\n    duplicar(&x)\n    fmt.Println(x)\n}`,
+            expectedOutput: "10"
         }
     },
     {
@@ -1509,7 +1528,8 @@ func TestCountRunes(t *testing.T) {
         },
         exercise: {
             question: "Imprime la longitud en bytes y el conteo de runas de la cadena 'Holá'.", initialCode: `package main\n\nimport (\n    "fmt"\n    "unicode/utf8"\n)\n\nfunc main() {\n    s := "Holá"\n    // Tu código\n}`,
-            solution: `package main\n\nimport (\n    "fmt"\n    "unicode/utf8"\n)\n\nfunc main() {\n    s := "Holá"\n    fmt.Println("Bytes:", len(s))\n    fmt.Println("Runas:", utf8.RuneCountInString(s))\n}`
+            solution: `package main\n\nimport (\n    "fmt"\n    "unicode/utf8"\n)\n\nfunc main() {\n    s := "Holá"\n    fmt.Println("Bytes:", len(s))\n    fmt.Println("Runas:", utf8.RuneCountInString(s))\n}`,
+            expectedOutput: "Bytes: 5\nRunas: 4"
         }
     },
     {
@@ -1596,7 +1616,8 @@ func TestNewPerson(t *testing.T) {
         },
         exercise: {
             question: "Define una estructura `Coche` con campos `Marca` y `Modelo`. Crea una instancia e imprímela.", initialCode: `package main\n\nimport "fmt"\n\n// Tu struct aquí\n\nfunc main() {\n    // Crea e imprime tu instancia\n}`,
-            solution: `package main\n\nimport "fmt"\n\ntype Coche struct {\n    Marca string\n    Modelo string\n}\n\nfunc main() {\n    c := Coche{Marca: "Toyota", Modelo: "Corolla"}\n    fmt.Println(c)\n}`
+            solution: `package main\n\nimport "fmt"\n\ntype Coche struct {\n    Marca string\n    Modelo string\n}\n\nfunc main() {\n    c := Coche{Marca: "Toyota", Modelo: "Corolla"}\n    fmt.Println(c)\n}`,
+            expectedOutput: "{Toyota Corolla}"
         }
     },
     {
@@ -1667,7 +1688,8 @@ func TestRectangleArea(t *testing.T) {
         },
         exercise: {
             question: "Añade un método `Escalar(f int)` al struct `rect` que multiplique su ancho y alto por `f`. (Usa receptor puntero).", initialCode: `package main\n\nimport "fmt"\n\ntype rect struct {\n    width, height int\n}\n\n// Tu método Escalar aquí\n\nfunc main() {\n    r := rect{10, 5}\n    // r.Escalar(2)\n    fmt.Println(r)\n}`,
-            solution: `package main\n\nimport "fmt"\n\ntype rect struct {\n    width, height int\n}\n\nfunc (r *rect) Escalar(f int) {\n    r.width *= f\n    r.height *= f\n}\n\nfunc main() {\n    r := rect{10, 5}\n    r.Escalar(2)\n    fmt.Println(r)\n}`
+            solution: `package main\n\nimport "fmt"\n\ntype rect struct {\n    width, height int\n}\n\nfunc (r *rect) Escalar(f int) {\n    r.width *= f\n    r.height *= f\n}\n\nfunc main() {\n    r := rect{10, 5}\n    r.Escalar(2)\n    fmt.Println(r)\n}`,
+            expectedOutput: "{20 10}"
         }
     },
     {
@@ -1763,7 +1785,8 @@ func TestShapeInterface(t *testing.T) {
         },
         exercise: {
             question: "Define una interfaz `Hablador` con un método `Hablar() string`. Implementala para un tipo `Perro`.", initialCode: `package main\n\nimport "fmt"\n\n// Interfaz y Struct aquí\n\nfunc main() {\n    // Llama a Hablar\n}`,
-            solution: `package main\n\nimport "fmt"\n\ntype Hablador interface {\n    Hablar() string\n}\n\ntype Perro struct{}\n\nfunc (p Perro) Hablar() string {\n    return "Guau"\n}\n\nfunc main() {\n    var h Hablador = Perro{}\n    fmt.Println(h.Hablar())\n}`
+            solution: `package main\n\nimport "fmt"\n\ntype Hablador interface {\n    Hablar() string\n}\n\ntype Perro struct{}\n\nfunc (p Perro) Hablar() string {\n    return "Guau"\n}\n\nfunc main() {\n    var h Hablador = Perro{}\n    fmt.Println(h.Hablar())\n}`,
+            expectedOutput: "Guau"
         }
     },
     {
@@ -1851,7 +1874,8 @@ func TestEnumValues(t *testing.T) {
         },
         exercise: {
             question: "Crea un enum `Semana` con `Lunes` y `Martes` usando iota.", initialCode: `package main\n\nimport "fmt"\n\n// Define el enum\n\nfunc main() {\n    // Imprime los valos\n}`,
-            solution: `package main\n\nimport "fmt"\n\ntype Semana int\nconst (\n    Lunes Semana = iota\n    Martes\n)\nfunc main() {\n    fmt.Println(Lunes, Martes)\n}`
+            solution: `package main\n\nimport "fmt"\n\ntype Semana int\nconst (\n    Lunes Semana = iota\n    Martes\n)\nfunc main() {\n    fmt.Println(Lunes, Martes)\n}`,
+            expectedOutput: "0 1"
         }
     },
     {
@@ -1933,7 +1957,8 @@ func TestStructEmbedding(t *testing.T) {
         },
         exercise: {
             question: "Define `Persona` con campo `Nombre`, y `Empleado` que incruste `Persona` y añada `Puesto`. Crea un empleado.", initialCode: `package main\n\nimport "fmt"\n\n// Structs aquí\n\nfunc main() {\n    // Instancia\n}`,
-            solution: `package main\n\nimport "fmt"\n\ntype Persona struct {\n    Nombre string\n}\ntype Empleado struct {\n    Persona\n    Puesto string\n}\nfunc main() {\n    e := Empleado{Persona: Persona{"Ana"}, Puesto: "Jefa"}\n    fmt.Println(e.Nombre, e.Puesto)\n}`
+            solution: `package main\n\nimport "fmt"\n\ntype Persona struct {\n    Nombre string\n}\ntype Empleado struct {\n    Persona\n    Puesto string\n}\nfunc main() {\n    e := Empleado{Persona: Persona{"Ana"}, Puesto: "Jefa"}\n    fmt.Println(e.Nombre, e.Puesto)\n}`,
+            expectedOutput: "Ana Jefa"
         }
     },
     {
@@ -2034,7 +2059,8 @@ func TestMax(t *testing.T) {
         },
         exercise: {
             question: "Escribe una función genérica `Identidad[T any](v T) T` que simplemente devuelva el valor recibido.", initialCode: `package main\n\nimport "fmt"\n\n// Tu función genérica\n\nfunc main() {\n    fmt.Println(Identidad("Hola"))\n    fmt.Println(Identidad(123))\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc Identidad[T any](v T) T {\n    return v\n}\n\nfunc main() {\n    fmt.Println(Identidad("Hola"))\n    fmt.Println(Identidad(123))\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc Identidad[T any](v T) T {\n    return v\n}\n\nfunc main() {\n    fmt.Println(Identidad("Hola"))\n    fmt.Println(Identidad(123))\n}`,
+            expectedOutput: "Hola\n123"
         }
     },
     {
@@ -2190,7 +2216,8 @@ func TestDivide(t *testing.T) {
         },
         exercise: {
             question: "Crea una función `dividir(a, b int)` que devuelva un error si `b` es 0.", initialCode: `package main\n\nimport ("errors"; "fmt")\n\n// Tu función dividir\n\nfunc main() {\n    // Prueba con 10/0\n}`,
-            solution: `package main\n\nimport ("errors"; "fmt")\n\nfunc dividir(a, b int) (int, error) {\n    if b == 0 {\n        return 0, errors.New("división por cero")\n    }\n    return a / b, nil\n}\n\nfunc main() {\n    if _, err := dividir(10, 0); err != nil {\n        fmt.Println(err)\n    }\n}`
+            solution: `package main\n\nimport ("errors"; "fmt")\n\nfunc dividir(a, b int) (int, error) {\n    if b == 0 {\n        return 0, errors.New("división por cero")\n    }\n    return a / b, nil\n}\n\nfunc main() {\n    if _, err := dividir(10, 0); err != nil {\n        fmt.Println(err)\n    }\n}`,
+            expectedOutput: "división por cero"
         }
     },
     {
@@ -2266,7 +2293,8 @@ func TestValidationError(t *testing.T) {
         },
         exercise: {
             question: "Define un error `miError` (struct vacío) e implementa el método `Error()` que devuelva 'error fatal'.", initialCode: `package main\n\nimport "fmt"\n\n// Tu struct y método\n\nfunc main() {\n    var e error = &miError{}\n    fmt.Println(e)\n}`,
-            solution: `package main\n\nimport "fmt"\n\ntype miError struct{}\n\nfunc (m *miError) Error() string {\n    return "error fatal"\n}\n\nfunc main() {\n    var e error = &miError{}\n    fmt.Println(e)\n}`
+            solution: `package main\n\nimport "fmt"\n\ntype miError struct{}\n\nfunc (m *miError) Error() string {\n    return "error fatal"\n}\n\nfunc main() {\n    var e error = &miError{}\n    fmt.Println(e)\n}`,
+            expectedOutput: "error fatal"
         }
     },
     {
@@ -2359,7 +2387,8 @@ func TestGoroutine(t *testing.T) {
         },
         exercise: {
             question: "Lanza una goroutine que imprima 'Hola desde goroutine' 5 veces.", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    // Tu goroutine\n    time.Sleep(100 * time.Millisecond)\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    go func() {\n        for i:=0; i<5; i++ {\n            fmt.Println("Hola desde goroutine")\n        }\n    }()\n    time.Sleep(100 * time.Millisecond)\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    go func() {\n        for i:=0; i<5; i++ {\n            fmt.Println("Hola desde goroutine")\n        }\n    }()\n    time.Sleep(100 * time.Millisecond)\n}`,
+            expectedOutput: "/(Hola desde goroutine\\n){5}/"
         }
     },
     {
@@ -2425,7 +2454,8 @@ func TestChannel(t *testing.T) {
         },
         exercise: {
             question: "Crea un canal entero, envía el número 42 en una goroutine, y léelo en el main.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    ch := make(chan int)\n    go func() { ch <- 42 }()\n    fmt.Println(<-ch)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    ch := make(chan int)\n    go func() { ch <- 42 }()\n    fmt.Println(<-ch)\n}`,
+            expectedOutput: "42"
         }
     },
     {
@@ -2479,7 +2509,8 @@ func TestBufferedChannel(t *testing.T) {
         },
         exercise: {
             question: "Crea un canal con buffer de tamaño 1. Envía un texto y léelo sin usar goroutines adicionales.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    ch := make(chan string, 1)\n    ch <- "buffer"\n    fmt.Println(<-ch)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    ch := make(chan string, 1)\n    ch <- "buffer"\n    fmt.Println(<-ch)\n}`,
+            expectedOutput: "buffer"
         }
     },
     {
@@ -2535,7 +2566,8 @@ func TestChannelSynchronization(t *testing.T) {
         },
         exercise: {
             question: "Modifica el ejemplo para que la goroutine envíe 'Fin' (string) en lugar de true.", initialCode: `package main\n\nimport ("fmt"; "time")\n\n// Cambia la firma y el envío\nfunc worker(done chan bool) {\n    time.Sleep(time.Second)\n    fmt.Println("trabajo terminado")\n    done <- true\n}\n\nfunc main() {\n    done := make(chan bool, 1)\n    go worker(done)\n    <-done\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc worker(done chan string) {\n    time.Sleep(time.Second)\n    fmt.Println("trabajo terminado")\n    done <- "Fin"\n}\n\nfunc main() {\n    done := make(chan string, 1)\n    go worker(done)\n    fmt.Println(<-done)\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc worker(done chan string) {\n    time.Sleep(time.Second)\n    fmt.Println("trabajo terminado")\n    done <- "Fin"\n}\n\nfunc main() {\n    done := make(chan string, 1)\n    go worker(done)\n    fmt.Println(<-done)\n}`,
+            expectedOutput: "trabajo terminado\nFin"
         }
     },
     {
@@ -2680,7 +2712,8 @@ func TestSelect(t *testing.T) {
         },
         exercise: {
             question: "Usa `select` para recibir del canal que responda primero (c1 o c2). Simula c1 rápido y c2 lento.", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    c1 := make(chan string, 1)\n    c2 := make(chan string, 1)\n    c1 <- "rápido"\n    // Tu select\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    c1 := make(chan string, 1)\n    c2 := make(chan string, 1)\n    c1 <- "rápido"\n    select {\n    case m1 := <-c1:\n        fmt.Println(m1)\n    case m2 := <-c2:\n        fmt.Println(m2)\n    }\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    c1 := make(chan string, 1)\n    c2 := make(chan string, 1)\n    c1 <- "rápido"\n    select {\n    case m1 := <-c1:\n        fmt.Println(m1)\n    case m2 := <-c2:\n        fmt.Println(m2)\n    }\n}`,
+            expectedOutput: "rápido"
         }
     },
     {
@@ -2759,7 +2792,8 @@ func TestTimeout(t *testing.T) {
         },
         exercise: {
             question: "Implementa un timeout de 500ms para una operación que tarda 1 segundo.", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    c := make(chan bool)\n    go func() { time.Sleep(time.Second); c <- true }()\n    // Tu select con timeout\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    c := make(chan bool)\n    go func() { time.Sleep(time.Second); c <- true }()\n    select {\n    case <-c:\n        fmt.Println("éxito")\n    case <-time.After(500 * time.Millisecond):\n        fmt.Println("timeout")\n    }\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    c := make(chan bool)\n    go func() { time.Sleep(time.Second); c <- true }()\n    select {\n    case <-c:\n        fmt.Println("éxito")\n    case <-time.After(500 * time.Millisecond):\n        fmt.Println("timeout")\n    }\n}`,
+            expectedOutput: "timeout"
         }
     },
     {
@@ -2837,7 +2871,8 @@ func TestNonBlockingReceive(t *testing.T) {
         },
         exercise: {
             question: "Intenta leer de un canal vacío `c` de forma no bloquante e imprime 'vacío' en el default.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    c := make(chan int)\n    // Tu select\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    c := make(chan int)\n    select {\n    case v := <-c:\n        fmt.Println(v)\n    default:\n        fmt.Println("vacío")\n    }\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    c := make(chan int)\n    select {\n    case v := <-c:\n        fmt.Println(v)\n    default:\n        fmt.Println("vacío")\n    }\n}`,
+            expectedOutput: "vacío"
         }
     },
     {
@@ -2927,7 +2962,8 @@ func TestClosingChannel(t *testing.T) {
         },
         exercise: {
             question: "Envía 3 números a un canal, ciérralo y luego intenta leer un cuarto valor. ¿Qué obtienes y qué valor tiene `ok`?", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    ch := make(chan int, 3)\n    // Tu código\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    ch := make(chan int, 3)\n    ch <- 1; ch <- 2; ch <- 3\n    close(ch)\n    <-ch; <-ch; <-ch\n    val, ok := <-ch\n    fmt.Println(val, ok)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    ch := make(chan int, 3)\n    ch <- 1; ch <- 2; ch <- 3\n    close(ch)\n    <-ch; <-ch; <-ch\n    val, ok := <-ch\n    fmt.Println(val, ok)\n}`,
+            expectedOutput: "0 false"
         }
     },
     {
@@ -2981,7 +3017,8 @@ func TestRangeOverChannel(t *testing.T) {
         },
         exercise: {
             question: "Usa range para sumar todos los números enviados a un canal (envía 1, 2, 3, 4, 5 y cierra).", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    nums := make(chan int, 5)\n    // Llena y cierra\n    // Suma con range\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    nums := make(chan int, 5)\n    for i:=1; i<=5; i++ { nums <- i }\n    close(nums)\n    sum := 0\n    for n := range nums {\n        sum += n\n    }\n    fmt.Println(sum)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    nums := make(chan int, 5)\n    for i:=1; i<=5; i++ { nums <- i }\n    close(nums)\n    sum := 0\n    for n := range nums {\n        sum += n\n    }\n    fmt.Println(sum)\n}`,
+            expectedOutput: "15"
         }
     },
     {
@@ -3038,7 +3075,8 @@ func TestTimer(t *testing.T) {
         },
         exercise: {
             question: "Crea un timer de 5 segundos, pero cancélalo inmediatamente.", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    // Tu timer aquí\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    t := time.NewTimer(5 * time.Second)\n    if t.Stop() {\n        fmt.Println("Cancelado")\n    }\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    t := time.NewTimer(5 * time.Second)\n    if t.Stop() {\n        fmt.Println("Cancelado")\n    }\n}`,
+            expectedOutput: "Cancelado"
         }
     },
     {
@@ -3103,7 +3141,8 @@ func TestTicker(t *testing.T) {
         },
         exercise: {
             question: "Crea un ticker que imprima 'Hola' cada 100ms y deténlo después de 300ms.", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    ticker := time.NewTicker(100 * time.Millisecond)\n    go func() { \n        for range ticker.C { \n            fmt.Println("Hola") \n        } \n    }()\n    time.Sleep(350 * time.Millisecond)\n    ticker.Stop()\n    fmt.Println("Fin")\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    ticker := time.NewTicker(100 * time.Millisecond)\n    go func() { \n        for range ticker.C { \n            fmt.Println("Hola") \n        } \n    }()\n    time.Sleep(350 * time.Millisecond)\n    ticker.Stop()\n    fmt.Println("Fin")\n}`,
+            expectedOutput: "/(Hola\\n){3}Fin/"
         }
     },
     {
@@ -3186,7 +3225,8 @@ func TestWorkerPool(t *testing.T) {
         },
         exercise: {
             question: "Modifica el ejemplo para que haya 100 trabajos y 10 workers. ¿Cuánto tarda?", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc worker(id int, jobs <-chan int, results chan<- int) {\n    for j := range jobs {\n        time.Sleep(100 * time.Millisecond)\n        results <- j * 2\n    }\n}\n\nfunc main() {\n    // Configura 10 workers y 100 jobs\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc worker(id int, jobs <-chan int, results chan<- int) {\n    for j := range jobs {\n        time.Sleep(100 * time.Millisecond)\n        results <- j * 2\n    }\n}\n\nfunc main() {\n    jobs := make(chan int, 100)\n    results := make(chan int, 100)\n    for w:=1; w<=10; w++ { go worker(w, jobs, results) }\n    for j:=1; j<=100; j++ { jobs <- j }\n    close(jobs)\n    for a:=1; a<=100; a++ { <-results }\n    fmt.Println("Terminado")\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc worker(id int, jobs <-chan int, results chan<- int) {\n    for j := range jobs {\n        time.Sleep(100 * time.Millisecond)\n        results <- j * 2\n    }\n}\n\nfunc main() {\n    jobs := make(chan int, 100)\n    results := make(chan int, 100)\n    for w:=1; w<=10; w++ { go worker(w, jobs, results) }\n    for j:=1; j<=100; j++ { jobs <- j }\n    close(jobs)\n    for a:=1; a<=100; a++ { <-results }\n    fmt.Println("Terminado")\n}`,
+            expectedOutput: "Terminado"
         }
     },
     {
@@ -3263,7 +3303,8 @@ func TestRateLimit(t *testing.T) {
         },
         exercise: {
             question: "Implementa un limitador que permita 10 operaciones por segundo (1 cada 100ms).", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    // Tu limitador\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    limiter := time.Tick(100 * time.Millisecond)\n    for i:=0; i<5; i++ {\n        <-limiter\n        fmt.Println("Op", i)\n    }\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    limiter := time.Tick(100 * time.Millisecond)\n    for i:=0; i<5; i++ {\n        <-limiter\n        fmt.Println("Op", i)\n    }\n}`,
+            expectedOutput: "Op 0\nOp 1\nOp 2\nOp 3\nOp 4"
         }
     },
     {
@@ -3335,7 +3376,8 @@ func TestAtomicCounter(t *testing.T) {
         },
         exercise: {
             question: "Intenta hacer esto SIN atomic (usando `ops++`) y observa si el resultado es 50000 exacto (pista: probablemente no). Arréglalo con atomic.", initialCode: `package main\n\nimport ("fmt"; "sync")\n\nfunc main() {\n    var ops int\n    var wg sync.WaitGroup\n    for i := 0; i < 50; i++ {\n        wg.Add(1)\n        go func() {\n            for c := 0; c < 1000; c++ {\n                ops++ // ¡INSEGURO!\n            }\n            wg.Done()\n        }()\n    }\n    wg.Wait()\n    fmt.Println("ops:", ops)\n}`,
-            solution: `package main\n\nimport ("fmt"; "sync"; "sync/atomic")\n\nfunc main() {\n    var ops uint64\n    var wg sync.WaitGroup\n    for i := 0; i < 50; i++ {\n        wg.Add(1)\n        go func() {\n            for c := 0; c < 1000; c++ {\n                atomic.AddUint64(&ops, 1)\n            }\n            wg.Done()\n        }()\n    }\n    wg.Wait()\n    fmt.Println("ops:", ops)\n}`
+            solution: `package main\n\nimport ("fmt"; "sync"; "sync/atomic")\n\nfunc main() {\n    var ops uint64\n    var wg sync.WaitGroup\n    for i := 0; i < 50; i++ {\n        wg.Add(1)\n        go func() {\n            for c := 0; c < 1000; c++ {\n                atomic.AddUint64(&ops, 1)\n            }\n            wg.Done()\n        }()\n    }\n    wg.Wait()\n    fmt.Println("ops:", ops)\n}`,
+            expectedOutput: "ops: 50000"
         }
     },
     {
@@ -3451,7 +3493,8 @@ func TestMutex(t *testing.T) {
         },
         exercise: {
             question: "Protege una variable global `balance` con un Mutex en una función `Deposit(amount int)`.", initialCode: `package main\n\nimport ("fmt"; "sync")\n\nvar balance int\n// Declara mutex\n\nfunc Deposit(amount int) {\n    // Usa mutex\n    balance += amount\n}\n\nfunc main() {\n    // Llama a Deposit concurrentemente\n}`,
-            solution: `package main\n\nimport ("fmt"; "sync")\n\nvar balance int\nvar mu sync.Mutex\n\nfunc Deposit(amount int) {\n    mu.Lock()\n    defer mu.Unlock()\n    balance += amount\n}\n\nfunc main() {\n    var wg sync.WaitGroup\n    for i:=0; i<100; i++ {\n        wg.Add(1)\n        go func(){ Deposit(10); wg.Done() }()\n    }\n    wg.Wait()\n    fmt.Println(balance)\n}`
+            solution: `package main\n\nimport ("fmt"; "sync")\n\nvar balance int\nvar mu sync.Mutex\n\nfunc Deposit(amount int) {\n    mu.Lock()\n    defer mu.Unlock()\n    balance += amount\n}\n\nfunc main() {\n    var wg sync.WaitGroup\n    for i:=0; i<100; i++ {\n        wg.Add(1)\n        go func(){ Deposit(10); wg.Done() }()\n    }\n    wg.Wait()\n    fmt.Println(balance)\n}`,
+            expectedOutput: "1000"
         }
     },
     {
@@ -3541,7 +3584,8 @@ func main() {
         },
         exercise: {
             question: "Completa el código para esperar a que la goroutine termine antes de imprimir 'Fin'.", initialCode: `var wg sync.WaitGroup\nwg.Add(1)\ngo func() {\n    // marca como hecha\n    fmt.Println("Async")\n}()\n// espera aquí\nfmt.Println("Fin")`,
-            solution: `var wg sync.WaitGroup\nwg.Add(1)\ngo func() {\n    defer wg.Done()\n    fmt.Println("Async")\n}()\nwg.Wait()\nfmt.Println("Fin")`
+            solution: `package main\n\nimport ("fmt"; "sync")\n\nfunc main() {\n    var wg sync.WaitGroup\n    wg.Add(1)\n    go func() {\n        defer wg.Done()\n        fmt.Println("Async")\n    }()\n    wg.Wait()\n    fmt.Println("Fin")\n}`,
+            expectedOutput: "Async\nFin"
         }
     },
     {
@@ -3744,7 +3788,8 @@ func TestSorting(t *testing.T) {
         },
         exercise: {
             question: "Ordena el slice `[10, 5, 8]` e imprime si está ordenado.", initialCode: `package main\n\nimport ("fmt"; "slices")\n\nfunc main() {\n    nums := []int{10, 5, 8}\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "slices")\n\nfunc main() {\n    nums := []int{10, 5, 8}\n    slices.Sort(nums)\n    fmt.Println(nums, slices.IsSorted(nums))\n}`
+            solution: `package main\n\nimport ("fmt"; "slices")\n\nfunc main() {\n    nums := []int{10, 5, 8}\n    slices.Sort(nums)\n    fmt.Println(nums, slices.IsSorted(nums))\n}`,
+            expectedOutput: "[5 8 10] true"
         }
     },
     {
@@ -3823,7 +3868,8 @@ func TestSortingByFunctions(t *testing.T) {
         },
         exercise: {
             question: "Ordena una lista de palabras en orden inverso (alfabéticamente descendente).", initialCode: `package main\n\nimport ("fmt"; "slices"; "strings")\n\nfunc main() {\n    p := []string{"a", "c", "b"}\n    // slices.SortFunc...\n    fmt.Println(p)\n}`,
-            solution: `package main\n\nimport ("fmt"; "slices"; "strings")\n\nfunc main() {\n    p := []string{"a", "c", "b"}\n    slices.SortFunc(p, func(a, b string) int {\n        return strings.Compare(b, a)\n    })\n    fmt.Println(p)\n}`
+            solution: `package main\n\nimport ("fmt"; "slices"; "strings")\n\nfunc main() {\n    p := []string{"a", "c", "b"}\n    slices.SortFunc(p, func(a, b string) int {\n        return strings.Compare(b, a)\n    })\n    fmt.Println(p)\n}`,
+            expectedOutput: "[c b a]"
         }
     },
     {
@@ -3873,7 +3919,8 @@ func TestPanic(t *testing.T) {
         },
         exercise: {
             question: "Provoca un pánico con el mensaje 'Error fatal'.", initialCode: `package main\n\nfunc main() {\n    // Tu pánico\n}`,
-            solution: `package main\n\nfunc main() {\n    panic("Error fatal")\n}`
+            solution: `package main\n\nfunc main() {\n    panic("Error fatal")\n}`,
+            expectedOutput: "/panic: Error fatal/"
         }
     },
     {
@@ -3967,7 +4014,8 @@ func TestDefer(t *testing.T) {
         },
         exercise: {
             question: "Usa `defer` para imprimir 'Mundo' DESPUÉS de imprimir 'Hola', aunque 'Mundo' aparezca primero en el código.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // deferred print Mundo\n    fmt.Println("Hola")\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    defer fmt.Println("Mundo")\n    fmt.Println("Hola")\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    defer fmt.Println("Mundo")\n    fmt.Println("Hola")\n}`,
+            expectedOutput: "Hola\nMundo"
         }
     },
     {
@@ -4036,7 +4084,8 @@ func TestRecover(t *testing.T) {
         },
         exercise: {
             question: "Llama a `panic(123)` y recupéralo imprimiendo 'Recuperado: 123'.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    // Tu defer con recover\n    panic(123)\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    defer func() {\n        if r := recover(); r != nil {\n            fmt.Println("Recuperado:", r)\n        }\n    }()\n    panic(123)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    defer func() {\n        if r := recover(); r != nil {\n            fmt.Println("Recuperado:", r)\n        }\n    }()\n    panic(123)\n}`,
+            expectedOutput: "Recuperado: 123"
         }
     },
     {
@@ -4107,7 +4156,8 @@ func TestStringFunctions(t *testing.T) {
         },
         exercise: {
             question: "Usa `strings.ToUpper` y `strings.Join` para convertir `['hola', 'mundo']` en `HOLA def MUNDO`.", initialCode: `package main\n\nimport ("fmt"; "strings")\n\nfunc main() {\n    words := []string{"hola", "mundo"}\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "strings")\n\nfunc main() {\n    words := []string{"hola", "mundo"}\n    upper := []string{}\n    for _, w := range words {\n        upper = append(upper, strings.ToUpper(w))\n    }\n    fmt.Println(strings.Join(upper, " def "))\n}`
+            solution: `package main\n\nimport ("fmt"; "strings")\n\nfunc main() {\n    words := []string{"hola", "mundo"}\n    upper := []string{}\n    for _, w := range words {\n        upper = append(upper, strings.ToUpper(w))\n    }\n    fmt.Println(strings.Join(upper, " def "))\n}`,
+            expectedOutput: "HOLA def MUNDO"
         }
     },
     {
@@ -4191,7 +4241,8 @@ func TestFormatPersonInfo(t *testing.T) {
         },
         exercise: {
             question: "Usa `Sprintf` para formatear un float `3.14159` con solo 2 decimales.", initialCode: `package main\n\nimport "fmt"\n\nfunc main() {\n    pi := 3.14159\n    // Tu código\n}`,
-            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    pi := 3.14159\n    s := fmt.Sprintf("%.2f", pi)\n    fmt.Println(s)\n}`
+            solution: `package main\n\nimport "fmt"\n\nfunc main() {\n    pi := 3.14159\n    s := fmt.Sprintf("%.2f", pi)\n    fmt.Println(s)\n}`,
+            expectedOutput: "3.14"
         }
     },
     {
@@ -4279,7 +4330,8 @@ func TestRenderGreeting(t *testing.T) {
         },
         exercise: {
             question: "Crea una plantilla que imprima 'Hola, [Nombre]!' dado un struct {Nombre string}.", initialCode: `package main\n\nimport ("os"; "text/template")\n\ntype Persona struct { Nombre string }\n\nfunc main() {\n    yo := Persona{"Gru"}\n    // Tu plantilla\n}`,
-            solution: `package main\n\nimport ("os"; "text/template")\n\ntype Persona struct { Nombre string }\n\nfunc main() {\n    yo := Persona{"Gru"}\n    t := template.New("saludo")\n    t, _ = t.Parse("Hola, {{.Nombre}}!\\n")\n    t.Execute(os.Stdout, yo)\n}`
+            solution: `package main\n\nimport ("os"; "text/template")\n\ntype Persona struct { Nombre string }\n\nfunc main() {\n    yo := Persona{"Gru"}\n    t := template.New("saludo")\n    t, _ = t.Parse("Hola, {{.Nombre}}!\\n")\n    t.Execute(os.Stdout, yo)\n}`,
+            expectedOutput: "Hola, Gru!"
         }
     },
     {
@@ -4362,7 +4414,8 @@ func TestExtractEmails(t *testing.T) {
         },
         exercise: {
             question: "Usa regex para encontrar todos los números en el string 'abc 123 def 456'.", initialCode: `package main\n\nimport ("fmt"; "regexp")\n\nfunc main() {\n    s := "abc 123 def 456"\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "regexp")\n\nfunc main() {\n    s := "abc 123 def 456"\n    r := regexp.MustCompile("[0-9]+")\n    fmt.Println(r.FindAllString(s, -1))\n}`
+            solution: `package main\n\nimport ("fmt"; "regexp")\n\nfunc main() {\n    s := "abc 123 def 456"\n    r := regexp.MustCompile("[0-9]+")\n    fmt.Println(r.FindAllString(s, -1))\n}`,
+            expectedOutput: "[123 456]"
         }
     },
     {
@@ -4502,7 +4555,8 @@ func TestJSONToUser(t *testing.T) {
         },
         exercise: {
             question: "Define un struct `Persona` con campos `Nombre` (json: name) y `Edad` (json: age). Crea una instancia y conviértela a JSON.", initialCode: `package main\n\nimport ("encoding/json"; "fmt")\n\ntype Persona struct {\n    // Tus campos\n}\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("encoding/json"; "fmt")\n\ntype Persona struct {\n    Nombre string \`json:"name"\`\n    Edad   int    \`json:"age"\`\n}\n\nfunc main() {\n    p := Persona{"Gru", 42}\n    b, _ := json.Marshal(p)\n    fmt.Println(string(b))\n}`
+            solution: `package main\n\nimport ("encoding/json"; "fmt")\n\ntype Persona struct {\n    Nombre string \`json:"name"\`\n    Edad   int    \`json:"age"\`\n}\n\nfunc main() {\n    p := Persona{"Gru", 42}\n    b, _ := json.Marshal(p)\n    fmt.Println(string(b))\n}`,
+            expectedOutput: `{"name":"Gru","age":42}`
         }
     },
     {
@@ -4611,7 +4665,8 @@ func TestXMLToProduct(t *testing.T) {
         },
         exercise: {
             question: "Crea una estructura para `<book id='1'><title>The Go Gopher</title></book>` y decodifícalo.", initialCode: `package main\n\nimport ("encoding/xml"; "fmt")\n\ntype Book struct {\n    // Tus etiquetas xml\n}\n\nfunc main() {\n    data := []byte("<book id='1'><title>The Go Gopher</title></book>")\n    // Unmarshal\n}`,
-            solution: `package main\n\nimport ("encoding/xml"; "fmt")\n\ntype Book struct {\n    XMLName xml.Name \`xml:"book"\`\n    ID      int      \`xml:"id,attr"\`\n    Title   string   \`xml:"title"\`\n}\n\nfunc main() {\n    data := []byte("<book id='1'><title>The Go Gopher</title></book>")\n    var b Book\n    xml.Unmarshal(data, &b)\n    fmt.Println(b)\n}`
+            solution: `package main\n\nimport ("encoding/xml"; "fmt")\n\ntype Book struct {\n    XMLName xml.Name \`xml:"book"\`\n    ID      int      \`xml:"id,attr"\`\n    Title   string   \`xml:"title"\`\n}\n\nfunc main() {\n    data := []byte("<book id='1'><title>The Go Gopher</title></book>")\n    var b Book\n    xml.Unmarshal(data, &b)\n    fmt.Println(b)\n}`,
+            expectedOutput: `{{ book} 1 The Go Gopher}`
         }
     },
     {
@@ -4702,7 +4757,8 @@ func TestAddDays(t *testing.T) {
         },
         exercise: {
             question: "¿Cuánto tiempo ha pasado desde el 1 de enero de 2000? Imprímelo en horas.", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    start := time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    start := time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)\n    fmt.Println(time.Since(start).Hours())\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    start := time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)\n    fmt.Println(time.Since(start).Hours())\n}`,
+            expectedOutput: "/\\d+/"
         }
     },
     {
@@ -4775,7 +4831,8 @@ func TestUnixToTime(t *testing.T) {
         },
         exercise: {
             question: "Obtén la fecha correspondiente al timestamp Unix 1000000000.", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    fmt.Println(time.Unix(1000000000, 0))\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    fmt.Println(time.Unix(1000000000, 0).UTC())\n}`,
+            expectedOutput: "2001-09-09 01:46:40 +0000 UTC"
         }
     },
     {
@@ -4857,7 +4914,8 @@ func TestParseDate(t *testing.T) {
         },
         exercise: {
             question: "Formatea la hora actual como 'Día/Mes/Año' (e.g., 25/12/2023).", initialCode: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    t := time.Now()\n    // fmt.Println(t.Format(...))\n}`,
-            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    t := time.Now()\n    fmt.Println(t.Format("02/01/2006"))\n}`
+            solution: `package main\n\nimport ("fmt"; "time")\n\nfunc main() {\n    t := time.Now()\n    fmt.Println(t.Format("02/01/2006"))\n}`,
+            expectedOutput: "/\\d{2}/\\d{2}/\\d{4}/"
         }
     },
     {
@@ -4931,7 +4989,8 @@ func TestRandomFloat(t *testing.T) {
         },
         exercise: {
             question: "Genera un número entero aleatorio entre 50 y 100.", initialCode: `package main\n\nimport ("fmt"; "math/rand/v2")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "math/rand/v2")\n\nfunc main() {\n    // [0, 50) + 50 = [50, 100)\n    fmt.Println(rand.IntN(51) + 50)\n}`
+            solution: `package main\n\nimport ("fmt"; "math/rand/v2")\n\nfunc main() {\n    // [0, 50) + 50 = [50, 100)\n    fmt.Println(rand.IntN(51) + 50)\n}`,
+            expectedOutput: "/\\d+/"
         }
     },
     {
@@ -5026,7 +5085,8 @@ func TestParseFloat(t *testing.T) {
         },
         exercise: {
             question: "Convierte la cadena '3.14' a un float y súmale 1. Imprime el resultado.", initialCode: `package main\n\nimport ("fmt"; "strconv")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "strconv")\n\nfunc main() {\n    f, _ := strconv.ParseFloat("3.14", 64)\n    fmt.Println(f + 1)\n}`
+            solution: `package main\n\nimport ("fmt"; "strconv")\n\nfunc main() {\n    f, _ := strconv.ParseFloat("3.14", 64)\n    fmt.Println(f + 1)\n}`,
+            expectedOutput: "/4\\.14/"
         }
     },
     {
@@ -5139,7 +5199,8 @@ func TestGetHost(t *testing.T) {
         },
         exercise: {
             question: "Parsea 'http://google.com/search?q=golang' e imprime solo el valor del parámetro 'q'.", initialCode: `package main\n\nimport ("fmt"; "net/url")\n\nfunc main() {\n    s := "http://google.com/search?q=golang"\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "net/url")\n\nfunc main() {\n    u, _ := url.Parse("http://google.com/search?q=golang")\n    q := u.Query()\n    fmt.Println(q["q"][0])\n}`
+            solution: `package main\n\nimport ("fmt"; "net/url")\n\nfunc main() {\n    u, _ := url.Parse("http://google.com/search?q=golang")\n    q := u.Query()\n    fmt.Println(q["q"][0])\n}`,
+            expectedOutput: "golang"
         }
     },
     {
@@ -5211,8 +5272,9 @@ func TestHashString(t *testing.T) {
 }`
         },
         exercise: {
-            question: "Calcula el hash SHA256 de la palabra 'secreto' e imprímelo en formato hexadecimal (%x).", initialCode: `package main\n\nimport ("fmt"; "crypto/sha256")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "crypto/sha256")\n\nfunc main() {\n    h := sha256.New()\n    h.Write([]byte("secreto"))\n    fmt.Printf("%x\\n", h.Sum(nil))\n}`
+            question: "Calcula el hash SHA256 de la palabra 'hello' e imprímelo en formato hexadecimal (%x).", initialCode: `package main\n\nimport ("fmt"; "crypto/sha256")\n\nfunc main() {\n    // Tu código\n}`,
+            solution: `package main\n\nimport ("fmt"; "crypto/sha256")\n\nfunc main() {\n    h := sha256.New()\n    h.Write([]byte("hello"))\n    fmt.Printf("%x\\n", h.Sum(nil))\n}`,
+            expectedOutput: "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
         }
     },
     {
@@ -5300,7 +5362,8 @@ func TestDecodeBase64(t *testing.T) {
         },
         exercise: {
             question: "Codifica el string 'Golang' a Base64 estándar.", initialCode: `package main\n\nimport ("fmt"; "encoding/base64")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "encoding/base64")\n\nfunc main() {\n    fmt.Println(base64.StdEncoding.EncodeToString([]byte("Golang")))\n}`
+            solution: `package main\n\nimport ("fmt"; "encoding/base64")\n\nfunc main() {\n    fmt.Println(base64.StdEncoding.EncodeToString([]byte("Golang")))\n}`,
+            expectedOutput: "R29sYW5n"
         }
     },
     {
@@ -5464,7 +5527,8 @@ func TestReadFirstNBytes(t *testing.T) {
         },
         exercise: {
             question: "Usa `os.ReadFile` para leer un archivo ficticio 'hola.txt'. Asume que existe.", initialCode: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    dat, _ := os.ReadFile("hola.txt")\n    fmt.Print(string(dat))\n}`
+            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    os.WriteFile("hola.txt", []byte("contenido"), 0644)\n    dat, _ := os.ReadFile("hola.txt")\n    fmt.Print(string(dat))\n}`,
+            expectedOutput: "contenido"
         }
     },
     {
@@ -5610,7 +5674,8 @@ func TestAppendToFile(t *testing.T) {
         },
         exercise: {
             question: "Crea un archivo 'test.txt' y escribe la palabra 'Go' en él.", initialCode: `package main\n\nimport ("os")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("os")\n\nfunc main() {\n    os.WriteFile("test.txt", []byte("Go"), 0644)\n}`
+            solution: `package main\n\nimport ("os"; "fmt")\n\nfunc main() {\n    os.WriteFile("test.txt", []byte("Go"), 0644)\n    dat, _ := os.ReadFile("test.txt")\n    fmt.Println(string(dat))\n}`,
+            expectedOutput: "Go"
         }
     },
     {
@@ -5684,7 +5749,8 @@ func TestFilterLines(t *testing.T) {
         },
         exercise: {
             question: "Escribe un programa que lea líneas de stdin e imprima solo las que contienen 'ERROR'. (Usa strings.Contains).", initialCode: `package main\n\nimport ("bufio"; "fmt"; "os"; "strings")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("bufio"; "fmt"; "os"; "strings")\n\nfunc main() {\n    scanner := bufio.NewScanner(os.Stdin)\n    for scanner.Scan() {\n        if strings.Contains(scanner.Text(), "ERROR") {\n            fmt.Println(scanner.Text())\n        }\n    }\n}`
+            solution: `package main\n\nimport ("bufio"; "fmt"; "os"; "strings")\n\nfunc main() {\n    // Simulating stdin for playground\n    input := "Log 1\\nERROR: Fail\\nLog 2\\nERROR: Crash"\n    scanner := bufio.NewScanner(strings.NewReader(input))\n    for scanner.Scan() {\n        if strings.Contains(scanner.Text(), "ERROR") {\n            fmt.Println(scanner.Text())\n        }\n    }\n}`,
+            expectedOutput: "ERROR: Fail\nERROR: Crash"
         }
     },
     {
@@ -5775,7 +5841,8 @@ func TestGetFileName(t *testing.T) {
         },
         exercise: {
             question: "Combina los directorios 'carpeta', 'subcarpeta' y el archivo 'foto.png' en una ruta.", initialCode: `package main\n\nimport ("fmt"; "path/filepath")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "path/filepath")\n\nfunc main() {\n    p := filepath.Join("carpeta", "subcarpeta", "foto.png")\n    fmt.Println(p)\n}`
+            solution: `package main\n\nimport ("fmt"; "path/filepath")\n\nfunc main() {\n    p := filepath.Join("carpeta", "subcarpeta", "foto.png")\n    fmt.Println(p)\n}`,
+            expectedOutput: "carpeta/subcarpeta/foto.png"
         }
     },
     {
@@ -5898,7 +5965,8 @@ func TestCreateDirectoryWithFile(t *testing.T) {
         },
         exercise: {
             question: "Crea un directorio llamado 'datos' y dentro un archivo 'info.txt'.", initialCode: `package main\n\nimport ("os")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("os")\n\nfunc main() {\n    os.Mkdir("datos", 0755)\n    os.WriteFile("datos/info.txt", []byte(""), 0644)\n    // Limpieza opcional: os.RemoveAll("datos")\n}`
+            solution: `package main\n\nimport ("os"; "fmt")\n\nfunc main() {\n    os.Mkdir("datos", 0755)\n    os.WriteFile("datos/info.txt", []byte("OK"), 0644)\n    dat, _ := os.ReadFile("datos/info.txt")\n    fmt.Println(string(dat))\n    os.RemoveAll("datos")\n}`,
+            expectedOutput: "OK"
         }
     },
     {
@@ -5995,7 +6063,8 @@ func TestWriteToTempFile(t *testing.T) {
         },
         exercise: {
             question: "Crea un archivo temporal e imprime su nombre.", initialCode: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    f, _ := os.CreateTemp("", "temp")\n    defer os.Remove(f.Name())\n    fmt.Println(f.Name())\n}`
+            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    f, _ := os.CreateTemp("", "temp")\n    defer os.Remove(f.Name())\n    fmt.Println("Created temp file")\n}`,
+            expectedOutput: "Created temp file"
         }
     },
     {
@@ -6246,7 +6315,8 @@ func TestGetArgAt(t *testing.T) {
         },
         exercise: {
             question: "Imprime la cantidad de argumentos recibidos (sin contar el nombre del programa).", initialCode: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    fmt.Println(len(os.Args) - 1)\n}`
+            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    fmt.Println(len(os.Args) - 1)\n}`,
+            expectedOutput: "0"
         }
     },
     {
@@ -6332,7 +6402,8 @@ func TestParseFlags(t *testing.T) {
         },
         exercise: {
             question: "Define un flag booleano `-debug` que por defecto sea false. Imprime su valor.", initialCode: `package main\n\nimport ("flag"; "fmt")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("flag"; "fmt")\n\nfunc main() {\n    debug := flag.Bool("debug", false, "Enable debug mode")\n    flag.Parse()\n    fmt.Println(*debug)\n}`
+            solution: `package main\n\nimport ("flag"; "fmt")\n\nfunc main() {\n    debug := flag.Bool("debug", false, "Enable debug mode")\n    flag.Parse()\n    fmt.Println(*debug)\n}`,
+            expectedOutput: "false"
         }
     },
     {
@@ -6445,7 +6516,8 @@ func TestParseStopSubcommand(t *testing.T) {
         },
         exercise: {
             question: "Crea una estructura para un subcomando 'version' que no tenga flags, solo imprima 'v1.0'.", initialCode: `package main\n\nimport ("flag"; "fmt"; "os")\n\nfunc main() {\n    // Tu switch con version\n}`,
-            solution: `package main\n\nimport ("flag"; "fmt"; "os")\n\nfunc main() {\n    versionCmd := flag.NewFlagSet("version", flag.ExitOnError)\n    if len(os.Args) > 1 && os.Args[1] == "version" {\n        versionCmd.Parse(os.Args[2:])\n        fmt.Println("v1.0")\n    }\n}`
+            solution: `package main\n\nimport ("flag"; "fmt"; "os")\n\nfunc main() {\n    versionCmd := flag.NewFlagSet("version", flag.ExitOnError)\n    os.Args = []string{"cmd", "version"}\n    if len(os.Args) > 1 && os.Args[1] == "version" {\n        versionCmd.Parse(os.Args[2:])\n        fmt.Println("v1.0")\n    }\n}`,
+            expectedOutput: "v1.0"
         }
     },
     {
@@ -6534,7 +6606,8 @@ func TestGetEnvOrDefaultWithMissing(t *testing.T) {
         },
         exercise: {
             question: "Establece la variable 'MI_VAR' con valor 'Hola' y luego imprímela.", initialCode: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    os.Setenv("MI_VAR", "Hola")\n    fmt.Println(os.Getenv("MI_VAR"))\n}`
+            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    os.Setenv("MI_VAR", "Hola")\n    fmt.Println(os.Getenv("MI_VAR"))\n}`,
+            expectedOutput: "Hola"
         }
     },
     {
@@ -6638,7 +6711,8 @@ func TestCreateLogger(t *testing.T) {
         },
         exercise: {
             question: "Crea un logger que escriba en stdout (os.Stdout) con el prefijo 'TEST: '.", initialCode: `package main\n\nimport ("log"; "os")\n\nfunc main() {\n    // Tu logger\n}`,
-            solution: `package main\n\nimport ("log"; "os")\n\nfunc main() {\n    l := log.New(os.Stdout, "TEST: ", log.LstdFlags)\n    l.Println("Hola logger")\n}`
+            solution: `package main\n\nimport ("log"; "os")\n\nfunc main() {\n    l := log.New(os.Stdout, "TEST: ", log.LstdFlags)\n    l.Println("Hola logger")\n}`,
+            expectedOutput: "/TEST: .*Hola logger/"
         }
     },
     {
@@ -6743,7 +6817,8 @@ func TestCheckURL(t *testing.T) {
         },
         exercise: {
             question: "Haz un GET a 'https://example.com' e imprime el status code (resp.StatusCode).", initialCode: `package main\n\nimport ("fmt"; "net/http")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "net/http")\n\nfunc main() {\n    resp, _ := http.Get("https://example.com")\n    defer resp.Body.Close()\n    fmt.Println(resp.StatusCode)\n}`
+            solution: `package main\n\nimport ("fmt"; "net/http")\n\nfunc main() {\n    resp, _ := http.Get("https://example.com")\n    defer resp.Body.Close()\n    fmt.Println(resp.StatusCode)\n}`,
+            expectedOutput: "200"
         }
     },
     {
@@ -6843,7 +6918,8 @@ func TestGreetHandler(t *testing.T) {
         },
         exercise: {
             question: "Crea un handler para la ruta '/' que responda con 'Bienvenido'. (No necesitas llamar a ListenAndServe en el ejercicio).", initialCode: `package main\n\nimport ("fmt"; "net/http")\n\nfunc main() {\n    // http.HandleFunc("/", ...)\n}`,
-            solution: `package main\n\nimport ("fmt"; "net/http")\n\nfunc main() {\n    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {\n        fmt.Fprint(w, "Bienvenido")\n    })\n}`
+            solution: `package main\n\nimport ("fmt"; "net/http"; "net/http/httptest")\n\nfunc main() {\n    handler := func(w http.ResponseWriter, r *http.Request) {\n        fmt.Fprint(w, "Bienvenido")\n    }\n    req := httptest.NewRequest("GET", "/", nil)\n    w := httptest.NewRecorder()\n    handler(w, req)\n    fmt.Println(w.Body.String())\n}`,
+            expectedOutput: "Bienvenido"
         }
     },
     {
@@ -6925,7 +7001,8 @@ func main() {
 }`,
         exercise: {
             question: "Escribe la línea para escuchar (Listen) conexiones TCP en el puerto 9000.", initialCode: `package main\n\nimport "net"\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport "net"\n\nfunc main() {\n    ln, _ := net.Listen("tcp", ":9000")\n    defer ln.Close()\n}`
+            solution: `package main\n\nimport ("net"; "fmt")\n\nfunc main() {\n    ln, err := net.Listen("tcp", ":9000")\n    if err == nil { fmt.Println("Listening") }\n    defer ln.Close()\n}`,
+            expectedOutput: "Listening"
         }
     },
     {
@@ -7017,7 +7094,8 @@ func main() {
 }`,
         exercise: {
             question: "Crea un contexto que expire (timeout) en 100 milisegundos.", initialCode: `package main\n\nimport ("context"; "fmt"; "time")\n\nfunc main() {\n    // Tu contexto\n}`,
-            solution: `package main\n\nimport ("context"; "fmt"; "time")\n\nfunc main() {\n    ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)\n    defer cancel()\n    <-ctx.Done()\n    fmt.Println(ctx.Err())\n}`
+            solution: `package main\n\nimport ("context"; "fmt"; "time")\n\nfunc main() {\n    ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)\n    defer cancel()\n    <-ctx.Done()\n    fmt.Println(ctx.Err())\n}`,
+            expectedOutput: "context deadline exceeded"
         }
     },
     {
@@ -7089,7 +7167,8 @@ func main() {
 }`,
         exercise: {
             question: "Ejecuta el comando `echo 'Hola'` y captura su salida.", initialCode: `package main\n\nimport ("fmt"; "os/exec")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "os/exec")\n\nfunc main() {\n    out, _ := exec.Command("echo", "Hola").Output()\n    fmt.Printf("%s", out)\n}`
+            solution: `package main\n\nimport ("fmt"; "os/exec")\n\nfunc main() {\n    out, _ := exec.Command("echo", "Hola").Output()\n    fmt.Printf("%s", out)\n}`,
+            expectedOutput: "Hola\n"
         }
     },
     {
@@ -7143,7 +7222,8 @@ func main() {
 }`,
         exercise: {
             question: "Usa `exec.LookPath` para encontrar dónde está instalado `go`.", initialCode: `package main\n\nimport ("fmt"; "os/exec")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "os/exec")\n\nfunc main() {\n    path, _ := exec.LookPath("go")\n    fmt.Println(path)\n}`
+            solution: `package main\n\nimport ("fmt"; "os/exec")\n\nfunc main() {\n    path, _ := exec.LookPath("go")\n    if len(path) > 0 { fmt.Println("Found go") }\n}`,
+            expectedOutput: "Found go"
         }
     },
     {
@@ -7215,7 +7295,8 @@ func main() {
 }`,
         exercise: {
             question: "Crea un código que espere un SIGINT (Ctrl+C). (Nota: Difícil de probar en playground, imagina la estructura).", initialCode: `package main\n\nimport ("os"; "os/signal"; "syscall")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "os"; "os/signal"; "syscall")\n\nfunc main() {\n    c := make(chan os.Signal, 1)\n    signal.Notify(c, syscall.SIGINT)\n    <-c\n    fmt.Println("Interrumpido")\n}`
+            solution: `package main\n\nimport ("fmt"; "os"; "os/signal"; "syscall"; "time")\n\nfunc main() {\n    c := make(chan os.Signal, 1)\n    signal.Notify(c, syscall.SIGINT)\n    go func() { time.Sleep(100*time.Millisecond); c <- syscall.SIGINT }()\n    <-c\n    fmt.Println("Interrumpido")\n}`,
+            expectedOutput: "Interrumpido"
         }
     },
     {
@@ -7264,8 +7345,8 @@ func main() {
     os.Exit(3)
 }`,
         exercise: {
-            question: "Intenta imprimir 'Fin' usando defer y luego llama a os.Exit(1). ¿Se imprimirá?", initialCode: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    // Tu código\n}`,
-            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    defer fmt.Println("Fin")\n    os.Exit(1)\n    // Respuesta: No, no se imprimirá.\n}`
+            solution: `package main\n\nimport ("fmt"; "os")\n\nfunc main() {\n    defer fmt.Println("Fin")\n    os.Exit(1)\n    // Respuesta: No, no se imprimirá.\n}`,
+            expectedOutput: ""
         }
     },
     {
@@ -7343,7 +7424,8 @@ func TestBot(t *testing.T) {
         },
         exercise: {
             question: "Modifica el `NewBot` para que acepte una implementación diferente de `Greeter` (por ejemplo `SpanishGreeter`) e inyéctala en `main`.", initialCode: `package main\n\nimport "fmt"\n\ntype Greeter interface {\n    Greet(name string) string\n}\n\n// Escribe SpanishGreeter aquí...\n\nfunc main() {\n    // Inyecta tu SpanishGreeter aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\ntype Greeter interface {\n    Greet(name string) string\n}\n\ntype SpanishGreeter struct{}\nfunc (s SpanishGreeter) Greet(name string) string {\n    return "Hola " + name\n}\n\ntype Bot struct { g Greeter }\nfunc NewBot(g Greeter) *Bot { return &Bot{g} }\n\nfunc main() {\n    g := SpanishGreeter{}\n    b := NewBot(g)\n    fmt.Println(b.g.Greet("Mundo"))\n}`
+            solution: `package main\n\nimport "fmt"\n\ntype Greeter interface {\n    Greet(name string) string\n}\n\ntype SpanishGreeter struct{}\nfunc (s SpanishGreeter) Greet(name string) string {\n    return "Hola " + name\n}\n\ntype Bot struct { g Greeter }\nfunc NewBot(g Greeter) *Bot { return &Bot{g} }\n\nfunc main() {\n    g := SpanishGreeter{}\n    b := NewBot(g)\n    fmt.Println(b.g.Greet("Mundo"))\n}`,
+            expectedOutput: "Hola Mundo"
         }
     },
     {

@@ -1,0 +1,300 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Go Guru API - HTTP API + CloudFront + WAF + Alerts (v5)
+
+Parameters:
+  AllowedOrigin:
+    Type: String
+    Default: 'https://goguru.dev'
+    Description: Allowed CORS origin
+
+Globals:
+  Function:
+    Timeout: 60
+    MemorySize: 1536
+    Environment:
+      Variables:
+        MAX_EXECUTION_TIME: "30"
+
+Resources:
+
+  # =====================================================
+  # HTTP API
+  # =====================================================
+  GoGuruHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      Name: GoGuruHttpApi
+      StageName: Prod
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref AllowedOrigin
+        AllowMethods:
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+          - Authorization
+          - X-Api-Key
+        MaxAge: 600
+
+  # =====================================================
+  # Lambda Function
+  # =====================================================
+  GoExecutorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Architectures:
+        - x86_64
+      Events:
+        ExecuteCode:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref GoGuruHttpApi
+            Path: /execute
+            Method: POST
+      Policies:
+        - AWSLambdaBasicExecutionRole
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./src
+      DockerTag: go-executor-v1
+
+  # =====================================================
+  # WAF Web ACL (CLOUDFRONT SCOPE)
+  # =====================================================
+  GoGuruWebACL:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      Name: GoGuruWebACL
+      Scope: CLOUDFRONT
+      DefaultAction:
+        Allow: {}
+      VisibilityConfig:
+        CloudWatchMetricsEnabled: true
+        MetricName: GoGuruWebACL
+        SampledRequestsEnabled: true
+      Rules:
+
+        # -----------------------------------------
+        # Rate limit por IP
+        # -----------------------------------------
+        - Name: RateLimitPerIP
+          Priority: 0
+          Action:
+            Block: {}
+          Statement:
+            RateBasedStatement:
+              Limit: 100
+              AggregateKeyType: IP
+          VisibilityConfig:
+            CloudWatchMetricsEnabled: true
+            MetricName: RateLimitPerIP
+            SampledRequestsEnabled: true
+
+        # -----------------------------------------
+        # Bloqueo de User-Agents maliciosos
+        # -----------------------------------------
+        - Name: BlockBadUserAgents
+          Priority: 1
+          Action:
+            Block: {}
+          Statement:
+            OrStatement:
+              Statements:
+                - ByteMatchStatement:
+                    FieldToMatch:
+                      SingleHeader:
+                        Name: user-agent
+                    PositionalConstraint: CONTAINS
+                    SearchString: "curl"
+                    TextTransformations:
+                      - Priority: 0
+                        Type: LOWERCASE
+
+                - ByteMatchStatement:
+                    FieldToMatch:
+                      SingleHeader:
+                        Name: user-agent
+                    PositionalConstraint: CONTAINS
+                    SearchString: "wget"
+                    TextTransformations:
+                      - Priority: 0
+                        Type: LOWERCASE
+
+                - ByteMatchStatement:
+                    FieldToMatch:
+                      SingleHeader:
+                        Name: user-agent
+                    PositionalConstraint: CONTAINS
+                    SearchString: "python-requests"
+                    TextTransformations:
+                      - Priority: 0
+                        Type: LOWERCASE
+          VisibilityConfig:
+            CloudWatchMetricsEnabled: true
+            MetricName: BlockBadUserAgents
+            SampledRequestsEnabled: true
+
+        # -----------------------------------------
+        # AWS Managed Rules (SQLi, XSS, exploits)
+        # -----------------------------------------
+        - Name: AWSManagedCommonRuleSet
+          Priority: 2
+          OverrideAction:
+            None: {}
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesCommonRuleSet
+          VisibilityConfig:
+            CloudWatchMetricsEnabled: true
+            MetricName: AWSManagedCommonRuleSet
+            SampledRequestsEnabled: true
+
+  # =====================================================
+  # CloudFront Distribution
+  # =====================================================
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: !Sub "${AWS::StackName} - GoGuru API CDN"
+        
+        # Origin: API Gateway HTTP API
+        Origins:
+          - Id: HttpApiOrigin
+            DomainName: !Sub "${GoGuruHttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+            OriginPath: /Prod
+            CustomOriginConfig:
+              HTTPSPort: 443
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols:
+                - TLSv1.2
+        
+        # Default Cache Behavior
+        DefaultCacheBehavior:
+          TargetOriginId: HttpApiOrigin
+          ViewerProtocolPolicy: redirect-to-https
+          
+          # Métodos permitidos
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+            - PUT
+            - POST
+            - PATCH
+            - DELETE
+          CachedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          
+          # Cache Policy: Deshabilitar cache para API dinámica
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad  # CachingDisabled
+          
+          # Origin Request Policy
+          OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac  # AllViewerExceptHostHeader
+          
+          Compress: true
+        
+        # Asociar WAF
+        WebACLId: !GetAtt GoGuruWebACL.Arn
+        
+        # Configuración de precios
+        PriceClass: PriceClass_100
+        
+        # HTTP/2 y HTTP/3
+        HttpVersion: http2and3
+
+  # =====================================================
+  # CloudWatch Alarms
+  # =====================================================
+
+  # Alerta: Rate Limit
+  WafRateLimitAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "${AWS::StackName}-WAF-RateLimit"
+      AlarmDescription: "Muchas requests bloqueadas por rate limit"
+      Namespace: AWS/WAFV2
+      MetricName: BlockedRequests
+      Dimensions:
+        - Name: WebACL
+          Value: GoGuruWebACL
+        - Name: Rule
+          Value: RateLimitPerIP
+        - Name: Region
+          Value: us-east-1
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 50
+      ComparisonOperator: GreaterThanThreshold
+
+  # Alerta: Bad User Agents
+  WafBadUserAgentAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "${AWS::StackName}-WAF-BadUserAgent"
+      AlarmDescription: "Bloqueos por User-Agent sospechoso"
+      Namespace: AWS/WAFV2
+      MetricName: BlockedRequests
+      Dimensions:
+        - Name: WebACL
+          Value: GoGuruWebACL
+        - Name: Rule
+          Value: BlockBadUserAgents
+        - Name: Region
+          Value: us-east-1
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 20
+      ComparisonOperator: GreaterThanThreshold
+
+  # Alerta: Errores 5xx en CloudFront
+  CloudFront5xxErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "${AWS::StackName}-CloudFront-5xxErrors"
+      AlarmDescription: "Demasiados errores 5xx en CloudFront"
+      Namespace: AWS/CloudFront
+      MetricName: 5xxErrorRate
+      Dimensions:
+        - Name: DistributionId
+          Value: !Ref CloudFrontDistribution
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 5
+      ComparisonOperator: GreaterThanThreshold
+
+Outputs:
+  # Endpoint directo de API Gateway (para debugging)
+  DirectApiEndpoint:
+    Description: "HTTP API endpoint (directo, sin CloudFront)"
+    Value: !Sub "https://${GoGuruHttpApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/execute"
+  
+  # Endpoint de CloudFront Production
+  CloudFrontEndpoint:
+    Description: "CloudFront endpoint (USAR EN PRODUCCIÓN)"
+    Value: !Sub "https://${CloudFrontDistribution.DomainName}/execute"
+  
+  # Dominio de CloudFront (para configurar CNAME en tu DNS)
+  CloudFrontDomain:
+    Description: "Dominio CloudFront (para CNAME en DNS)"
+    Value: !GetAtt CloudFrontDistribution.DomainName
+  
+  # ID de distribución CloudFront
+  CloudFrontDistributionId:
+    Description: "ID de distribución CloudFront"
+    Value: !Ref CloudFrontDistribution
+  
+  # ARN del WAF
+  WebACLArn:
+    Description: "ARN del WAF Web ACL"
+    Value: !GetAtt GoGuruWebACL.Arn
