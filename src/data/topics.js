@@ -62,10 +62,6 @@ Hello
 $ go build
 $ ./hello
 Hello`,
-        exercise: {
-            question: "¿Cuál es el comando para verificar que Go está instalado correctamente y ver su versión?", initialCode: `// Escribe el comando aquí como comentario\n// $ ...`,
-            solution: `// $ go version`
-        }
     },
     {
         id: 'hello-world', category: 'Getting Started', title: 'Hello World', description: 'Tu primer programa en Go.', guide: `Bienvenido a Go. Este es el punto de partida fundamental.
@@ -7489,10 +7485,6 @@ func TestGenerateID(t *testing.T) {
         t.Error("UUID should not be empty")
     }
 }`
-        },
-        exercise: {
-            question: "¿Qué comandos ejecutarías para instalar la librería 'github.com/gin-gonic/gin' y limpiar las dependencias sobrantes?", initialCode: `// Escribe los comandos bash aquí\n// 1. Instalar:\n// 2. Limpiar:`,
-            solution: `// 1. go get github.com/gin-gonic/gin\n// 2. go mod tidy`
         }
     },
     {
@@ -7861,10 +7853,6 @@ func main() {
 // script:
 //   - go test -race -v ./...`,
             testCode: `// No test code here, flag usage.`
-        },
-        exercise: {
-            question: "¿Qué flag debes añadir a `go test` o `go run` para detectar accesos concurrentes inseguros a memoria?", initialCode: `// Flag`,
-            solution: `// -race`
         }
     },
     {
@@ -7902,10 +7890,6 @@ $ go build -ldflags="-s -w" -o mi-app-small`
 func main() { fmt.Println("Version:", Version) }`,
             testCode: `// Build command:
 // go build -ldflags="-X main.Version=1.0.0"`
-        },
-        exercise: {
-            question: "Estás en una MacBook (Darwin) y quieres compilar tu programa para un servidor Ubuntu (Linux). ¿Qué variables de entorno debes configurar antes de `go build`?", initialCode: `// Variables`,
-            solution: `// GOOS=linux GOARCH=amd64`
         }
     },
     {
@@ -8136,9 +8120,5 @@ func (h *Hub) Run() {
             description: "", functionCode: `// --`,
             testCode: `// --`
         },
-        exercise: {
-            question: "¿Qué header HTTP es obligatorio para iniciar una conexión Server-Sent Events (SSE)?", initialCode: `// Header`,
-            solution: `// Content-Type: text/event-stream`
-        }
     }
 ];
