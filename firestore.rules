@@ -1,0 +1,24 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Rules for all topic collections
+    // This matches collections like: go-topics, python-topics, javascript-topics, etc.
+    match /{collection}/{document=**} {
+      // Allow public read access to all collections
+      // This is safe because topics are educational content meant to be public
+      allow read: if true;
+
+      // Deny write access to prevent unauthorized modifications
+      // To migrate data, temporarily set this to true, then revert to false
+      // Or use Firebase Admin SDK with service account for migrations
+      allow write: if false;
+
+      // Alternative: Allow writes only from authenticated users (if you add auth later)
+      // allow write: if request.auth != null;
+
+      // Alternative: Allow writes only from specific authenticated admin users
+      // allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+  }
+}

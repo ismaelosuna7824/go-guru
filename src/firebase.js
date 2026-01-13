@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent, setAnalyticsCollectionEnabled } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/setup#config-object
@@ -15,6 +16,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
 // Enable collection (just to be explicit)
 setAnalyticsCollectionEnabled(analytics, true);
@@ -69,4 +71,4 @@ export const logTopicView = (topic) => {
   }
 };
 
-export { analytics };
+export { analytics, db };

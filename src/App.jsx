@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 const TopicViewer = lazy(() => import('./components/TopicViewer'));
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { useProgress } from './context/ProgressContext';
+import { fetchTopics } from './services/topicsService';
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -20,9 +21,6 @@ function ThemeToggle() {
   );
 }
 
-// Start fetching topics immediately (in parallel with React rendering)
-const topicsPromise = import('./data/topics');
-
 function AppContent() {
   const { lastTopicId, updateCurrentTopic } = useProgress();
   const [topics, setTopics] = useState([]);
@@ -33,19 +31,27 @@ function AppContent() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    // Data should be fetching/fetched by now
-    topicsPromise.then(module => {
-      setTopics(module.topics);
-      setIsLoading(false);
+    // Fetch topics from Firestore
+    const loadTopics = async () => {
+      try {
+        const fetchedTopics = await fetchTopics();
+        setTopics(fetchedTopics);
+        setIsLoading(false);
 
-      // Set initial topic
-      if (lastTopicId && module.topics.find(t => t.id === lastTopicId)) {
-        setCurrentTopicId(lastTopicId);
-      } else if (module.topics.length > 0) {
-        setCurrentTopicId(module.topics[0].id);
+        // Set initial topic
+        if (lastTopicId && fetchedTopics.find(t => t.id === lastTopicId)) {
+          setCurrentTopicId(lastTopicId);
+        } else if (fetchedTopics.length > 0) {
+          setCurrentTopicId(fetchedTopics[0].id);
+        }
+      } catch (error) {
+        console.error('Error loading topics:', error);
+        setIsLoading(false);
       }
-    });
-  }, [lastTopicId]); // Added lastTopicId dependency to match logic use but simplistic check is fine
+    };
+
+    loadTopics();
+  }, [lastTopicId]);
 
   const currentTopic = topics.find(t => t.id === currentTopicId);
 

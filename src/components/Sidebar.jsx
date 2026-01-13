@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useProgress } from '../context/ProgressContext';
 
@@ -8,80 +8,62 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
     const [searchTerm, setSearchTerm] = useState('');
     const [expandedCategories, setExpandedCategories] = useState({});
 
-    // Explicit Category Order defined by User
-    const CATEGORY_ORDER = [
-        "Getting Started",
-        "Basic Data Types & Variables",
-        "Operators",
-        "Control Flow",
-        "Data Structures",
-        "Functions",
-        "Object-Oriented Concepts",
-        "Iteration",
-        "Error Handling",
-        "Concurrency (Goroutines & Channels)",
-        "Concurrency Patterns & Synchronization",
-        "Time & Scheduling",
-        "Sorting & Data Manipulation",
-        "String Operations",
-        "Data Formats",
-        "File System & I/O",
-        "Cryptography & Security",
-        "Random & Number Operations",
-        "URL & Network Utilities",
-        "Testing & Quality",
-        "Command Line",
-        "Logging",
-        "HTTP & Web",
-        "Network Programming",
-        "System Programming",
-        "Advanced Concepts",
-        "Package Management & Dependencies",
-        "Database & ORM",
-        "Performance & Debugging",
-        "Deployment"
-    ];
-
-    // Group topics by category (preserving order)
+    // Group topics by category (preserving order from Firebase)
+    // The order is determined by the 'order' field in each topic document
     const categorizedTopics = useMemo(() => {
-        const groups = [];
-        const seen = new Set();
+        const categoryMap = new Map();
 
+        // Group topics by category and track the minimum order for each category
         topics.forEach(topic => {
             const catName = topic.category || 'Uncategorized';
-            if (!seen.has(catName)) {
-                seen.add(catName);
-                groups.push({
+
+            if (!categoryMap.has(catName)) {
+                categoryMap.set(catName, {
                     name: catName,
-                    topics: []
+                    topics: [],
+                    minOrder: topic.order || Infinity
                 });
-                // Initialize expanded state for new categories (default open)
-                if (expandedCategories[catName] === undefined) {
-                    // This side-effect in render is not ideal but standard workaround
-                    // Better to just treat undefined as true in isExpanded
-                }
             }
-            const group = groups.find(g => g.name === catName);
+
+            const group = categoryMap.get(catName);
             group.topics.push(topic);
+
+            // Track the minimum order to sort categories
+            if (topic.order && topic.order < group.minOrder) {
+                group.minOrder = topic.order;
+            }
         });
 
-        // Sort groups based on CATEGORY_ORDER
-        groups.sort((a, b) => {
-            const indexA = CATEGORY_ORDER.indexOf(a.name);
-            const indexB = CATEGORY_ORDER.indexOf(b.name);
+        // Convert Map to Array
+        const groups = Array.from(categoryMap.values());
 
-            // If both are in the list, sort by index
-            if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-            // If only A is in list, comes first
-            if (indexA !== -1) return -1;
-            // If only B is in list, comes first
-            if (indexB !== -1) return 1;
-            // If neither, sort alphabetically
+        // Sort categories by the minimum order of their topics
+        groups.sort((a, b) => {
+            const orderA = a.minOrder;
+            const orderB = b.minOrder;
+
+            // If both have order, sort by order
+            if (orderA !== Infinity && orderB !== Infinity) {
+                return orderA - orderB;
+            }
+            // If only one has order, prioritize it
+            if (orderA !== Infinity) return -1;
+            if (orderB !== Infinity) return 1;
+            // If neither has order, sort alphabetically
             return a.name.localeCompare(b.name);
         });
 
+        // Sort topics within each category by their order field
+        groups.forEach(group => {
+            group.topics.sort((a, b) => {
+                const orderA = a.order || Infinity;
+                const orderB = b.order || Infinity;
+                return orderA - orderB;
+            });
+        });
+
         return groups;
-    }, []);
+    }, [topics]);
 
     // Toggle category expansion
     const toggleCategory = (catName) => {

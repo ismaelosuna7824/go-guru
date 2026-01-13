@@ -10,7 +10,7 @@ export default defineConfig({
         manualChunks: {
           'vendor-react': ['react', 'react-dom', 'react-helmet-async'],
           'vendor-firebase': ['firebase/app', 'firebase/analytics'],
-          'data-topics': ['/src/data/topics.js']
+          // 'data-topics': ['/src/data/topics.js']
         }
       }
     }
