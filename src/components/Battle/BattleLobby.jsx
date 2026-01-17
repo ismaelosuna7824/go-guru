@@ -94,7 +94,7 @@ export default function BattleLobby({ onJoin }) {
                     <img
                         src="/logo.png"
                         alt="GoGuru Logo"
-                        style={{ width: '64px', height: '64px', filter: 'drop-shadow(0 0 20px rgba(139, 92, 246, 0.3))' }}
+                        style={{ width: '64px', height: '64px', borderRadius: '50%', filter: 'drop-shadow(0 0 20px rgba(139, 92, 246, 0.3))' }}
                     />
                     <h1 style={{
                         fontSize: '3.5rem',

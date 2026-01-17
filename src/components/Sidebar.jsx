@@ -144,18 +144,125 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
                             setIsOpen(false);
                             navigate('/battle');
                         }}
-                        className="nav-item"
+                        className="nav-item battle-mode-btn"
                         style={{
                             width: '100%',
-                            justifyContent: 'flex-start',
-                            background: 'linear-gradient(45deg, rgba(147, 51, 234, 0.1), rgba(79, 70, 229, 0.1))',
-                            border: '1px solid rgba(147, 51, 234, 0.2)',
-                            color: 'var(--text-primary)',
-                            fontWeight: 600
+                            justifyContent: 'center',
+                            background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)',
+                            border: 'none',
+                            color: '#ffffff',
+                            fontWeight: 800,
+                            boxShadow: '0 4px 15px rgba(168, 85, 247, 0.4)',
+                            marginTop: '8px',
+                            transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.05em',
+                            fontSize: '0.9rem',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            height: '48px',
+                            display: 'flex',
+                            alignItems: 'center'
                         }}
                     >
-                        <span style={{ marginRight: '8px' }}>⚔️</span> Modo Batalla
+                        {/* Clashing Swords Container */}
+                        <div className="battle-icon-container">
+                            <span className="sword sword-left">🗡️</span>
+                            <span className="sword sword-right">🗡️</span>
+                        </div>
+
+                        <span style={{ position: 'relative', zIndex: 1, textShadow: '0 2px 4px rgba(0,0,0,0.3)', marginLeft: '8px' }}>
+                            Battle Mode
+                        </span>
+
+                        {/* Sparkles */}
+                        <span className="star star-1">✨</span>
+                        <span className="star star-2">✨</span>
+                        <span className="star star-3">✦</span>
                     </button>
+
+                    <style>{`
+                        .battle-mode-btn:hover {
+                            transform: translateY(-2px) scale(1.02);
+                            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.6) !important;
+                            background: linear-gradient(135deg, #9333ea 0%, #2563eb 100%) !important;
+                        }
+
+                        .battle-icon-container {
+                            position: relative;
+                            width: 24px;
+                            height: 24px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                        .sword {
+                            position: absolute;
+                            font-size: 1.2rem;
+                            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+                        }
+
+                        .sword-left {
+                            transform: translate(-2px, 0) rotate(0deg);
+                            left: 0;
+                            z-index: 2;
+                        }
+
+                        .sword-right {
+                            transform: translate(2px, 0) scaleX(-1) rotate(0deg);
+                            right: 0;
+                            z-index: 1;
+                        }
+
+                        /* Hover Animation: Clash */
+                        .battle-mode-btn:hover .sword-left {
+                            animation: clash-left 0.6s ease-in-out infinite;
+                        }
+                        .battle-mode-btn:hover .sword-right {
+                            animation: clash-right 0.6s ease-in-out infinite;
+                        }
+
+                        @keyframes clash-left {
+                            0% { transform: translate(-2px, 0) rotate(0deg); }
+                            25% { transform: translate(-8px, -5px) rotate(-45deg); } /* Pull back */
+                            50% { transform: translate(4px, 2px) rotate(20deg); } /* Strike */
+                            75% { transform: translate(0, 0) rotate(0deg); }
+                            100% { transform: translate(-2px, 0) rotate(0deg); }
+                        }
+
+                        @keyframes clash-right {
+                            0% { transform: translate(2px, 0) scaleX(-1) rotate(0deg); }
+                            25% { transform: translate(8px, -5px) scaleX(-1) rotate(-45deg); } /* Pull back */
+                            50% { transform: translate(-4px, 2px) scaleX(-1) rotate(20deg); } /* Strike */
+                            75% { transform: translate(0, 0) scaleX(-1) rotate(0deg); }
+                            100% { transform: translate(2px, 0) scaleX(-1) rotate(0deg); }
+                        }
+
+                        /* Sparkles */
+                        .star {
+                            position: absolute;
+                            font-size: 10px;
+                            color: #ffff80; /* Light yellow tint */
+                            opacity: 0;
+                            pointer-events: none;
+                        }
+                        
+                        .battle-mode-btn:hover .star {
+                             animation: twinkle 1s infinite;
+                        }
+
+                        .star-1 { top: 5px; right: 20px; animation-delay: 0s; }
+                        .star-2 { bottom: 8px; left: 15px; animation-delay: 0.3s; font-size: 8px; }
+                        .star-3 { top: 10px; left: 45%; animation-delay: 0.6s; font-size: 12px; color: white; }
+                        
+                        @keyframes twinkle {
+                            0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+                            50% { opacity: 1; transform: scale(1.4) rotate(180deg); text-shadow: 0 0 5px white; }
+                            100% { opacity: 0; transform: scale(0.5) rotate(360deg); }
+                        }
+                    `}</style>
                 </div>
 
                 <nav className="sidebar-nav">
