@@ -2,6 +2,8 @@
   "name": "go-tutorials",
   "private": true,
   "version": "0.0.0",
+  "author": "Ismael Osuna",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
