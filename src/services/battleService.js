@@ -133,8 +133,13 @@ export const battleService = {
         // Since we don't have the deployment URL yet, we might need configuration.
         // I'll assume /api/generate is proxied or configured.
 
-        // In local dev, standard might be http://localhost:3000/generate
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        // In local dev, standard might be http://localhost:3000
+        let apiUrl = import.meta.env.VITE_GO_EXECUTOR_API_URL || 'http://localhost:3000';
+
+        // Sanitize URL: Remove /execute suffix if user accidentally added it to the base var
+        apiUrl = apiUrl.replace(/\/execute\/?$/, '');
+        // Remove trailing slash
+        apiUrl = apiUrl.replace(/\/$/, '');
 
         try {
             const response = await fetch(`${apiUrl}/generate`, {

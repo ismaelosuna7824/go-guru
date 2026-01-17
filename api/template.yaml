@@ -51,7 +51,7 @@ Resources:
     Properties:
       PackageType: Image
       Architectures:
-        - x86_64
+        - arm64
       Events:
         ExecuteCode:
           Type: HttpApi
@@ -59,6 +59,8 @@ Resources:
             ApiId: !Ref GoGuruHttpApi
             Path: /execute
             Method: POST
+      MemorySize: 3008 # 2 vCPU approx for faster compilation
+      Timeout: 120 # 2 minutes
       Policies:
         - AWSLambdaBasicExecutionRole
     Metadata:

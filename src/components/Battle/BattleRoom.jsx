@@ -277,14 +277,23 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                                     disabled={generating}
                                     style={{
                                         width: '100%',
-                                        padding: '10px 12px',
+                                        padding: '10px 36px 10px 12px',
                                         background: 'var(--bg-secondary)',
                                         border: '1px solid var(--border-subtle)',
                                         borderRadius: 'var(--radius-md)',
                                         color: 'var(--text-primary)',
                                         fontSize: '0.95rem',
                                         cursor: 'pointer',
-                                        outline: 'none'
+                                        outline: 'none',
+                                        // Cross-browser reset
+                                        WebkitAppearance: 'none',
+                                        MozAppearance: 'none',
+                                        appearance: 'none',
+                                        // Custom dropdown arrow
+                                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E")`,
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundPosition: 'right 12px center',
+                                        backgroundSize: '12px'
                                     }}
                                 >
                                     <option value="beginner">🟢 Beginner</option>
@@ -312,14 +321,23 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                                     disabled={generating}
                                     style={{
                                         width: '100%',
-                                        padding: '10px 12px',
+                                        padding: '10px 36px 10px 12px',
                                         background: 'var(--bg-secondary)',
                                         border: '1px solid var(--border-subtle)',
                                         borderRadius: 'var(--radius-md)',
                                         color: 'var(--text-primary)',
                                         fontSize: '0.95rem',
                                         cursor: 'pointer',
-                                        outline: 'none'
+                                        outline: 'none',
+                                        // Cross-browser reset
+                                        WebkitAppearance: 'none',
+                                        MozAppearance: 'none',
+                                        appearance: 'none',
+                                        // Custom dropdown arrow
+                                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E")`,
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundPosition: 'right 12px center',
+                                        backgroundSize: '12px'
                                     }}
                                 >
                                     <option value="es">🇪🇸 Español</option>
