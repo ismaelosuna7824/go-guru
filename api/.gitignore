@@ -37,4 +37,3 @@ wheels/
 # OS
 .DS_Store
 Thumbs.db
-api/env.json
