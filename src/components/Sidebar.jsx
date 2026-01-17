@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useProgress } from '../context/ProgressContext';
 
@@ -7,6 +8,7 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
     const { visitedIds, resetProgress } = useProgress();
     const [searchTerm, setSearchTerm] = useState('');
     const [expandedCategories, setExpandedCategories] = useState({});
+    const navigate = useNavigate();
 
     // Explicit Category Order defined by User
     const CATEGORY_ORDER = [
@@ -133,6 +135,27 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
+                </div>
+
+                {/* Battle Direct Link */}
+                <div style={{ padding: '0 var(--spacing-sm) var(--spacing-sm)' }}>
+                    <button
+                        onClick={() => {
+                            setIsOpen(false);
+                            navigate('/battle');
+                        }}
+                        className="nav-item"
+                        style={{
+                            width: '100%',
+                            justifyContent: 'flex-start',
+                            background: 'linear-gradient(45deg, rgba(147, 51, 234, 0.1), rgba(79, 70, 229, 0.1))',
+                            border: '1px solid rgba(147, 51, 234, 0.2)',
+                            color: 'var(--text-primary)',
+                            fontWeight: 600
+                        }}
+                    >
+                        <span style={{ marginRight: '8px' }}>⚔️</span> Modo Batalla
+                    </button>
                 </div>
 
                 <nav className="sidebar-nav">

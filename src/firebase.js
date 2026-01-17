@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent, setAnalyticsCollectionEnabled } from "firebase/analytics";
+import { getDatabase } from "firebase/database";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/setup#config-object
@@ -13,8 +14,15 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+// Validate config
+const missingKeys = Object.keys(firebaseConfig).filter(key => !firebaseConfig[key]);
+if (missingKeys.length > 0) {
+  console.error(`Missing Firebase configuration keys: ${missingKeys.join(', ')}. Check your .env file.`);
+}
+
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const db = getDatabase(app);
 
 // Enable collection (just to be explicit)
 setAnalyticsCollectionEnabled(analytics, true);
@@ -69,4 +77,4 @@ export const logTopicView = (topic) => {
   }
 };
 
-export { analytics };
+export { analytics, app, db };

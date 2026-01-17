@@ -5,8 +5,13 @@ Description: Go Guru API - HTTP API + CloudFront + WAF + Alerts (v5)
 Parameters:
   AllowedOrigin:
     Type: String
-    Default: 'https://goguru.dev'
+    Default: '*'
     Description: Allowed CORS origin
+
+  GroqApiKey:
+    Type: String
+    Description: API Key for Groq (Challenge Generation)
+    NoEcho: true
 
 Globals:
   Function:
@@ -60,6 +65,26 @@ Resources:
       Dockerfile: Dockerfile
       DockerContext: ./src
       DockerTag: go-executor-v1
+
+  GenerateChallengeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: generator.handler
+      Runtime: python3.9
+      Timeout: 30
+      Events:
+        GenerateChallenge:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref GoGuruHttpApi
+            Path: /generate
+            Method: POST
+      Environment:
+        Variables:
+          GROQ_API_KEY: !Ref GroqApiKey
+      Policies:
+        - AWSLambdaBasicExecutionRole
 
   # =====================================================
   # WAF Web ACL (CLOUDFRONT SCOPE)
