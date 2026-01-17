@@ -77,4 +77,33 @@ export const logTopicView = (topic) => {
   }
 };
 
+export const logBattleStart = (roomId, challenge) => {
+  const isDev = import.meta.env.DEV;
+
+  if (!analytics) {
+    console.warn("Analytics not initialized");
+    return;
+  }
+
+  const eventParams = {
+    room_id: roomId,
+    difficulty: challenge.difficulty || 'unknown',
+    language: challenge.language || 'unknown',
+    ...(isDev && { debug_mode: true }),
+  };
+
+  if (isDev) {
+    console.log(`[Analytics Debug] Battle Start:`, eventParams);
+  }
+
+  // Log custom event 'battle_start'
+  logEvent(analytics, "battle_start", eventParams);
+
+  // Also log 'level_start' which is a standard game event
+  logEvent(analytics, "level_start", {
+    level_name: `Battle ${challenge.difficulty}`,
+    ...eventParams
+  });
+};
+
 export { analytics, app, db };

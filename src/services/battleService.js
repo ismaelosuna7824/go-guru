@@ -1,5 +1,5 @@
 import { ref, push, set, onValue, update, get, serverTimestamp } from "firebase/database";
-import { db } from "../firebase";
+import { db, logBattleStart } from "../firebase";
 
 export const battleService = {
     /**
@@ -83,11 +83,16 @@ export const battleService = {
      */
     setChallenge: async (roomId, challenge) => {
         const roomRef = ref(db, `battles/${roomId}`);
+
+        // Update room status
         await update(roomRef, {
             currentChallenge: challenge,
             status: 'playing',
             startTime: serverTimestamp()
         });
+
+        // Track Event: Battle Started
+        logBattleStart(roomId, challenge);
     },
 
     /**
