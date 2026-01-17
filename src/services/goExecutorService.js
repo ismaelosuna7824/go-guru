@@ -4,9 +4,12 @@
  */
 
 // Get API URL from environment variable
-// After deploying with SAM, update .env with: VITE_GO_EXECUTOR_API_URL=https://your-api-id.execute-api.region.amazonaws.com/Prod/execute
-const API_URL = import.meta.env.VITE_GO_EXECUTOR_API_URL || 'http://localhost:3000/execute';
+// Expected format: Base URL (e.g., https://...cloudfront.net or http://localhost:3000)
+// If users append /execute, we strip it to avoid duplication.
+let baseApiUrl = import.meta.env.VITE_GO_EXECUTOR_API_URL || 'http://localhost:3000';
+baseApiUrl = baseApiUrl.replace(/\/execute\/?$/, '').replace(/\/$/, '');
 
+const url = `${baseApiUrl}/execute`;
 /**
  * Execute Go code and validate against expected output
  *
@@ -16,7 +19,7 @@ const API_URL = import.meta.env.VITE_GO_EXECUTOR_API_URL || 'http://localhost:30
  */
 export const executeCode = async (code, expectedOutput = '') => {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

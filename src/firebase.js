@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent, setAnalyticsCollectionEnabled } from "firebase/analytics";
+import { getDatabase } from "firebase/database";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/setup#config-object
@@ -13,8 +14,15 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+// Validate config
+const missingKeys = Object.keys(firebaseConfig).filter(key => !firebaseConfig[key]);
+if (missingKeys.length > 0) {
+  console.error(`Missing Firebase configuration keys: ${missingKeys.join(', ')}. Check your .env file.`);
+}
+
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const db = getDatabase(app);
 
 // Enable collection (just to be explicit)
 setAnalyticsCollectionEnabled(analytics, true);
@@ -69,4 +77,33 @@ export const logTopicView = (topic) => {
   }
 };
 
-export { analytics };
+export const logBattleStart = (roomId, challenge) => {
+  const isDev = import.meta.env.DEV;
+
+  if (!analytics) {
+    console.warn("Analytics not initialized");
+    return;
+  }
+
+  const eventParams = {
+    room_id: roomId,
+    difficulty: challenge.difficulty || 'unknown',
+    language: challenge.language || 'unknown',
+    ...(isDev && { debug_mode: true }),
+  };
+
+  if (isDev) {
+    console.log(`[Analytics Debug] Battle Start:`, eventParams);
+  }
+
+  // Log custom event 'battle_start'
+  logEvent(analytics, "battle_start", eventParams);
+
+  // Also log 'level_start' which is a standard game event
+  logEvent(analytics, "level_start", {
+    level_name: `Battle ${challenge.difficulty}`,
+    ...eventParams
+  });
+};
+
+export { analytics, app, db };

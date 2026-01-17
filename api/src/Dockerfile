@@ -1,16 +1,16 @@
 # Multi-stage build: Stage 1 - Download Go
-FROM alpine:3.19 AS go-installer
+FROM --platform=linux/arm64 alpine:3.19 AS go-installer
 
 # Install tools needed to download Go
 RUN apk add --no-cache wget tar
 
-# Download and extract Go 1.22.0
-RUN wget -q https://go.dev/dl/go1.22.0.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.22.0.linux-amd64.tar.gz && \
-    rm go1.22.0.linux-amd64.tar.gz
+# Download and extract Go 1.22.0 (ARM64 for Graviton)
+RUN wget -q https://go.dev/dl/go1.22.0.linux-arm64.tar.gz && \
+    tar -C /usr/local -xzf go1.22.0.linux-arm64.tar.gz && \
+    rm go1.22.0.linux-arm64.tar.gz
 
 # Stage 2 - Lambda runtime
-FROM public.ecr.aws/lambda/python:3.11
+FROM --platform=linux/arm64 public.ecr.aws/lambda/python:3.11
 
 # Copy Go from the first stage (reduces layer size)
 COPY --from=go-installer /usr/local/go /usr/local/go

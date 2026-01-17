@@ -8,6 +8,11 @@ Parameters:
     Default: 'https://goguru.dev'
     Description: Allowed CORS origin
 
+  GroqApiKey:
+    Type: String
+    Description: API Key for Groq (Challenge Generation)
+    NoEcho: true
+
 Globals:
   Function:
     Timeout: 60
@@ -46,7 +51,7 @@ Resources:
     Properties:
       PackageType: Image
       Architectures:
-        - x86_64
+        - arm64
       Events:
         ExecuteCode:
           Type: HttpApi
@@ -54,12 +59,34 @@ Resources:
             ApiId: !Ref GoGuruHttpApi
             Path: /execute
             Method: POST
+      MemorySize: 3008 # 2 vCPU approx for faster compilation
+      Timeout: 120 # 2 minutes
       Policies:
         - AWSLambdaBasicExecutionRole
     Metadata:
       Dockerfile: Dockerfile
       DockerContext: ./src
       DockerTag: go-executor-v1
+
+  GenerateChallengeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: generator.handler
+      Runtime: python3.9
+      Timeout: 30
+      Events:
+        GenerateChallenge:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref GoGuruHttpApi
+            Path: /generate
+            Method: POST
+      Environment:
+        Variables:
+          GROQ_API_KEY: !Ref GroqApiKey
+      Policies:
+        - AWSLambdaBasicExecutionRole
 
   # =====================================================
   # WAF Web ACL (CLOUDFRONT SCOPE)
