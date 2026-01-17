@@ -5,7 +5,7 @@ Description: Go Guru API - HTTP API + CloudFront + WAF + Alerts (v5)
 Parameters:
   AllowedOrigin:
     Type: String
-    Default: '*'
+    Default: 'https://goguru.dev/'
     Description: Allowed CORS origin
 
   GroqApiKey:
