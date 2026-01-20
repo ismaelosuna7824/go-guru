@@ -343,7 +343,7 @@ pre {
 }
 
 .sidebar-footer {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
   border-top: 1px solid var(--border-subtle);
   background: var(--bg-sidebar);
 }
@@ -354,14 +354,16 @@ pre {
   gap: var(--spacing-sm);
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   transition: color var(--transition-fast);
-  padding: var(--spacing-sm) 0;
+  padding: 2px 0;
+  opacity: 0.8;
 }
 
 .social-link:hover {
   color: var(--primary);
+  opacity: 1;
 }
 
 /* Mobile Sidebar Overlay */

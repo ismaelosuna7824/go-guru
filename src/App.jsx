@@ -1,6 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Outlet, useLocation, useOutletContext } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
+import SEO from './components/SEO';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { useProgress } from './context/ProgressContext';
 
@@ -96,6 +97,7 @@ function Layout() {
 
   return (
     <div className="app-layout">
+      <SEO />
       <Sidebar
         topics={topics}
         currentTopicId={location.pathname === '/' ? currentTopicId : null} // Only highlight if at home

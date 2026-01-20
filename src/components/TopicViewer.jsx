@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEO from './SEO';
 import { logTopicView } from '../firebase';
 import { useProgress } from '../context/ProgressContext';
 import CodePlayground from './CodePlayground';
@@ -176,12 +176,10 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
             </button>
 
             <header className="topic-header">
-                <Helmet>
-                    <title>{topic.title} | Go Guru Tutorials</title>
-                    <meta name="description" content={topic.description} />
-                    <meta property="og:title" content={`${topic.title} | Go Guru`} />
-                    <meta property="og:description" content={topic.description} />
-                </Helmet>
+                <SEO
+                    title={topic.title}
+                    description={topic.description}
+                />
                 <h1 className="topic-title">{topic.title}</h1>
                 <p className="topic-desc">{topic.description}</p>
             </header>

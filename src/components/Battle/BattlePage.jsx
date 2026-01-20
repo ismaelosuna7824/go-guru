@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import BattleLobby from './BattleLobby';
 import BattleRoom from './BattleRoom';
+import SEO from '../SEO';
 
 export default function BattlePage() {
     const navigate = useNavigate();
@@ -24,6 +25,10 @@ export default function BattlePage() {
 
     return (
         <div className="battle-page h-full"> {/* h-full to fill main content */}
+            <SEO
+                title="Batalla de Código"
+                description="Compite en tiempo real resolviendo desafíos de Go (Golang) contra otros desarrolladores."
+            />
             {/* Optional local header if needed, but Sidebar has the branding. 
                 Maybe just a simple breadcrumb or title if desired. 
                 For now, keeping it clean as Lobby has its own title. 

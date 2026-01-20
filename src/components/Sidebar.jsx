@@ -371,13 +371,13 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
                             }
                         }}
                         style={{
-                            marginTop: 'var(--spacing-md)',
+                            marginTop: 'var(--spacing-sm)',
                             background: 'transparent',
                             border: '1px solid var(--border-subtle)',
                             color: 'var(--text-tertiary)',
-                            padding: 'var(--spacing-xs) var(--spacing-sm)',
+                            padding: '2px var(--spacing-sm)',
                             borderRadius: 'var(--radius-sm)',
-                            fontSize: '0.8rem',
+                            fontSize: '0.75rem',
                             width: '100%',
                             cursor: 'pointer'
                         }}
