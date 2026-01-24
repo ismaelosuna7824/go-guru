@@ -1,5 +1,12 @@
 /**
- * Script to migrate topics from local topics.js to Firestore
+ * Script to migrate topics to Firestore
+ * 
+ * NOTE: This script was originally used for the initial migration from topics.js to Firestore.
+ * Topics are now managed directly in Firestore. This script is kept for reference.
+ * 
+ * To add/update topics, use Firebase Console:
+ * https://console.firebase.google.com/project/goguru-71888/firestore/data/topics
+ * 
  * Run with: node scripts/migrateTopics.js
  */
 
@@ -50,64 +57,18 @@ if (missingKeys.length > 0) {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Import topics (using dynamic import for ES modules)
-async function loadTopics() {
-    const module = await import('../src/data/topics.js');
-    return module.topics;
-}
 
 async function migrateTopics() {
-    try {
-        console.log('🚀 Starting topics migration to Firestore...\n');
+    console.log('⚠️  This script is deprecated.');
+    console.log('📝 Topics are now managed directly in Firestore.\n');
+    console.log('To manage topics:');
+    console.log('1. Go to Firebase Console:');
+    console.log(`   https://console.firebase.google.com/project/${firebaseConfig.projectId}/firestore/data/topics\n`);
+    console.log('2. Add/Edit topics directly in the Firestore UI');
+    console.log('3. Topics will automatically appear in your app\n');
+    console.log('💡 Tip: The original topics.js has been backed up to src/data/topics.js.backup');
 
-        const topics = await loadTopics();
-        console.log(`📚 Found ${topics.length} topics to migrate\n`);
-
-        // Use batch writes for efficiency (max 500 operations per batch)
-        const batchSize = 500;
-        let successCount = 0;
-        let errorCount = 0;
-
-        for (let i = 0; i < topics.length; i += batchSize) {
-            const batch = writeBatch(db);
-            const batchTopics = topics.slice(i, i + batchSize);
-
-            batchTopics.forEach(topic => {
-                const topicRef = doc(db, 'topics', topic.id);
-                batch.set(topicRef, topic);
-            });
-
-            try {
-                await batch.commit();
-                successCount += batchTopics.length;
-                console.log(`✅ Batch ${Math.floor(i / batchSize) + 1}: Migrated ${batchTopics.length} topics (${successCount}/${topics.length})`);
-            } catch (error) {
-                errorCount += batchTopics.length;
-                console.error(`❌ Error in batch ${Math.floor(i / batchSize) + 1}:`, error.message);
-            }
-        }
-
-        console.log('\n' + '='.repeat(50));
-        console.log('📊 Migration Summary:');
-        console.log('='.repeat(50));
-        console.log(`Total topics: ${topics.length}`);
-        console.log(`✅ Successfully migrated: ${successCount}`);
-        console.log(`❌ Failed: ${errorCount}`);
-        console.log('='.repeat(50));
-
-        if (errorCount === 0) {
-            console.log('\n🎉 Migration completed successfully!');
-            console.log('✨ You can now view your topics in Firebase Console:');
-            console.log(`   https://console.firebase.google.com/project/${firebaseConfig.projectId}/firestore/data/topics`);
-        } else {
-            console.log('\n⚠️  Migration completed with errors. Please check the logs above.');
-        }
-
-        process.exit(errorCount === 0 ? 0 : 1);
-    } catch (error) {
-        console.error('\n❌ Fatal error during migration:', error);
-        process.exit(1);
-    }
+    process.exit(0);
 }
 
 // Run migration
