@@ -179,6 +179,9 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                 <SEO
                     title={topic.title}
                     description={topic.description}
+                    topic={topic}
+                    url={typeof window !== 'undefined' ? window.location.href : undefined}
+                    type="article"
                 />
                 <h1 className="topic-title">{topic.title}</h1>
                 <p className="topic-desc">{topic.description}</p>

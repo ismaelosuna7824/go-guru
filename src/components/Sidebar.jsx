@@ -83,7 +83,7 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
         });
 
         return groups;
-    }, []);
+    }, [topics]); // Re-calculate when topics change (important for async Firestore data)
 
     // Toggle category expansion
     const toggleCategory = (catName) => {
