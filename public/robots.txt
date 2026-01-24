@@ -1,0 +1,12 @@
+# robots.txt for Go Guru
+# Allows all search engines to crawl the site
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+# TODO: Update with your production URL
+Sitemap: https://goguru.com/sitemap.xml
+
+# Crawl-delay to be respectful to search engines
+Crawl-delay: 1

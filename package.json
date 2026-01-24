@@ -7,10 +7,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run generate:sitemap && vite build",
     "lint": "eslint .",
     "preview": "npm run build && vite preview",
-    "deploy": "npm run build && firebase deploy"
+    "deploy": "npm run build && firebase deploy",
+    "migrate:topics": "node scripts/migrateTopics.js",
+    "generate:sitemap": "node scripts/generateSitemap.js"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",

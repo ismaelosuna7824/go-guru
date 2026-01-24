@@ -4,13 +4,11 @@ import Sidebar from './components/Sidebar';
 import SEO from './components/SEO';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { useProgress } from './context/ProgressContext';
+import { useTopics } from './hooks/useTopics';
 
 // Lazy load components
 const TopicViewer = lazy(() => import('./components/TopicViewer'));
 const BattlePage = lazy(() => import('./components/Battle/BattlePage'));
-
-// Start fetching topics immediately (in parallel with React rendering)
-const topicsPromise = import('./data/topics');
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -27,31 +25,27 @@ function ThemeToggle() {
   );
 }
 
-// Start fetching topics immediately (in parallel with React rendering)
-
-
-
-
 // Layout Component (Formerly Home logic for structure)
 // Handles Sidebar and Main Content wrapper
 function Layout() {
   const { lastTopicId, updateCurrentTopic } = useProgress();
-  const [topics, setTopics] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { topics, loading: topicsLoading, error: topicsError } = useTopics();
   const [currentTopicId, setCurrentTopicId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    topicsPromise.then(module => {
-      setTopics(module.topics);
-      setIsLoading(false);
+    if (currentTopicId && location.pathname === '/') {
+      updateCurrentTopic(currentTopicId);
+    }
+  }, [currentTopicId, updateCurrentTopic, location.pathname]);
 
-      // Set initial topic based on URL if present, otherwise fall back to history or first topic
-      // The topic will be handled dynamically by the route, but we might want to default logic here if needed.
-    });
-  }, [lastTopicId]);
+  useEffect(() => {
+    if (lastTopicId === null && topics.length > 0) {
+      setCurrentTopicId(topics[0].id);
+    }
+  }, [lastTopicId, topics]);
 
   // Context-like prop passing for the specific topic viewer case
   // When we are at root '/', we want to show the TopicViewer.
@@ -74,17 +68,146 @@ function Layout() {
     }
   }, [lastTopicId, topics]);
 
-  if (isLoading) {
+
+  // Show error state if topics failed to load
+  if (topicsError) {
     return (
       <div style={{
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
         background: 'var(--bg-primary)',
-        color: 'var(--text-primary)'
+        color: 'var(--text-primary)',
+        padding: '20px',
+        textAlign: 'center'
       }}>
-        Cargando...
+        <h2>❌ Error al cargar topics</h2>
+        <p style={{ color: 'var(--text-secondary)', marginTop: '10px' }}>
+          {topicsError.message || 'No se pudieron cargar los temas'}
+        </p>
+        <button
+          onClick={() => window.location.reload()}
+          style={{
+            marginTop: '20px',
+            padding: '10px 20px',
+            background: 'var(--accent)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          Reintentar
+        </button>
+      </div>
+    );
+  }
+
+  // Show loading state while topics are being fetched
+  if (topicsLoading) {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        background: 'var(--bg-primary)',
+        color: 'var(--text-primary)',
+        gap: '24px'
+      }}>
+        {/* Animated Logo Container */}
+        <div style={{
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          {/* Pulse Ring */}
+          <div style={{
+            position: 'absolute',
+            width: '120px',
+            height: '120px',
+            borderRadius: '50%',
+            border: '3px solid var(--primary)',
+            opacity: '0.3',
+            animation: 'pulse 2s ease-in-out infinite'
+          }} />
+
+          {/* Logo */}
+          <img
+            src="/logo.png"
+            alt="Go Guru"
+            style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
+              animation: 'float 3s ease-in-out infinite',
+              position: 'relative',
+              zIndex: 1
+            }}
+          />
+        </div>
+
+        {/* Loading Text with Dots Animation */}
+        <div style={{
+          fontSize: '1.2rem',
+          fontWeight: '500',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px'
+        }}>
+          <span>Cargando topics</span>
+          <span style={{ display: 'inline-flex', width: '30px' }}>
+            <span style={{ animation: 'dot1 1.4s infinite' }}>.</span>
+            <span style={{ animation: 'dot2 1.4s infinite' }}>.</span>
+            <span style={{ animation: 'dot3 1.4s infinite' }}>.</span>
+          </span>
+        </div>
+
+        {/* CSS Animations */}
+        <style>{`
+          @keyframes pulse {
+            0%, 100% {
+              transform: scale(1);
+              opacity: 0.3;
+            }
+            50% {
+              transform: scale(1.3);
+              opacity: 0.1;
+            }
+          }
+
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+              transform: translateY(-10px) rotate(5deg);
+            }
+            66% {
+              transform: translateY(-5px) rotate(-5deg);
+            }
+          }
+
+          @keyframes dot1 {
+            0%, 20%, 100% { opacity: 0; }
+            40% { opacity: 1; }
+          }
+
+          @keyframes dot2 {
+            0%, 40%, 100% { opacity: 0; }
+            60% { opacity: 1; }
+          }
+
+          @keyframes dot3 {
+            0%, 60%, 100% { opacity: 0; }
+            80% { opacity: 1; }
+          }
+        `}</style>
       </div>
     );
   }

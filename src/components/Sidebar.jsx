@@ -3,46 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useProgress } from '../context/ProgressContext';
 
+import { CATEGORY_ORDER } from '../data/constants';
+
 export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, isOpen, setIsOpen }) {
     const { theme, toggleTheme } = useTheme();
     const { visitedIds, resetProgress } = useProgress();
     const [searchTerm, setSearchTerm] = useState('');
     const [expandedCategories, setExpandedCategories] = useState({});
     const navigate = useNavigate();
-
-    // Explicit Category Order defined by User
-    const CATEGORY_ORDER = [
-        "Getting Started",
-        "Basic Data Types & Variables",
-        "Operators",
-        "Control Flow",
-        "Data Structures",
-        "Functions",
-        "Object-Oriented Concepts",
-        "Iteration",
-        "Error Handling",
-        "Concurrency (Goroutines & Channels)",
-        "Concurrency Patterns & Synchronization",
-        "Time & Scheduling",
-        "Sorting & Data Manipulation",
-        "String Operations",
-        "Data Formats",
-        "File System & I/O",
-        "Cryptography & Security",
-        "Random & Number Operations",
-        "URL & Network Utilities",
-        "Testing & Quality",
-        "Command Line",
-        "Logging",
-        "HTTP & Web",
-        "Network Programming",
-        "System Programming",
-        "Advanced Concepts",
-        "Package Management & Dependencies",
-        "Database & ORM",
-        "Performance & Debugging",
-        "Deployment"
-    ];
 
     // Group topics by category (preserving order)
     const categorizedTopics = useMemo(() => {
@@ -67,6 +35,11 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
             group.topics.push(topic);
         });
 
+        // Sort topics within each group by displayIndex
+        groups.forEach(group => {
+            group.topics.sort((a, b) => (a.displayIndex || 0) - (b.displayIndex || 0));
+        });
+
         // Sort groups based on CATEGORY_ORDER
         groups.sort((a, b) => {
             const indexA = CATEGORY_ORDER.indexOf(a.name);
@@ -83,7 +56,7 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
         });
 
         return groups;
-    }, []);
+    }, [topics]); // Re-calculate when topics change (important for async Firestore data)
 
     // Toggle category expansion
     const toggleCategory = (catName) => {
@@ -281,7 +254,7 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
                                     className={`nav-item ${currentTopicId === topic.id ? 'active' : ''}`}
                                 >
                                     <span className="nav-index">
-                                        {(topics.findIndex(t => t.id === topic.id) + 1).toString().padStart(2, '0')}
+                                        {topic.displayIndex?.toString().padStart(2, '0') || '00'}
                                     </span>
                                     {topic.title}
                                     {visitedIds.includes(topic.id) && (
@@ -319,7 +292,7 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
                                                 className={`nav-item ${currentTopicId === topic.id ? 'active' : ''}`}
                                             >
                                                 <span className="nav-index">
-                                                    {(topics.findIndex(t => t.id === topic.id) + 1).toString().padStart(2, '0')}
+                                                    {topic.displayIndex?.toString().padStart(2, '0') || '00'}
                                                 </span>
                                                 {topic.title}
                                                 {visitedIds.includes(topic.id) && (
