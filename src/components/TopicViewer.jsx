@@ -3,6 +3,7 @@ import SEO from './SEO';
 import { logTopicView } from '../firebase';
 import { useProgress } from '../context/ProgressContext';
 import CodePlayground from './CodePlayground';
+import CodeViewer from './CodeViewer';
 
 const parseFormattedText = (text) => {
     if (!text) return null;
@@ -101,8 +102,7 @@ const renderGuideContent = (fullText) => {
                 const code = match[2]; // match[2] is the code block content
                 return (
                     <div key={`code-${index}`} className="code-container" style={{ margin: 'var(--spacing-md) 0' }}>
-                        {language && <div className="code-badge" style={{ textTransform: 'uppercase' }}>{language}</div>}
-                        <pre className="code-content">{code}</pre>
+                        <CodeViewer code={code} language={language || 'go'} />
                     </div>
                 );
             }
@@ -205,7 +205,7 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                         </div>
                         {item.lineCode && (
                             <div className="code-container" style={{ margin: 0 }}>
-                                <pre className="code-content">{item.lineCode}</pre>
+                                <CodeViewer code={item.lineCode} />
                             </div>
                         )}
                     </div>
@@ -216,7 +216,7 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
             {(!topic.explanation || topic.explanation.length === 0) && (
                 <div className="card">
                     <div className="code-container" style={{ marginTop: 0 }}>
-                        <pre className="code-content">{topic.code}</pre>
+                        <CodeViewer code={topic.code} />
                     </div>
                 </div>
             )}
@@ -233,8 +233,7 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                     </p>
 
                     <div className="code-container">
-                        <div className="code-badge text-green">Example</div>
-                        <pre className="code-content">{topic.useCase.code}</pre>
+                        <CodeViewer code={topic.useCase.code} />
                     </div>
                 </div>
             )}
@@ -253,14 +252,14 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                         <div style={{ minWidth: 0 }}>
                             <h4 style={{ fontSize: '0.9rem', marginBottom: 'var(--spacing-xs)', color: 'var(--text-tertiary)' }}>FUNCIÓN</h4>
                             <div className="code-container" style={{ marginTop: 0 }}>
-                                <pre className="code-content">{topic.testExample.functionCode}</pre>
+                                <CodeViewer code={topic.testExample.functionCode} />
                             </div>
                         </div>
 
                         <div style={{ minWidth: 0 }}>
                             <h4 style={{ fontSize: '0.9rem', marginBottom: 'var(--spacing-xs)', color: 'var(--text-tertiary)' }}>TEST</h4>
                             <div className="code-container" style={{ marginTop: 0, borderColor: 'var(--accent-amber-border)' }}>
-                                <pre className="code-content">{topic.testExample.testCode}</pre>
+                                <CodeViewer code={topic.testExample.testCode} />
                             </div>
                         </div>
                     </div>
@@ -300,9 +299,7 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                         {showSolution && (
                             <div className="code-container" style={{ marginTop: 'var(--spacing-md)', borderColor: 'var(--accent-blue-border)' }}>
                                 <div className="code-badge text-blue">Solución</div>
-                                <pre className="code-content" style={{ whiteSpace: 'pre-wrap' }}>
-                                    {topic.exercise.solution}
-                                </pre>
+                                <CodeViewer code={topic.exercise.solution} />
                             </div>
                         )}
                     </div>

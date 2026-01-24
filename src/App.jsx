@@ -48,12 +48,8 @@ function Layout() {
       setTopics(module.topics);
       setIsLoading(false);
 
-      // Set initial topic
-      if (lastTopicId && module.topics.find(t => t.id === lastTopicId)) {
-        setCurrentTopicId(lastTopicId);
-      } else if (module.topics.length > 0) {
-        setCurrentTopicId(module.topics[0].id);
-      }
+      // Set initial topic based on URL if present, otherwise fall back to history or first topic
+      // The topic will be handled dynamically by the route, but we might want to default logic here if needed.
     });
   }, [lastTopicId]);
 
@@ -100,11 +96,11 @@ function Layout() {
       <SEO />
       <Sidebar
         topics={topics}
-        currentTopicId={location.pathname === '/' ? currentTopicId : null} // Only highlight if at home
+        currentTopicId={currentTopicId}
         onSelectTopic={(id) => {
-          setCurrentTopicId(id);
+          // Navigate to the topic URL
+          navigate(`/${id}`);
           setIsSidebarOpen(false);
-          navigate('/'); // Ensure we go back to home when a topic is selected
         }}
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
@@ -115,28 +111,54 @@ function Layout() {
         {/* Render the matching child route */}
         <Suspense fallback={<div className="p-8 text-center" style={{ color: 'var(--text-secondary)' }}>Cargando...</div>}>
           {/* Pass props to outlet if needed, e.g. currentTopic */}
-          <Outlet context={{ currentTopic, setIsSidebarOpen }} />
+          <Outlet context={{ topics, currentTopic, setIsSidebarOpen }} />
         </Suspense>
       </main>
     </div>
   );
 }
 
-// Wrapper for TopicViewer to consume Outlet context
+// Wrapper for TopicViewer to consume URL params
+import { useParams, Navigate } from 'react-router-dom';
+
 function TopicViewerRoute() {
-  const { currentTopic, setIsSidebarOpen } = useOutletContext();
-  if (!currentTopic) return null;
-  return <TopicViewer topic={currentTopic} onOpenSidebar={() => setIsSidebarOpen(true)} />;
+  const { topicId } = useParams();
+  const { updateCurrentTopic } = useProgress();
+  // Get topics from context, defaulting to empty array if undefined to prevent crash
+  const { topics = [], setIsSidebarOpen } = useOutletContext() || {};
+
+  // Find the topic based on URL param
+  const topic = topics ? topics.find(t => t.id === topicId) : null;
+
+  useEffect(() => {
+    if (topicId && topic) {
+      updateCurrentTopic(topicId);
+    }
+  }, [topicId, topic, updateCurrentTopic]);
+
+  if (!topics || topics.length === 0) return <div>Cargando...</div>;
+
+  // If we are at root / and have topics, redirect to the first one
+  if (!topicId) {
+    if (topics.length > 0) {
+      return <Navigate to={`/${topics[0].id}`} replace />;
+    }
+  }
+
+  if (topicId && !topic) {
+    return <div>Tema no encontrado</div>;
+  }
+
+  return <TopicViewer topic={topic} onOpenSidebar={() => setIsSidebarOpen(true)} />;
 }
-
-// Helper to use context (since TopicViewerRoute is a distinct component now or we can just inline)
-
 
 function AppContent() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        {/* Index route redirects to first topic in TopicViewerRoute logic or we can be explicit */}
         <Route index element={<TopicViewerRoute />} />
+        <Route path=":topicId" element={<TopicViewerRoute />} />
       </Route>
       {/* 
          Battle Mode outside of Layout to remove Sidebar as requested.

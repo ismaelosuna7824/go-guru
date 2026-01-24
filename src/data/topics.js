@@ -7346,82 +7346,271 @@ func main() {
         }
     },
     {
-        id: 'dependency-injection', category: 'Advanced Concepts', title: 'Inyección de Dependencias', description: 'Patrón para desacoplar componentes pasando sus dependencias explícitamente.', guide: `La inyección de dependencias (DI) en Go se basa en pasar las dependencias (como conexiones a bases de datos o servicios) a los constructores o funciones, generalmente a través de interfaces.
-Esto hace que el código sea más modular y fácil de probar, ya que puedes sustituir implementaciones reales por "mocks" o simulaciones durante los tests.`,
+        id: 'dependency-injection', category: 'Advanced Concepts', title: 'Inyección de Dependencias', description: 'Patrón clave para escribir software limpio, mantenible y testeable.', guide: `La **Inyección de Dependencias (DI)** suena complicada, pero el concepto es muy simple:
+
+    > "No construyas las cosas que necesitas. Pídelas."
+
+    **¿Qué problema resuelve?**
+    Imagina que estás construyendo una aplicación de e-commerce. Necesitas enviar emails de confirmación cuando alguien compra algo.
+
+    **Forma INCORRECTA (Sin DI):**
+    \`\`\`go
+    type TiendaService struct {}
+
+    func (t *TiendaService) ProcesarCompra(producto string) {
+        // ¡Problema! La tienda está "casada" con Gmail
+        gmail := GmailSender{}
+        gmail.Enviar("Compra confirmada: " + producto)
+    }
+    \`\`\`
+
+    **Problemas:**
+    1. ¿Qué pasa si quieres cambiar a SendGrid? Tienes que modificar \`TiendaService\`.
+    2. ¿Cómo pruebas esto sin enviar emails reales? No puedes.
+    3. El código está **acoplado** (pegado) a Gmail.
+
+    **Forma CORRECTA (Con DI):**
+    \`\`\`go
+    type EmailSender interface {
+        Enviar(mensaje string)
+    }
+
+    type TiendaService struct {
+        emailer EmailSender // Acepta CUALQUIER cosa que sepa enviar emails
+    }
+
+    func NewTiendaService(e EmailSender) *TiendaService {
+        return &TiendaService{emailer: e}
+    }
+
+    func (t *TiendaService) ProcesarCompra(producto string) {
+        t.emailer.Enviar("Compra confirmada: " + producto)
+    }
+    \`\`\`
+
+    **Beneficios:**
+    1. Cambiar de Gmail a SendGrid: Solo cambias qué implementación inyectas.
+    2. Testing: Inyectas un "Mock" que no envía emails reales.
+    3. Código flexible y desacoplado.
+
+    **La Regla de Oro:**
+    *"Depende de abstracciones (interfaces), no de implementaciones concretas."*`,
         explanation: [
             {
-                text: "En lugar de que una estructura cree sus propias dependencias internamente, las recibe desde fuera.", lineCode: "func NewServer(db Database) *Server { return &Server{db: db} }"
+                text: "**Paso 1: Define la Interfaz (El Contrato)**\nLa interfaz dice QUÉ se puede hacer, no CÓMO.", lineCode: `type Logger interface {
+    Log(mensaje string)
+}`
+            },
+            {
+                text: "**Paso 2: Crea Implementaciones Concretas**\nPuedes tener múltiples implementaciones de la misma interfaz.", lineCode: `// Implementación 1: Consola
+type ConsoleLogger struct{}
+func (c ConsoleLogger) Log(msg string) {
+    fmt.Println("[CONSOLE]", msg)
+}
+
+// Implementación 2: Archivo
+type FileLogger struct{ archivo string }
+func (f FileLogger) Log(msg string) {
+    // Escribir en archivo...
+    fmt.Println("[FILE]", f.archivo, msg)
+}`
+            },
+            {
+                text: "**Paso 3: Tu Servicio PIDE la Dependencia**\nNo la crea internamente. La recibe como parámetro.", lineCode: `type UserService struct {
+    logger Logger // Interfaz, no implementación
+}
+
+func NewUserService(l Logger) *UserService {
+    return &UserService{logger: l}
+}`
+            },
+            {
+                text: "**Paso 4: Inyecta lo que Necesites**\nEn producción usas FileLogger, en tests usas MockLogger.", lineCode: `func main() {
+    // Producción: Logger de archivo
+    logger := FileLogger{archivo: "app.log"}
+    service := NewUserService(logger)
+    
+    // Ahora puedes cambiar fácilmente
+    // logger := ConsoleLogger{}
+}`
             }
         ],
         code: `package main
 
 import "fmt"
 
-// 1. Definimos una interfaz para el comportamiento
-type Greeter interface {
-    Greet(name string) string
+// ============================================
+// EJEMPLO COMPLETO: Sistema de Notificaciones
+// ============================================
+
+// 1. INTERFAZ (El Contrato)
+type Notificador interface {
+    Enviar(destinatario, mensaje string) error
 }
 
-// 2. Implementación Real
-type EnglishGreeter struct{}
-func (e EnglishGreeter) Greet(name string) string {
-    return "Hello " + name
+// 2. IMPLEMENTACIÓN REAL: Email
+type EmailNotificador struct {
+    servidor string
 }
 
-// 3. El componente que "recibe" la dependencia
-type Bot struct {
-    greeter Greeter
+func (e EmailNotificador) Enviar(destinatario, mensaje string) error {
+    fmt.Printf("📧 [EMAIL] Enviando a %s desde %s: %s\n", 
+        destinatario, e.servidor, mensaje)
+    return nil
 }
 
-func NewBot(g Greeter) *Bot {
-    return &Bot{greeter: g}
+// 3. IMPLEMENTACIÓN REAL: SMS
+type SMSNotificador struct {
+    proveedor string
 }
 
-func (b *Bot) SayHello(name string) {
-    fmt.Println(b.greeter.Greet(name))
+func (s SMSNotificador) Enviar(destinatario, mensaje string) error {
+    fmt.Printf("📱 [SMS] Enviando a %s vía %s: %s\n", 
+        destinatario, s.proveedor, mensaje)
+    return nil
+}
+
+// 4. TU LÓGICA DE NEGOCIO (El Consumidor)
+type SistemaAlertas struct {
+    notificador Notificador // ¡Interfaz, no implementación!
+}
+
+// Constructor: INYECTA la dependencia
+func NewSistemaAlertas(n Notificador) *SistemaAlertas {
+    return &SistemaAlertas{notificador: n}
+}
+
+func (s *SistemaAlertas) AlertarUsuario(usuario, mensaje string) {
+    fmt.Println("\n🔔 Nueva alerta generada...")
+    s.notificador.Enviar(usuario, mensaje)
 }
 
 func main() {
-    // Inyectamos la implementación real
-    greeter := EnglishGreeter{}
-    bot := NewBot(greeter)
-    bot.SayHello("Gopher")
+    fmt.Println("=== EJEMPLO DE INYECCIÓN DE DEPENDENCIAS ===\n")
+
+    // Escenario 1: Usar Email
+    emailer := EmailNotificador{servidor: "smtp.gmail.com"}
+    sistema1 := NewSistemaAlertas(emailer)
+    sistema1.AlertarUsuario("juan@example.com", "Tu pedido ha sido enviado")
+
+    // Escenario 2: Cambiar a SMS (¡Sin modificar SistemaAlertas!)
+    sms := SMSNotificador{proveedor: "Twilio"}
+    sistema2 := NewSistemaAlertas(sms)
+    sistema2.AlertarUsuario("+52123456789", "Código de verificación: 1234")
+
+    fmt.Println("\n Mismo código, diferentes implementaciones")
 }`,
         useCase: {
-            title: "Servicio de Usuarios con Base de Datos", description: "Un caso clásico: un servicio de usuario que no depende de MySQL ni Postgres directamente, sino de una interfaz `UserRepository`. Esto permite cambiar de base de datos sin tocar la lógica de negocio.", code: `type UserRepository interface {
-    FindUser(id int) string
+            title: "Caso Real: API de Usuarios con Base de Datos", description: "Imagina un servicio de usuarios. En producción usa PostgreSQL, pero en tests usas una base de datos en memoria. La DI hace esto trivial.", code: `// Interfaz: Define las operaciones de base de datos
+type UserRepository interface {
+    GetUser(id int) (*User, error)
+    SaveUser(user *User) error
 }
 
+// Implementación Real: PostgreSQL
+type PostgresRepo struct {
+    connectionString string
+}
+
+func (p *PostgresRepo) GetUser(id int) (*User, error) {
+    // Consulta real a Postgres
+    return &User{ID: id, Name: "Juan"}, nil
+}
+
+func (p *PostgresRepo) SaveUser(user *User) error {
+    // INSERT real en Postgres
+    return nil
+}
+
+// Implementación Mock: Para Tests
+type MockRepo struct {
+    users map[int]*User
+}
+
+func (m *MockRepo) GetUser(id int) (*User, error) {
+    return m.users[id], nil
+}
+
+func (m *MockRepo) SaveUser(user *User) error {
+    m.users[user.ID] = user
+    return nil
+}
+
+// Tu Servicio de Negocio
 type UserService struct {
-    repo UserRepository
+    repo UserRepository // ¡Interfaz!
 }
 
-func (s *UserService) GetUserName(id int) string {
-    return s.repo.FindUser(id)
-}`
+func NewUserService(r UserRepository) *UserService {
+    return &UserService{repo: r}
+}
+
+func (s *UserService) ActualizarNombre(id int, nuevoNombre string) error {
+    user, _ := s.repo.GetUser(id)
+    user.Name = nuevoNombre
+    return s.repo.SaveUser(user)
+}
+
+// En Producción:
+// repo := &PostgresRepo{connectionString: "postgres://..."}
+// service := NewUserService(repo)
+
+// En Tests:
+// mockRepo := &MockRepo{users: make(map[int]*User)}
+// service := NewUserService(mockRepo)`
         },
         testExample: {
-            description: "Gracias a la inyección de dependencias, podemos crear un 'MockGreeter' para probar el bot sin necesitar la implementación real.", functionCode: `func (b *Bot) SayHello(name string) string {
-    return b.greeter.Greet(name)
-}`,
-            testCode: `type MockGreeter struct{}
-func (m MockGreeter) Greet(name string) string {
-    return "Mock Hello " + name
+            description: "Ejemplo de Testing: Gracias a la DI, podemos probar nuestro código sin dependencias externas reales.", functionCode: `// Código a probar
+type PagoService struct {
+    procesador ProcesadorPagos
 }
 
-func TestBot(t *testing.T) {
-    mock := MockGreeter{}
-    bot := NewBot(mock)
+func NewPagoService(p ProcesadorPagos) *PagoService {
+    return &PagoService{procesador: p}
+}
+
+func (s *PagoService) Cobrar(monto float64) (string, error) {
+    if monto <= 0 {
+        return "", errors.New("monto inválido")
+    }
+    return s.procesador.ProcesarPago(monto)
+}`,
+            testCode: `// Mock para tests
+type MockProcesador struct {
+    DeberíaFallar bool
+    MontoRecibido float64
+}
+
+func (m *MockProcesador) ProcesarPago(monto float64) (string, error) {
+    m.MontoRecibido = monto
+    if m.DeberíaFallar {
+        return "", errors.New("pago rechazado")
+    }
+    return "PAGO_OK_123", nil
+}
+
+// Test
+func TestPagoExitoso(t *testing.T) {
+    mock := &MockProcesador{DeberíaFallar: false}
+    service := NewPagoService(mock)
     
-    if got := bot.SayHello("Test"); got != "Mock Hello Test" {
-        t.Errorf("Expected mock response, got %s", got)
+    id, err := service.Cobrar(100.0)
+    
+    if err != nil {
+        t.Error("No debería haber error")
+    }
+    if mock.MontoRecibido != 100.0 {
+        t.Error("Monto incorrecto")
+    }
+    if id != "PAGO_OK_123" {
+        t.Error("ID incorrecto")
     }
 }`
         },
         exercise: {
-            question: "Modifica el `NewBot` para que acepte una implementación diferente de `Greeter` (por ejemplo `SpanishGreeter`) e inyéctala en `main`.", initialCode: `package main\n\nimport "fmt"\n\ntype Greeter interface {\n    Greet(name string) string\n}\n\n// Escribe SpanishGreeter aquí...\n\nfunc main() {\n    // Inyecta tu SpanishGreeter aquí\n}`,
-            solution: `package main\n\nimport "fmt"\n\ntype Greeter interface {\n    Greet(name string) string\n}\n\ntype SpanishGreeter struct{}\nfunc (s SpanishGreeter) Greet(name string) string {\n    return "Hola " + name\n}\n\ntype Bot struct { g Greeter }\nfunc NewBot(g Greeter) *Bot { return &Bot{g} }\n\nfunc main() {\n    g := SpanishGreeter{}\n    b := NewBot(g)\n    fmt.Println(b.g.Greet("Mundo"))\n}`,
-            expectedOutput: "Hola Mundo"
+            question: "Completa el código para inyectar un `FileLogger` en lugar del `ConsoleLogger`. El FileLogger debe imprimir 'Guardando en: app.log'.", initialCode: `package main\n\nimport "fmt"\n\ntype Logger interface {\n    Log(msg string)\n}\n\ntype ConsoleLogger struct{}\nfunc (c ConsoleLogger) Log(msg string) {\n    fmt.Println("Console:", msg)\n}\n\n// TODO: Crea FileLogger aquí\n\ntype App struct {\n    logger Logger\n}\n\nfunc NewApp(l Logger) *App {\n    return &App{logger: l}\n}\n\nfunc main() {\n    // TODO: Cambia esto para usar FileLogger\n    logger := ConsoleLogger{}\n    app := NewApp(logger)\n    app.logger.Log("App iniciada")\n}`,
+            solution: `package main\n\nimport "fmt"\n\ntype Logger interface {\n    Log(msg string)\n}\n\ntype ConsoleLogger struct{}\nfunc (c ConsoleLogger) Log(msg string) {\n    fmt.Println("Console:", msg)\n}\n\ntype FileLogger struct{}\nfunc (f FileLogger) Log(msg string) {\n    fmt.Println("Guardando en: app.log -", msg)\n}\n\ntype App struct {\n    logger Logger\n}\n\nfunc NewApp(l Logger) *App {\n    return &App{logger: l}\n}\n\nfunc main() {\n    logger := FileLogger{}\n    app := NewApp(logger)\n    app.logger.Log("App iniciada")\n}`,
+            expectedOutput: "Guardando en: app.log - App iniciada"
         }
     },
     {
