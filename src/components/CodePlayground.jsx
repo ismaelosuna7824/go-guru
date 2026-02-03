@@ -5,7 +5,8 @@ import { useTheme } from '../context/ThemeContext';
 
 export default function CodePlayground({ initialCode, expectedOutput }) {
     const { theme } = useTheme();
-    const isDark = theme === 'dark';
+    // All themes except 'light' are considered dark for Monaco
+    const isDark = theme !== 'light';
 
     const [code, setCode] = useState(initialCode ? initialCode.replace(/\\n/g, '\n') : '');
     const [output, setOutput] = useState('');
@@ -74,23 +75,21 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
         }
     };
 
-    // Theme-aware colors
+    // Theme-aware colors using CSS variables
     const colors = {
-        headerBg: isDark ? 'var(--vscode-editorGroupHeader-tabsBg)' : '#f5f5f5',
-        headerBorder: isDark ? '#111' : '#d4d4d4',
-        badgeBg: isDark ? '#37373d' : '#e0e0e0',
-        badgeColor: isDark ? '#fff' : '#333',
-        consoleBg: isDark ? '#1e1e1e' : '#f8f8f8',
-        consoleBorder: isDark ? '#333' : '#d4d4d4',
-        consoleHeaderBg: isDark ? '#252526' : '#ececec',
-        consoleText: isDark ? '#cccccc' : '#333333',
-        placeholderText: isDark ? '#666' : '#999'
+        headerBg: 'var(--vscode-editorGroupHeader-tabsBg)',
+        headerBorder: 'var(--vscode-sideBar-border)',
+        badgeBg: isDark ? 'var(--vscode-list-activeSelectionBg)' : '#e0e0e0',
+        badgeColor: 'var(--vscode-editor-fg)',
+        consoleBg: 'var(--bg-code)',
+        consoleBorder: 'var(--vscode-sideBar-border)',
+        consoleHeaderBg: 'var(--vscode-sideBar-bg)',
+        consoleText: 'var(--vscode-editor-fg)',
+        placeholderText: 'var(--text-secondary)'
     };
 
     return (
         <div className="code-playground" style={{
-            marginTop: '16px',
-            border: `1px solid ${isDark ? 'var(--vscode-focusBorder)' : '#d4d4d4'}`,
             borderRadius: '6px',
             overflow: 'hidden',
             display: 'flex',

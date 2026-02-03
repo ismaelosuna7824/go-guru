@@ -9,11 +9,31 @@ const FONT_SIZES = {
     xlarge: 20
 };
 
+const THEMES = ['dark', 'light', 'cyberpunk', 'kanagawa', 'dracula', 'nord'];
+
+const THEME_LABELS = {
+    dark: 'Oscuro',
+    light: 'Claro',
+    cyberpunk: 'Cyberpunk',
+    kanagawa: 'Kanagawa',
+    dracula: 'Dracula',
+    nord: 'Nord'
+};
+
+const THEME_ICONS = {
+    dark: 'dark_mode',
+    light: 'light_mode',
+    cyberpunk: 'electric_bolt',
+    kanagawa: 'waves',
+    dracula: 'nights_stay',
+    nord: 'ac_unit'
+};
+
 export function ThemeProvider({ children }) {
     // Theme state
     const [theme, setTheme] = useState(() => {
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) return savedTheme;
+        if (savedTheme && THEMES.includes(savedTheme)) return savedTheme;
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     });
 
@@ -35,9 +55,14 @@ export function ThemeProvider({ children }) {
         localStorage.setItem('fontSize', fontSize);
     }, [fontSize]);
 
-    const toggleTheme = () => {
-        setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    const cycleTheme = () => {
+        const currentIndex = THEMES.indexOf(theme);
+        const nextIndex = (currentIndex + 1) % THEMES.length;
+        setTheme(THEMES[nextIndex]);
     };
+
+    // Keep toggleTheme for backwards compatibility
+    const toggleTheme = cycleTheme;
 
     const cycleFontSize = () => {
         const sizes = Object.keys(FONT_SIZES);
@@ -55,7 +80,13 @@ export function ThemeProvider({ children }) {
     return (
         <ThemeContext.Provider value={{
             theme,
+            themeLabel: THEME_LABELS[theme],
+            themeIcon: THEME_ICONS[theme],
+            themes: THEMES,
+            themeLabels: THEME_LABELS,
             toggleTheme,
+            cycleTheme,
+            setTheme,
             fontSize,
             fontSizeValue: FONT_SIZES[fontSize],
             cycleFontSize,

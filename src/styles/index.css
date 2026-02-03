@@ -77,58 +77,274 @@
   --spacing-xl: 32px;
 }
 
-/* Light Theme - VS Code Light+ */
+/* Light Theme - Modern GitHub-inspired */
 [data-theme="light"] {
-  --vscode-bg: #f5f5f5;
-  --vscode-fg: #1f1f1f;
-  --vscode-focusBorder: #0078d4;
+  --vscode-bg: #f6f8fa;
+  --vscode-fg: #24292f;
+  --vscode-focusBorder: #0969da;
 
-  --vscode-activityBar-bg: #e8e8e8;
-  --vscode-activityBar-fg: #424242;
-  --vscode-activityBar-inactiveFg: rgba(66, 66, 66, 0.5);
-  --vscode-activityBar-border: #d4d4d4;
+  --vscode-activityBar-bg: #ffffff;
+  --vscode-activityBar-fg: #24292f;
+  --vscode-activityBar-inactiveFg: rgba(36, 41, 47, 0.5);
+  --vscode-activityBar-border: #d0d7de;
 
-  --vscode-sideBar-bg: #f5f5f5;
-  --vscode-sideBar-fg: #1f1f1f;
-  --vscode-sideBar-border: #d4d4d4;
-  --vscode-sideBarSectionHeader-bg: #e8e8e8;
-  --vscode-sideBarSectionHeader-fg: #1f1f1f;
+  --vscode-sideBar-bg: #f6f8fa;
+  --vscode-sideBar-fg: #24292f;
+  --vscode-sideBar-border: #d0d7de;
+  --vscode-sideBarSectionHeader-bg: #f6f8fa;
+  --vscode-sideBarSectionHeader-fg: #24292f;
 
-  --vscode-list-hoverBg: #e4e4e4;
-  --vscode-list-activeSelectionBg: #cce5ff;
-  --vscode-list-activeSelectionFg: #000000;
-  --vscode-list-inactiveSelectionBg: #e4e6e8;
+  --vscode-list-hoverBg: #eaeef2;
+  --vscode-list-activeSelectionBg: #ddf4ff;
+  --vscode-list-activeSelectionFg: #0969da;
+  --vscode-list-inactiveSelectionBg: #eaeef2;
 
   --vscode-editor-bg: #ffffff;
-  --vscode-editor-fg: #1f1f1f;
-  --vscode-editorGroupHeader-tabsBg: #f5f5f5;
-  --vscode-editorLineNumber-fg: #6e7681;
-  --vscode-editorLineNumber-activeFg: #1f1f1f;
+  --vscode-editor-fg: #24292f;
+  --vscode-editorGroupHeader-tabsBg: #f6f8fa;
+  --vscode-editorLineNumber-fg: #8c959f;
+  --vscode-editorLineNumber-activeFg: #24292f;
 
   --vscode-tab-activeBg: #ffffff;
-  --vscode-tab-activeFg: #1f1f1f;
-  --vscode-tab-inactiveBg: #ececec;
-  --vscode-tab-inactiveFg: #5f6368;
-  --vscode-tab-border: #d4d4d4;
+  --vscode-tab-activeFg: #24292f;
+  --vscode-tab-inactiveBg: #f6f8fa;
+  --vscode-tab-inactiveFg: #57606a;
+  --vscode-tab-border: #d0d7de;
 
-  --vscode-statusBar-bg: #0078d4;
+  --vscode-statusBar-bg: #0969da;
   --vscode-statusBar-fg: #ffffff;
 
-  --vscode-scrollbarSlider-bg: rgba(100, 100, 100, 0.3);
-  --vscode-scrollbarSlider-hoverBg: rgba(100, 100, 100, 0.5);
-  --vscode-scrollbarSlider-activeBg: rgba(100, 100, 100, 0.6);
+  --vscode-scrollbarSlider-bg: rgba(36, 41, 47, 0.15);
+  --vscode-scrollbarSlider-hoverBg: rgba(36, 41, 47, 0.3);
+  --vscode-scrollbarSlider-activeBg: rgba(36, 41, 47, 0.4);
 
   --vscode-input-bg: #ffffff;
-  --vscode-input-fg: #1f1f1f;
-  --vscode-input-border: #d4d4d4;
-  --vscode-button-bg: #0078d4;
+  --vscode-input-fg: #24292f;
+  --vscode-input-border: #d0d7de;
+  --vscode-button-bg: #0969da;
   --vscode-button-fg: #ffffff;
-  --vscode-button-hoverBg: #006cbd;
+  --vscode-button-hoverBg: #0860ca;
 
   --bg-app: var(--vscode-editor-bg);
   --text-primary: var(--vscode-editor-fg);
-  --text-secondary: #5f6368;
-  --bg-code: #f8f8f8;
+  --text-secondary: #57606a;
+  --bg-code: #f6f8fa;
+}
+
+/* Cyberpunk Theme - Neon Pink & Cyan */
+[data-theme="cyberpunk"] {
+  --vscode-bg: #0a0a0f;
+  --vscode-fg: #e0e0e0;
+  --vscode-focusBorder: #ff00ff;
+
+  --vscode-activityBar-bg: #12121a;
+  --vscode-activityBar-fg: #00ffff;
+  --vscode-activityBar-inactiveFg: rgba(0, 255, 255, 0.4);
+  --vscode-activityBar-border: #ff00ff33;
+
+  --vscode-sideBar-bg: #0f0f18;
+  --vscode-sideBar-fg: #e0e0e0;
+  --vscode-sideBar-border: #ff00ff33;
+  --vscode-sideBarSectionHeader-bg: #12121a;
+  --vscode-sideBarSectionHeader-fg: #ff00ff;
+
+  --vscode-list-hoverBg: #1a1a2e;
+  --vscode-list-activeSelectionBg: #ff00ff22;
+  --vscode-list-activeSelectionFg: #00ffff;
+  --vscode-list-inactiveSelectionBg: #1a1a2e;
+
+  --vscode-editor-bg: #0a0a0f;
+  --vscode-editor-fg: #e0e0e0;
+  --vscode-editorGroupHeader-tabsBg: #0f0f18;
+  --vscode-editorLineNumber-fg: #ff00ff66;
+  --vscode-editorLineNumber-activeFg: #ff00ff;
+
+  --vscode-tab-activeBg: #0a0a0f;
+  --vscode-tab-activeFg: #00ffff;
+  --vscode-tab-inactiveBg: #12121a;
+  --vscode-tab-inactiveFg: #808080;
+  --vscode-tab-border: #ff00ff33;
+
+  --vscode-statusBar-bg: #ff00ff;
+  --vscode-statusBar-fg: #000000;
+
+  --vscode-scrollbarSlider-bg: rgba(255, 0, 255, 0.3);
+  --vscode-scrollbarSlider-hoverBg: rgba(255, 0, 255, 0.5);
+  --vscode-scrollbarSlider-activeBg: rgba(255, 0, 255, 0.7);
+
+  --vscode-input-bg: #12121a;
+  --vscode-input-fg: #e0e0e0;
+  --vscode-input-border: #ff00ff66;
+  --vscode-button-bg: #ff00ff;
+  --vscode-button-fg: #000000;
+  --vscode-button-hoverBg: #ff44ff;
+
+  --bg-app: var(--vscode-editor-bg);
+  --text-primary: var(--vscode-editor-fg);
+  --text-secondary: #00ffff99;
+  --bg-code: #12121a;
+}
+
+/* Kanagawa Theme - Japanese Wave Inspired */
+[data-theme="kanagawa"] {
+  --vscode-bg: #1f1f28;
+  --vscode-fg: #dcd7ba;
+  --vscode-focusBorder: #7e9cd8;
+
+  --vscode-activityBar-bg: #16161d;
+  --vscode-activityBar-fg: #c8c093;
+  --vscode-activityBar-inactiveFg: rgba(200, 192, 147, 0.4);
+  --vscode-activityBar-border: #2a2a37;
+
+  --vscode-sideBar-bg: #1f1f28;
+  --vscode-sideBar-fg: #dcd7ba;
+  --vscode-sideBar-border: #2a2a37;
+  --vscode-sideBarSectionHeader-bg: #16161d;
+  --vscode-sideBarSectionHeader-fg: #c8c093;
+
+  --vscode-list-hoverBg: #2a2a37;
+  --vscode-list-activeSelectionBg: #2d4f67;
+  --vscode-list-activeSelectionFg: #c8c093;
+  --vscode-list-inactiveSelectionBg: #2a2a37;
+
+  --vscode-editor-bg: #1f1f28;
+  --vscode-editor-fg: #dcd7ba;
+  --vscode-editorGroupHeader-tabsBg: #16161d;
+  --vscode-editorLineNumber-fg: #54546d;
+  --vscode-editorLineNumber-activeFg: #c8c093;
+
+  --vscode-tab-activeBg: #1f1f28;
+  --vscode-tab-activeFg: #dcd7ba;
+  --vscode-tab-inactiveBg: #16161d;
+  --vscode-tab-inactiveFg: #727169;
+  --vscode-tab-border: #2a2a37;
+
+  --vscode-statusBar-bg: #7e9cd8;
+  --vscode-statusBar-fg: #1f1f28;
+
+  --vscode-scrollbarSlider-bg: rgba(126, 156, 216, 0.3);
+  --vscode-scrollbarSlider-hoverBg: rgba(126, 156, 216, 0.5);
+  --vscode-scrollbarSlider-activeBg: rgba(126, 156, 216, 0.7);
+
+  --vscode-input-bg: #16161d;
+  --vscode-input-fg: #dcd7ba;
+  --vscode-input-border: #2a2a37;
+  --vscode-button-bg: #7e9cd8;
+  --vscode-button-fg: #1f1f28;
+  --vscode-button-hoverBg: #7fb4ca;
+
+  --bg-app: var(--vscode-editor-bg);
+  --text-primary: var(--vscode-editor-fg);
+  --text-secondary: #727169;
+  --bg-code: #16161d;
+}
+
+/* Dracula Theme - Classic Purple */
+[data-theme="dracula"] {
+  --vscode-bg: #282a36;
+  --vscode-fg: #f8f8f2;
+  --vscode-focusBorder: #bd93f9;
+
+  --vscode-activityBar-bg: #21222c;
+  --vscode-activityBar-fg: #f8f8f2;
+  --vscode-activityBar-inactiveFg: rgba(248, 248, 242, 0.4);
+  --vscode-activityBar-border: #44475a;
+
+  --vscode-sideBar-bg: #21222c;
+  --vscode-sideBar-fg: #f8f8f2;
+  --vscode-sideBar-border: #44475a;
+  --vscode-sideBarSectionHeader-bg: #282a36;
+  --vscode-sideBarSectionHeader-fg: #bd93f9;
+
+  --vscode-list-hoverBg: #44475a;
+  --vscode-list-activeSelectionBg: #44475a;
+  --vscode-list-activeSelectionFg: #50fa7b;
+  --vscode-list-inactiveSelectionBg: #383a46;
+
+  --vscode-editor-bg: #282a36;
+  --vscode-editor-fg: #f8f8f2;
+  --vscode-editorGroupHeader-tabsBg: #21222c;
+  --vscode-editorLineNumber-fg: #6272a4;
+  --vscode-editorLineNumber-activeFg: #f8f8f2;
+
+  --vscode-tab-activeBg: #282a36;
+  --vscode-tab-activeFg: #f8f8f2;
+  --vscode-tab-inactiveBg: #21222c;
+  --vscode-tab-inactiveFg: #6272a4;
+  --vscode-tab-border: #44475a;
+
+  --vscode-statusBar-bg: #bd93f9;
+  --vscode-statusBar-fg: #282a36;
+
+  --vscode-scrollbarSlider-bg: rgba(189, 147, 249, 0.3);
+  --vscode-scrollbarSlider-hoverBg: rgba(189, 147, 249, 0.5);
+  --vscode-scrollbarSlider-activeBg: rgba(189, 147, 249, 0.7);
+
+  --vscode-input-bg: #21222c;
+  --vscode-input-fg: #f8f8f2;
+  --vscode-input-border: #44475a;
+  --vscode-button-bg: #bd93f9;
+  --vscode-button-fg: #282a36;
+  --vscode-button-hoverBg: #ff79c6;
+
+  --bg-app: var(--vscode-editor-bg);
+  --text-primary: var(--vscode-editor-fg);
+  --text-secondary: #6272a4;
+  --bg-code: #21222c;
+}
+
+/* Nord Theme - Arctic Blue */
+[data-theme="nord"] {
+  --vscode-bg: #2e3440;
+  --vscode-fg: #eceff4;
+  --vscode-focusBorder: #88c0d0;
+
+  --vscode-activityBar-bg: #2e3440;
+  --vscode-activityBar-fg: #eceff4;
+  --vscode-activityBar-inactiveFg: rgba(236, 239, 244, 0.4);
+  --vscode-activityBar-border: #3b4252;
+
+  --vscode-sideBar-bg: #2e3440;
+  --vscode-sideBar-fg: #eceff4;
+  --vscode-sideBar-border: #3b4252;
+  --vscode-sideBarSectionHeader-bg: #3b4252;
+  --vscode-sideBarSectionHeader-fg: #88c0d0;
+
+  --vscode-list-hoverBg: #3b4252;
+  --vscode-list-activeSelectionBg: #434c5e;
+  --vscode-list-activeSelectionFg: #88c0d0;
+  --vscode-list-inactiveSelectionBg: #3b4252;
+
+  --vscode-editor-bg: #2e3440;
+  --vscode-editor-fg: #eceff4;
+  --vscode-editorGroupHeader-tabsBg: #2e3440;
+  --vscode-editorLineNumber-fg: #4c566a;
+  --vscode-editorLineNumber-activeFg: #d8dee9;
+
+  --vscode-tab-activeBg: #3b4252;
+  --vscode-tab-activeFg: #eceff4;
+  --vscode-tab-inactiveBg: #2e3440;
+  --vscode-tab-inactiveFg: #616e88;
+  --vscode-tab-border: #3b4252;
+
+  --vscode-statusBar-bg: #5e81ac;
+  --vscode-statusBar-fg: #eceff4;
+
+  --vscode-scrollbarSlider-bg: rgba(136, 192, 208, 0.3);
+  --vscode-scrollbarSlider-hoverBg: rgba(136, 192, 208, 0.5);
+  --vscode-scrollbarSlider-activeBg: rgba(136, 192, 208, 0.7);
+
+  --vscode-input-bg: #3b4252;
+  --vscode-input-fg: #eceff4;
+  --vscode-input-border: #4c566a;
+  --vscode-button-bg: #88c0d0;
+  --vscode-button-fg: #2e3440;
+  --vscode-button-hoverBg: #8fbcbb;
+
+  --bg-app: var(--vscode-editor-bg);
+  --text-primary: var(--vscode-editor-fg);
+  --text-secondary: #616e88;
+  --bg-code: #3b4252;
 }
 
 * {
@@ -202,18 +418,26 @@ pre {
   overflow: hidden;
 }
 
-/* Tabs container - hide scrollbar but keep scrollable */
+/* Tabs container - scrollable but hide scrollbar */
 .tabs-container {
-  scrollbar-width: thin;
-  scrollbar-color: var(--vscode-scrollbarSlider-bg) transparent;
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+  /* Hide scrollbar for IE/Edge */
+  -ms-overflow-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-wrap: nowrap;
+  min-width: 0;
+  flex-shrink: 1;
+  flex-grow: 1;
 }
 
+/* Hide scrollbar for Chrome/Safari/Opera */
 .tabs-container::-webkit-scrollbar {
-  height: 3px;
-}
-
-.tabs-container::-webkit-scrollbar-thumb {
-  background-color: var(--vscode-scrollbarSlider-bg);
+  display: none;
 }
 
 /* Utility to hide/show elements */

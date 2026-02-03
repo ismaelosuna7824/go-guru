@@ -203,12 +203,8 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                     minHeight: '35px',
                     maxHeight: '35px',
                     backgroundColor: 'var(--vscode-editorGroupHeader-tabsBg)',
-                    display: 'flex',
                     alignItems: 'flex-end',
-                    borderBottom: '1px solid var(--vscode-tab-border)',
-                    overflowX: 'auto',
-                    overflowY: 'hidden',
-                    flexShrink: 0
+                    borderBottom: '1px solid var(--vscode-tab-border)'
                 }}
             >
                 {openTabs.map(tabId => {

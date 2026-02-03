@@ -315,10 +315,11 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
                                         <div
                                             style={{ ...treeItemStyle(false), paddingLeft: '10px', fontWeight: 'bold' }}
                                             onClick={(e) => toggleCategory(group.name, e)}
+                                            title={group.name}
                                         >
                                             {isExpanded(group.name) ? <ChevronDown /> : <ChevronRight />}
                                             <FolderIcon />
-                                            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{group.name}</span>
+                                            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, minWidth: 0 }}>{group.name}</span>
                                         </div>
                                         {isExpanded(group.name) && (
                                             <div>

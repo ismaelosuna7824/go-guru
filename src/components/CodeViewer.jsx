@@ -6,7 +6,8 @@ import { useTheme } from '../context/ThemeContext';
 export default function CodeViewer({ code, language = 'go' }) {
     const { theme, fontSizeValue } = useTheme();
     const lang = language.toLowerCase();
-    const isDark = theme === 'dark';
+    // All themes except 'light' are considered dark
+    const isDark = theme !== 'light';
 
     return (
         <div className="code-viewer-wrapper" style={{
@@ -18,7 +19,7 @@ export default function CodeViewer({ code, language = 'go' }) {
                 customStyle={{
                     margin: 0,
                     padding: '16px',
-                    backgroundColor: isDark ? '#1e1e1e' : '#f8f8f8',
+                    backgroundColor: 'var(--bg-code)',
                     fontFamily: "'Consolas', 'Monaco', 'Courier New', monospace",
                     fontSize: `${fontSizeValue}px`,
                     lineHeight: '1.5'
