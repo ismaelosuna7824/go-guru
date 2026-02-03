@@ -110,13 +110,61 @@ const renderGuideContent = (fullText) => {
 export default function TopicViewer({ topic, onOpenSidebar }) {
     const [showSolution, setShowSolution] = useState(false);
     const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
+    const [draggedTab, setDraggedTab] = useState(null);
+    const [dragOverTab, setDragOverTab] = useState(null);
     const { markAsCompleted, visitedIds } = useProgress();
     const { fontSizeValue } = useTheme();
     const navigate = useNavigate();
 
     // Get tabs from context
     const context = useOutletContext() || {};
-    const { topics = [], openTabs = [], handleCloseTab, handleCloseAllTabs } = context;
+    const { topics = [], openTabs = [], handleCloseTab, handleCloseAllTabs, handleReorderTabs } = context;
+
+    // Drag and drop handlers
+    const handleDragStart = (e, tabId) => {
+        setDraggedTab(tabId);
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', tabId);
+        // Add a slight delay for better visual feedback
+        setTimeout(() => {
+            e.target.style.opacity = '0.5';
+        }, 0);
+    };
+
+    const handleDragEnd = (e) => {
+        e.target.style.opacity = '1';
+        setDraggedTab(null);
+        setDragOverTab(null);
+    };
+
+    const handleDragOver = (e, tabId) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        if (tabId !== draggedTab) {
+            setDragOverTab(tabId);
+        }
+    };
+
+    const handleDragLeave = () => {
+        setDragOverTab(null);
+    };
+
+    const handleDrop = (e, targetTabId) => {
+        e.preventDefault();
+        if (draggedTab && draggedTab !== targetTabId && handleReorderTabs) {
+            const newTabs = [...openTabs];
+            const draggedIndex = newTabs.indexOf(draggedTab);
+            const targetIndex = newTabs.indexOf(targetTabId);
+
+            // Remove dragged tab and insert at target position
+            newTabs.splice(draggedIndex, 1);
+            newTabs.splice(targetIndex, 0, draggedTab);
+
+            handleReorderTabs(newTabs);
+        }
+        setDraggedTab(null);
+        setDragOverTab(null);
+    };
 
     // Handle right-click on tabs area
     const handleContextMenu = (e) => {
@@ -211,10 +259,17 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                     const tabTopic = topics.find(t => t.id === tabId);
                     if (!tabTopic) return null;
                     const isActive = topic.id === tabId;
+                    const isDragOver = dragOverTab === tabId && draggedTab !== tabId;
 
                     return (
                         <div
                             key={tabId}
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, tabId)}
+                            onDragEnd={handleDragEnd}
+                            onDragOver={(e) => handleDragOver(e, tabId)}
+                            onDragLeave={handleDragLeave}
+                            onDrop={(e) => handleDrop(e, tabId)}
                             onClick={() => navigate(`/${tabId}`)}
                             style={{
                                 padding: '8px 12px',
@@ -223,17 +278,19 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                                 fontSize: '13px',
                                 borderRight: '1px solid var(--vscode-tab-border)',
                                 borderTop: isActive ? '1px solid var(--vscode-focusBorder)' : '1px solid transparent',
-                                cursor: 'pointer',
+                                borderLeft: isDragOver ? '2px solid var(--vscode-focusBorder)' : '2px solid transparent',
+                                cursor: 'grab',
                                 whiteSpace: 'nowrap',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '6px',
                                 flexShrink: 0,
-                                height: '35px'
+                                height: '35px',
+                                transition: 'border-left 0.15s ease'
                             }}
                         >
-                            <span className="material-icons" style={{ fontSize: '14px' }}>description</span>
-                            <span style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tabTopic.title}</span>
+                            <span className="material-icons" style={{ fontSize: '14px', pointerEvents: 'none' }}>description</span>
+                            <span style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', pointerEvents: 'none' }}>{tabTopic.title}</span>
                             <span
                                 onClick={(e) => handleCloseTab && handleCloseTab(tabId, e)}
                                 style={{
