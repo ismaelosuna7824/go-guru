@@ -50,16 +50,21 @@ function Layout() {
     }
   }, [lastTopicId, topics]);
 
-  // Add topic to tabs when navigating
+  // Add topic to tabs when navigating (new tabs added at the beginning)
   const handleOpenTopic = (id) => {
     if (!openTabs.includes(id)) {
-      setOpenTabs(prev => [...prev, id]);
+      setOpenTabs(prev => [id, ...prev]);
     }
     navigate(`/${id}`);
     // Close sidebar on mobile after selecting
     if (window.innerWidth <= 768) {
       setIsSidebarOpen(false);
     }
+  };
+
+  // Reorder tabs via drag and drop
+  const handleReorderTabs = (newOrder) => {
+    setOpenTabs(newOrder);
   };
 
   const handleCloseTab = (id, e) => {
@@ -161,7 +166,7 @@ function Layout() {
             </div>
           ) : (
             <Suspense fallback={<div style={{ padding: '20px', color: '#888' }}>Loading Editor...</div>}>
-              <Outlet context={{ topics, currentTopic, setIsSidebarOpen, openTabs, setOpenTabs, handleCloseTab, handleCloseAllTabs }} />
+              <Outlet context={{ topics, currentTopic, setIsSidebarOpen, openTabs, setOpenTabs, handleCloseTab, handleCloseAllTabs, handleReorderTabs }} />
             </Suspense>
           )}
         </main>
