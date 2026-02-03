@@ -61,22 +61,21 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
         <div className="battle-room" style={{
             maxWidth: '1000px',
             margin: '0 auto',
-            padding: 'var(--spacing-lg)',
-            minHeight: 'calc(100vh - 100px)',
+            padding: '24px',
+            minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            backgroundColor: 'var(--vscode-editor-bg)',
+            color: 'var(--vscode-editor-fg)'
         }}>
             {/* Header / Title Section */}
-            <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)' }}>
+            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
                 <h2 style={{
-                    fontSize: '2.5rem',
-                    fontWeight: 800,
-                    color: 'var(--text-primary)',
-                    marginBottom: '8px',
-                    background: 'linear-gradient(135deg, #fff 0%, #cbd5e1 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
+                    fontSize: '2rem',
+                    fontWeight: 600,
+                    color: 'var(--vscode-editor-fg)',
+                    marginBottom: '16px'
                 }}>
                     Battle Lobby
                 </h2>
@@ -84,17 +83,17 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '12px',
-                    background: 'rgba(255,255,255,0.05)',
+                    background: 'var(--vscode-textBlockQuote-background)',
                     padding: '8px 16px',
-                    borderRadius: '50px',
-                    border: '1px solid var(--border-subtle)'
+                    borderRadius: '2px', // Square-ish for VS Code
+                    border: '1px solid var(--vscode-textBlockQuote-border)'
                 }}>
-                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 500 }}>ROOM CODE:</span>
+                    <span style={{ color: 'var(--vscode-descriptionForeground)', fontSize: '0.9rem', fontWeight: 500 }}>ROOM CODE:</span>
                     <span style={{
-                        fontFamily: 'var(--font-mono)',
+                        fontFamily: "'Consolas', 'Monaco', 'Courier New', monospace",
                         fontSize: '1.2rem',
-                        fontWeight: 700,
-                        color: 'var(--accent-amber-text)',
+                        fontWeight: 600,
+                        color: 'var(--vscode-textLink-foreground)',
                         letterSpacing: '1px'
                     }}>
                         {roomId}
@@ -105,7 +104,7 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                             background: 'none',
                             border: 'none',
                             cursor: 'pointer',
-                            color: 'var(--text-tertiary)',
+                            color: 'var(--vscode-icon-foreground)',
                             fontSize: '0.9rem',
                             display: 'flex',
                             alignItems: 'center'
@@ -124,57 +123,58 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
             }}>
                 {/* Players List Card */}
                 <div className="card" style={{
-                    borderTop: '4px solid #8b5cf6', // Purple accent
+                    backgroundColor: 'var(--vscode-sideBar-bg)',
+                    border: '1px solid var(--vscode-sideBar-border)',
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    padding: '16px'
                 }}>
                     <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: 'var(--spacing-lg)',
-                        paddingBottom: 'var(--spacing-md)',
-                        borderBottom: '1px solid var(--border-subtle)'
+                        marginBottom: '16px',
+                        paddingBottom: '8px',
+                        borderBottom: '1px solid var(--vscode-sideBar-border)'
                     }}>
-                        <h3 style={{ fontSize: '1.25rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <h3 style={{ fontSize: '1rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--vscode-sideBarTitle-foreground)', textTransform: 'uppercase' }}>
                             <span>👥</span> Players
                         </h3>
                         <span style={{
-                            background: '#8b5cf6',
-                            color: 'white',
-                            padding: '2px 10px',
-                            borderRadius: '12px',
-                            fontSize: '0.85rem',
+                            background: 'var(--vscode-badge-background)',
+                            color: 'var(--vscode-badge-foreground)',
+                            padding: '2px 8px',
+                            borderRadius: '10px',
+                            fontSize: '0.8rem',
                             fontWeight: 600
                         }}>
                             {players.length} / 2
                         </span>
                     </div>
 
-                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px', flex: 1 }}>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
                         {players.map((p, i) => (
                             <li key={i} style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '16px',
-                                padding: '12px',
-                                borderRadius: 'var(--radius-md)',
-                                background: p.name === playerName ? 'rgba(139, 92, 246, 0.1)' : 'var(--bg-secondary)',
-                                border: p.name === playerName ? '1px solid rgba(139, 92, 246, 0.3)' : '1px solid transparent',
-                                transition: 'transform 0.2s ease',
+                                gap: '12px',
+                                padding: '8px',
+                                borderRadius: '2px',
+                                background: p.name === playerName ? 'var(--vscode-list-activeSelectionBg)' : 'transparent',
+                                color: p.name === playerName ? 'var(--vscode-list-activeSelectionForeground)' : 'var(--vscode-foreground)',
+                                border: '1px solid transparent',
                             }}>
                                 <div style={{
-                                    width: '40px',
-                                    height: '40px',
+                                    width: '32px',
+                                    height: '32px',
                                     borderRadius: '50%',
-                                    background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+                                    background: 'var(--vscode-activityBar-badgeBackground)',
+                                    color: 'var(--vscode-activityBar-badgeForeground)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    fontWeight: 800,
-                                    fontSize: '1rem',
-                                    color: 'white',
-                                    boxShadow: '0 2px 8px rgba(139, 92, 246, 0.4)'
+                                    fontWeight: 700,
+                                    fontSize: '0.9rem',
                                 }}>
                                     {p.name.substring(0, 2).toUpperCase()}
                                 </div>
@@ -182,35 +182,32 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                         <span style={{
                                             fontWeight: 600,
-                                            color: 'var(--text-primary)',
-                                            fontSize: '1rem'
+                                            fontSize: '0.95rem'
                                         }}>
                                             {p.name}
                                         </span>
                                         {p.name === playerName && (
                                             <span style={{
                                                 fontSize: '0.7rem',
-                                                color: 'var(--text-tertiary)',
+                                                opacity: 0.8,
                                                 fontWeight: 500
                                             }}>(YOU)</span>
                                         )}
                                     </div>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                                    <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>
                                         {p.name === roomState.host ? '👑 Host' : 'Ready'}
                                     </div>
                                 </div>
                                 {/* Score Badge */}
                                 <div style={{
-                                    background: 'rgba(251, 191, 36, 0.1)',
-                                    border: '1px solid rgba(251, 191, 36, 0.3)',
-                                    borderRadius: '12px',
-                                    padding: '4px 10px',
+                                    background: 'transparent',
+                                    padding: '4px',
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '4px'
                                 }}>
-                                    <span style={{ fontSize: '0.75rem', color: '#fbbf24' }}>⭐</span>
-                                    <span style={{ fontWeight: 700, color: '#fbbf24', fontSize: '0.9rem' }}>
+                                    <span style={{ fontSize: '0.75rem' }}>⭐</span>
+                                    <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>
                                         {p.score || 0}
                                     </span>
                                 </div>
@@ -220,9 +217,8 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                             <li style={{
                                 padding: '16px',
                                 textAlign: 'center',
-                                color: 'var(--text-tertiary)',
-                                border: '2px dashed var(--border-subtle)',
-                                borderRadius: 'var(--radius-md)',
+                                color: 'var(--vscode-descriptionForeground)',
+                                border: '1px dashed var(--vscode-sideBar-border)',
                                 fontSize: '0.9rem'
                             }}>
                                 Waiting for opponent to join...
@@ -233,23 +229,24 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
 
                 {/* Game Control Card */}
                 <div className="card" style={{
-                    borderTop: '4px solid #10b981', // Green accent
+                    backgroundColor: 'var(--vscode-sideBar-bg)',
+                    border: '1px solid var(--vscode-sideBar-border)',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    padding: '16px'
                 }}>
-                    <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-xl)' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '24px' }}>
                         <div style={{
                             fontSize: '4rem',
-                            marginBottom: 'var(--spacing-md)',
-                            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))'
+                            marginBottom: '16px',
                         }}>
                             ⚔️
                         </div>
-                        <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                        <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: 'var(--vscode-sideBarTitle-foreground)', marginBottom: '8px' }}>
                             Ready to Battle?
                         </h3>
-                        <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                        <p style={{ color: 'var(--vscode-descriptionForeground)', lineHeight: 1.5 }}>
                             {isHost
                                 ? 'Generate a unique AI challenge and start the match.'
                                 : 'Wait for the host to start the game. Good luck!'}
@@ -262,12 +259,11 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                             <div>
                                 <label style={{
                                     display: 'block',
-                                    fontSize: '0.85rem',
+                                    fontSize: '0.8rem',
                                     fontWeight: 600,
-                                    color: 'var(--text-secondary)',
-                                    marginBottom: '8px',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.05em'
+                                    color: 'var(--vscode-input-placeholderForeground)',
+                                    marginBottom: '6px',
+                                    textTransform: 'uppercase'
                                 }}>
                                     Challenge Difficulty
                                 </label>
@@ -277,23 +273,13 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                                     disabled={generating}
                                     style={{
                                         width: '100%',
-                                        padding: '10px 36px 10px 12px',
-                                        background: 'var(--bg-secondary)',
-                                        border: '1px solid var(--border-subtle)',
-                                        borderRadius: 'var(--radius-md)',
-                                        color: 'var(--text-primary)',
-                                        fontSize: '0.95rem',
+                                        padding: '8px',
+                                        background: 'var(--vscode-dropdown-background)',
+                                        border: '1px solid var(--vscode-dropdown-border)',
+                                        color: 'var(--vscode-dropdown-foreground)',
+                                        fontSize: '0.9rem',
                                         cursor: 'pointer',
-                                        outline: 'none',
-                                        // Cross-browser reset
-                                        WebkitAppearance: 'none',
-                                        MozAppearance: 'none',
-                                        appearance: 'none',
-                                        // Custom dropdown arrow
-                                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E")`,
-                                        backgroundRepeat: 'no-repeat',
-                                        backgroundPosition: 'right 12px center',
-                                        backgroundSize: '12px'
+                                        outline: 'none'
                                     }}
                                 >
                                     <option value="beginner">🟢 Beginner</option>
@@ -306,12 +292,11 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                             <div>
                                 <label style={{
                                     display: 'block',
-                                    fontSize: '0.85rem',
+                                    fontSize: '0.8rem',
                                     fontWeight: 600,
-                                    color: 'var(--text-secondary)',
-                                    marginBottom: '8px',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.05em'
+                                    color: 'var(--vscode-input-placeholderForeground)',
+                                    marginBottom: '6px',
+                                    textTransform: 'uppercase'
                                 }}>
                                     Challenge Language
                                 </label>
@@ -321,23 +306,13 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                                     disabled={generating}
                                     style={{
                                         width: '100%',
-                                        padding: '10px 36px 10px 12px',
-                                        background: 'var(--bg-secondary)',
-                                        border: '1px solid var(--border-subtle)',
-                                        borderRadius: 'var(--radius-md)',
-                                        color: 'var(--text-primary)',
-                                        fontSize: '0.95rem',
+                                        padding: '8px',
+                                        background: 'var(--vscode-dropdown-background)',
+                                        border: '1px solid var(--vscode-dropdown-border)',
+                                        color: 'var(--vscode-dropdown-foreground)',
+                                        fontSize: '0.9rem',
                                         cursor: 'pointer',
-                                        outline: 'none',
-                                        // Cross-browser reset
-                                        WebkitAppearance: 'none',
-                                        MozAppearance: 'none',
-                                        appearance: 'none',
-                                        // Custom dropdown arrow
-                                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E")`,
-                                        backgroundRepeat: 'no-repeat',
-                                        backgroundPosition: 'right 12px center',
-                                        backgroundSize: '12px'
+                                        outline: 'none'
                                     }}
                                 >
                                     <option value="es">🇪🇸 Español</option>
@@ -349,30 +324,23 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                             <button
                                 onClick={handleStartGame}
                                 disabled={generating || players.length < 1}
-                                className="btn-primary"
                                 style={{
                                     width: '100%',
-                                    padding: '16px',
-                                    fontSize: '1.1rem',
+                                    padding: '10px',
+                                    fontSize: '1rem',
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    gap: '12px',
-                                    background: generating ? 'var(--bg-secondary)' : 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
+                                    gap: '8px',
+                                    background: generating ? 'var(--vscode-button-secondaryBackground)' : 'var(--vscode-button-bg)',
+                                    color: 'var(--vscode-button-fg)',
+                                    border: 'none',
                                     cursor: (generating) ? 'not-allowed' : 'pointer',
-                                    boxShadow: '0 4px 12px rgba(22, 163, 74, 0.3)',
-                                    transform: generating ? 'none' : 'translateY(0)',
-                                    transition: 'all 0.2s ease'
                                 }}
+                                onMouseEnter={(e) => !generating && (e.target.style.background = 'var(--vscode-button-hoverBackground)')}
+                                onMouseLeave={(e) => !generating && (e.target.style.background = 'var(--vscode-button-bg)')}
                             >
-                                {generating ? (
-                                    <>
-                                        <span className="spinner" style={{ width: '20px', height: '20px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></span>
-                                        Generating Challenge...
-                                    </>
-                                ) : (
-                                    <>🚀 Start Battle</>
-                                )}
+                                {generating ? 'Generating...' : '🚀 Start Battle'}
                             </button>
 
                             {/* Delete Room Button */}
@@ -386,17 +354,15 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                                 disabled={generating}
                                 style={{
                                     width: '100%',
-                                    padding: '10px',
-                                    background: 'rgba(239, 68, 68, 0.1)',
-                                    color: '#ef4444',
-                                    border: '1px solid rgba(239, 68, 68, 0.2)',
-                                    borderRadius: 'var(--radius-md)',
+                                    padding: '8px',
+                                    background: 'var(--vscode-button-secondaryBackground)',
+                                    color: 'var(--vscode-button-secondaryForeground)',
+                                    border: '1px solid var(--vscode-button-border)',
                                     fontSize: '0.9rem',
-                                    fontWeight: 600,
                                     cursor: generating ? 'not-allowed' : 'pointer',
-                                    transition: 'all 0.2s ease',
-                                    opacity: generating ? 0.5 : 1
                                 }}
+                                onMouseEnter={(e) => !generating && (e.target.style.background = 'var(--vscode-button-secondaryHoverBackground)')}
+                                onMouseLeave={(e) => !generating && (e.target.style.background = 'var(--vscode-button-secondaryBackground)')}
                             >
                                 🗑️ Delete Room
                             </button>
@@ -405,12 +371,11 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                             {error && (
                                 <div style={{
                                     marginTop: '1rem',
-                                    padding: '10px',
-                                    background: 'rgba(239, 68, 68, 0.1)',
-                                    borderLeft: '3px solid #ef4444',
-                                    color: '#f87171',
-                                    fontSize: '0.9rem',
-                                    borderRadius: '4px'
+                                    padding: '8px',
+                                    background: 'var(--vscode-inputValidation-errorBackground)',
+                                    border: '1px solid var(--vscode-inputValidation-errorBorder)',
+                                    color: 'var(--vscode-errorForeground)',
+                                    fontSize: '0.9rem'
                                 }}>
                                     ⚠️ {error}
                                 </div>
@@ -419,21 +384,12 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
                     ) : (
                         <div style={{
                             padding: '20px',
-                            background: 'rgba(255,255,255,0.03)',
-                            borderRadius: 'var(--radius-md)',
+                            background: 'transparent',
                             textAlign: 'center',
-                            border: '1px solid var(--border-subtle)'
+                            border: '1px dashed var(--vscode-sideBar-border)',
+                            color: 'var(--vscode-descriptionForeground)'
                         }}>
-                            <div style={{
-                                display: 'inline-block',
-                                width: '12px',
-                                height: '12px',
-                                background: '#fbbf24',
-                                borderRadius: '50%',
-                                marginRight: '8px',
-                                animation: 'pulse 2s infinite'
-                            }}></div>
-                            <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>
+                            <span style={{ fontWeight: 500 }}>
                                 Host is configuring the game...
                             </span>
                         </div>
@@ -442,10 +398,7 @@ export default function BattleRoom({ roomId, playerId, playerName, onLeave }) {
             </div>
 
             {/* Global style tag for animations if not present */}
-            <style>{`
-                @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-                @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
-            `}</style>
+            {/* Styles removed */}
         </div>
     );
 

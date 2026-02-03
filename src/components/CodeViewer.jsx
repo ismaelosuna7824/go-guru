@@ -1,32 +1,34 @@
 import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useTheme } from '../context/ThemeContext';
 
 export default function CodeViewer({ code, language = 'go' }) {
-    // Normalize language for highlighter (it usually expects lowercase)
+    const { theme, fontSizeValue } = useTheme();
     const lang = language.toLowerCase();
+    // All themes except 'light' are considered dark
+    const isDark = theme !== 'light';
 
     return (
         <div className="code-viewer-wrapper" style={{
-            fontSize: '0.9rem',
-            borderRadius: 'var(--radius-md)',
             overflow: 'hidden',
-            border: '1px solid var(--border-subtle)'
         }}>
             <SyntaxHighlighter
                 language={lang}
-                style={vscDarkPlus}
+                style={isDark ? vscDarkPlus : vs}
                 customStyle={{
                     margin: 0,
-                    padding: 'var(--spacing-lg)',
-                    backgroundColor: '#1e1e1e', // Matches VS Code dark
-                    fontFamily: 'var(--font-mono)'
+                    padding: '16px',
+                    backgroundColor: 'var(--bg-code)',
+                    fontFamily: "'Consolas', 'Monaco', 'Courier New', monospace",
+                    fontSize: `${fontSizeValue}px`,
+                    lineHeight: '1.5'
                 }}
                 showLineNumbers={false}
                 lineNumberStyle={{
                     minWidth: '2em',
                     paddingRight: '1em',
-                    color: '#6e7681',
+                    color: isDark ? '#858585' : '#999999',
                     textAlign: 'right'
                 }}
             >

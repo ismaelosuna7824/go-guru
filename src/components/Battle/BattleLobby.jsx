@@ -47,14 +47,16 @@ export default function BattleLobby({ onJoin }) {
 
     return (
         <div className="battle-lobby" style={{
-            maxWidth: '1200px',
+            maxWidth: '900px',
             margin: '0 auto',
-            padding: 'var(--spacing-xl)',
-            minHeight: 'calc(100vh - 100px)',
+            padding: '40px 20px',
+            minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            position: 'relative' // For absolute positioning if needed
+            position: 'relative',
+            backgroundColor: 'var(--vscode-editor-bg)',
+            color: 'var(--vscode-editor-fg)'
         }}>
             {/* Navigation */}
             <button
@@ -65,7 +67,7 @@ export default function BattleLobby({ onJoin }) {
                     left: '20px',
                     background: 'transparent',
                     border: 'none',
-                    color: 'var(--text-secondary)',
+                    color: 'var(--vscode-textLink-foreground)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
@@ -76,8 +78,8 @@ export default function BattleLobby({ onJoin }) {
                     borderRadius: '8px',
                     transition: 'background 0.2s'
                 }}
-                onMouseEnter={(e) => e.target.style.background = 'var(--bg-secondary)'}
-                onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
             >
                 ← Back to Home
             </button>
@@ -105,11 +107,7 @@ export default function BattleLobby({ onJoin }) {
                         margin: 0,
                         letterSpacing: '-1px'
                     }}>
-                        GoGuru <span style={{
-                            background: 'linear-gradient(135deg, #a855f7 0%, #d946ef 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent'
-                        }}>Battle</span>
+                        GoGuru <span style={{ color: 'var(--vscode-textLink-foreground)' }}>Battle</span>
                     </h1>
                 </div>
                 <p style={{
@@ -134,42 +132,26 @@ export default function BattleLobby({ onJoin }) {
             }}>
                 {/* Create Room Card */}
                 <div className="card" style={{
-                    borderTop: '4px solid #a855f7', // Purple Accent
-                    transform: 'translateY(0)',
-                    transition: 'all 0.3s ease',
-                    cursor: 'default'
-                    // hover effect handling via CSS in global styles usually, inline assumes static
+                    backgroundColor: 'var(--vscode-sideBar-bg)',
+                    border: '1px solid var(--vscode-sideBar-border)',
+                    padding: '24px',
                 }}>
-                    <div style={{ marginBottom: 'var(--spacing-lg)' }}>
-                        <div style={{
-                            width: '48px',
-                            height: '48px',
-                            background: 'rgba(168, 85, 247, 0.1)',
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '1.5rem',
-                            marginBottom: 'var(--spacing-md)'
-                        }}>
-                            🚀
-                        </div>
-                        <h2 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '8px' }}>Crear Sala</h2>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <div style={{ marginBottom: '24px' }}>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '8px', color: 'var(--vscode-sideBarTitle-foreground)' }}>Crear Sala</h2>
+                        <p style={{ color: 'var(--vscode-descriptionForeground)', fontSize: '0.9rem' }}>
                             Start a new battle session and invite friends or colleagues to join.
                         </p>
                     </div>
 
-                    <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                         <div>
                             <label style={{
                                 display: 'block',
-                                fontSize: '0.85rem',
+                                fontSize: '0.8rem',
                                 fontWeight: 600,
-                                color: 'var(--text-secondary)',
-                                marginBottom: '8px',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.05em'
+                                color: 'var(--vscode-input-placeholderForeground)',
+                                marginBottom: '6px',
+                                textTransform: 'uppercase'
                             }}>
                                 Tu Nombre
                             </label>
@@ -177,13 +159,14 @@ export default function BattleLobby({ onJoin }) {
                                 type="text"
                                 value={hostName}
                                 onChange={(e) => setHostName(e.target.value)}
-                                className="search-input"
                                 style={{
-                                    padding: '12px 16px',
-                                    fontSize: '1rem',
-                                    background: 'var(--bg-secondary)',
-                                    border: '1px solid var(--border-subtle)',
-                                    width: '100%'
+                                    padding: '8px 12px',
+                                    fontSize: '0.9rem',
+                                    background: 'var(--vscode-input-background)',
+                                    color: 'var(--vscode-input-foreground)',
+                                    border: '1px solid var(--vscode-input-border)',
+                                    width: '100%',
+                                    outline: 'none'
                                 }}
                                 placeholder="e.g. Gopher Master"
                                 required
@@ -192,61 +175,49 @@ export default function BattleLobby({ onJoin }) {
                         <button
                             type="submit"
                             disabled={isCreating}
-                            className="btn-primary"
                             style={{
                                 width: '100%',
+                                padding: '10px',
+                                fontSize: '0.9rem',
+                                background: 'var(--vscode-button-bg)',
+                                color: 'var(--vscode-button-fg)',
+                                border: 'none',
+                                cursor: isCreating ? 'wait' : 'pointer',
+                                display: 'flex',
                                 justifyContent: 'center',
-                                padding: '14px',
-                                fontSize: '1.05rem',
-                                background: 'linear-gradient(135deg, #9333ea 0%, #7e22ce 100%)',
-                                boxShadow: '0 4px 12px rgba(147, 51, 234, 0.3)'
+                                alignItems: 'center'
                             }}
+                            onMouseEnter={(e) => !isCreating && (e.target.style.background = 'var(--vscode-button-hoverBackground)')}
+                            onMouseLeave={(e) => !isCreating && (e.target.style.background = 'var(--vscode-button-bg)')}
                         >
-                            {isCreating ? (
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span className="spinner" style={{ width: '16px', height: '16px', border: '2px solid white', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></span>
-                                    Creando...
-                                </span>
-                            ) : 'Crear Sala'}
+                            {isCreating ? 'Creating...' : 'Crear Sala'}
                         </button>
                     </form>
                 </div>
 
                 {/* Join Room Card */}
                 <div className="card" style={{
-                    borderTop: '4px solid #3b82f6' // Blue Accent
+                    backgroundColor: 'var(--vscode-sideBar-bg)',
+                    border: '1px solid var(--vscode-sideBar-border)',
+                    padding: '24px',
                 }}>
-                    <div style={{ marginBottom: 'var(--spacing-lg)' }}>
-                        <div style={{
-                            width: '48px',
-                            height: '48px',
-                            background: 'rgba(59, 130, 246, 0.1)',
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '1.5rem',
-                            marginBottom: 'var(--spacing-md)'
-                        }}>
-                            🎮
-                        </div>
-                        <h2 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '8px' }}>Unirse a Sala</h2>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <div style={{ marginBottom: '24px' }}>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '8px', color: 'var(--vscode-sideBarTitle-foreground)' }}>Unirse a Sala</h2>
+                        <p style={{ color: 'var(--vscode-descriptionForeground)', fontSize: '0.9rem' }}>
                             Enter an existing room code to join the battle.
                         </p>
                     </div>
 
-                    <form onSubmit={handleJoin} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <form onSubmit={handleJoin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                             <div style={{ gridColumn: '1 / -1' }}>
                                 <label style={{
                                     display: 'block',
-                                    fontSize: '0.85rem',
+                                    fontSize: '0.8rem',
                                     fontWeight: 600,
-                                    color: 'var(--text-secondary)',
-                                    marginBottom: '8px',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.05em'
+                                    color: 'var(--vscode-input-placeholderForeground)',
+                                    marginBottom: '6px',
+                                    textTransform: 'uppercase'
                                 }}>
                                     ID de Sala
                                 </label>
@@ -254,14 +225,15 @@ export default function BattleLobby({ onJoin }) {
                                     type="text"
                                     value={roomIdToJoin}
                                     onChange={(e) => setRoomIdToJoin(e.target.value)}
-                                    className="search-input"
                                     style={{
-                                        padding: '12px 16px',
-                                        fontSize: '1rem',
-                                        background: 'var(--bg-secondary)',
-                                        border: '1px solid var(--border-subtle)',
+                                        padding: '8px 12px',
+                                        fontSize: '0.9rem',
+                                        background: 'var(--vscode-input-background)',
+                                        color: 'var(--vscode-input-foreground)',
+                                        border: '1px solid var(--vscode-input-border)',
                                         width: '100%',
-                                        fontFamily: 'var(--font-mono)'
+                                        fontFamily: 'monospace',
+                                        outline: 'none'
                                     }}
                                     placeholder="e.g. -Okd..."
                                     required
@@ -270,12 +242,11 @@ export default function BattleLobby({ onJoin }) {
                             <div style={{ gridColumn: '1 / -1' }}>
                                 <label style={{
                                     display: 'block',
-                                    fontSize: '0.85rem',
+                                    fontSize: '0.8rem',
                                     fontWeight: 600,
-                                    color: 'var(--text-secondary)',
-                                    marginBottom: '8px',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.05em'
+                                    color: 'var(--vscode-input-placeholderForeground)',
+                                    marginBottom: '6px',
+                                    textTransform: 'uppercase'
                                 }}>
                                     Tu Nombre
                                 </label>
@@ -283,13 +254,14 @@ export default function BattleLobby({ onJoin }) {
                                     type="text"
                                     value={joinName}
                                     onChange={(e) => setJoinName(e.target.value)}
-                                    className="search-input"
                                     style={{
-                                        padding: '12px 16px',
-                                        fontSize: '1rem',
-                                        background: 'var(--bg-secondary)',
-                                        border: '1px solid var(--border-subtle)',
-                                        width: '100%'
+                                        padding: '8px 12px',
+                                        fontSize: '0.9rem',
+                                        background: 'var(--vscode-input-background)',
+                                        color: 'var(--vscode-input-foreground)',
+                                        border: '1px solid var(--vscode-input-border)',
+                                        width: '100%',
+                                        outline: 'none'
                                     }}
                                     placeholder="e.g. Gopher Ninja"
                                     required
@@ -299,15 +271,20 @@ export default function BattleLobby({ onJoin }) {
 
                         <button
                             type="submit"
-                            className="btn-primary"
                             style={{
                                 width: '100%',
+                                padding: '10px',
+                                fontSize: '0.9rem',
+                                background: 'var(--vscode-button-bg)',
+                                color: 'var(--vscode-button-fg)',
+                                border: 'none',
+                                cursor: 'pointer',
+                                display: 'flex',
                                 justifyContent: 'center',
-                                padding: '14px',
-                                fontSize: '1.05rem',
-                                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
-                                boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
+                                alignItems: 'center'
                             }}
+                            onMouseEnter={(e) => e.target.style.background = 'var(--vscode-button-hoverBackground)'}
+                            onMouseLeave={(e) => e.target.style.background = 'var(--vscode-button-bg)'}
                         >
                             Unirse
                         </button>
@@ -317,23 +294,21 @@ export default function BattleLobby({ onJoin }) {
 
             {error && (
                 <div style={{
-                    marginTop: 'var(--spacing-xl)',
-                    padding: 'var(--spacing-md)',
-                    background: 'rgba(239, 68, 68, 0.1)',
-                    borderLeft: '4px solid #ef4444',
-                    color: '#f87171',
-                    borderRadius: 'var(--radius-md)',
+                    marginTop: '24px',
+                    padding: '8px 12px',
+                    background: 'var(--vscode-inputValidation-errorBackground)',
+                    border: '1px solid var(--vscode-inputValidation-errorBorder)',
+                    color: 'var(--vscode-errorForeground)',
+                    borderRadius: '2px',
                     textAlign: 'center',
                     maxWidth: '800px',
-                    margin: 'var(--spacing-xl) auto 0'
+                    margin: '24px auto 0'
                 }}>
                     ⚠️ {error}
                 </div>
             )}
 
-            <style>{`
-                @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-            `}</style>
+            {/* Styles removed */}
         </div>
     );
 }

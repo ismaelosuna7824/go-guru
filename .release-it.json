@@ -1,0 +1,26 @@
+{
+    "git": {
+        "commit": true,
+        "commitMessage": "chore: release v${version}",
+        "tag": true,
+        "tagName": "v${version}",
+        "tagAnnotation": "Release v${version}",
+        "push": true,
+        "requireCleanWorkingDir": false,
+        "requireUpstream": false
+    },
+    "npm": {
+        "publish": false
+    },
+    "github": {
+        "release": true,
+        "releaseName": "v${version}",
+        "draft": false,
+        "preRelease": false,
+        "tokenRef": "GITHUB_TOKEN"
+    },
+    "hooks": {
+        "after:release": "echo '🚀 Released ${name} v${version} successfully!'"
+    },
+    "plugins": {}
+}

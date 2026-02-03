@@ -1,16 +1,58 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
 import { useProgress } from '../context/ProgressContext';
-
 import { CATEGORY_ORDER } from '../data/constants';
 
-export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, isOpen, setIsOpen }) {
-    const { theme, toggleTheme } = useTheme();
-    const { visitedIds, resetProgress } = useProgress();
-    const [searchTerm, setSearchTerm] = useState('');
-    const [expandedCategories, setExpandedCategories] = useState({});
+// Minimalist SVG Icons (VS Code style)
+const ChevronRight = () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style={{ marginRight: '4px', opacity: 0.8 }}>
+        <path d="M5.7 13.7L5 13l4.6-4.6L5 3.7l.7-.7 5.3 5.4-5.3 5.3z" />
+    </svg>
+);
+const ChevronDown = () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style={{ marginRight: '4px', opacity: 0.8 }}>
+        <path d="M2.7 5.7L3.4 5 8 9.6 12.6 5l.7.7L8 11 2.7 5.7z" />
+    </svg>
+);
+const FileIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 254.5 225" style={{ marginRight: '6px' }}>
+        <path fill="#00ACD7" d="M40.2,101.1c-0.4,0-0.5-0.2-0.3-0.5l2.1-2.7c0.2-0.3,0.7-0.5,1.1-0.5l35.7,0c0.4,0,0.5,0.3,0.3,0.6l-1.7,2.6c-0.2,0.3-0.7,0.6-1,0.6L40.2,101.1z" />
+        <path fill="#00ACD7" d="M25.1,110.3c-0.4,0-0.5-0.2-0.3-0.5l2.1-2.7c0.2-0.3,0.7-0.5,1.1-0.5l45.6,0c0.4,0,0.6,0.3,0.5,0.6l-0.8,2.4c-0.1,0.4-0.5,0.6-0.9,0.6L25.1,110.3z" />
+        <path fill="#00ACD7" d="M49.3,119.5c-0.4,0-0.5-0.3-0.3-0.6l1.4-2.5c0.2-0.3,0.6-0.6,1-0.6l20,0c0.4,0,0.6,0.3,0.6,0.7l-0.2,2.4c0,0.4-0.4,0.7-0.7,0.7L49.3,119.5z" />
+        <path fill="#00ACD7" d="M153.1,99.3c-6.3,1.6-10.6,2.8-16.8,4.4c-1.5,0.4-1.6,0.5-2.9-1c-1.5-1.7-2.6-2.8-4.7-3.8c-6.3-3.1-12.4-2.2-18.1,1.5c-6.8,4.4-10.3,10.9-10.2,19c0.1,8,5.6,14.6,13.5,15.7c6.8,0.9,12.5-1.5,17-6.6c0.9-1.1,1.7-2.3,2.7-3.7c-3.6,0-8.1,0-19.3,0c-2.1,0-2.6-1.3-1.9-3c1.3-3.1,3.7-8.3,5.1-10.9c0.3-0.6,1-1.6,2.5-1.6c5.1,0,23.9,0,36.4,0c-0.2,2.7-0.2,5.4-0.6,8.1c-1.1,7.2-3.8,13.8-8.2,19.6c-7.2,9.5-16.6,15.4-28.5,17c-9.8,1.3-18.9-0.6-26.9-6.6c-7.4-5.6-11.6-13-12.7-22.2c-1.3-10.9,1.9-20.7,8.5-29.3c7.1-9.3,16.5-15.2,28-17.3c9.4-1.7,18.4-0.6,26.5,4.9c5.3,3.5,9.1,8.3,11.6,14.1C154.7,98.5,154.3,99,153.1,99.3z" />
+        <path fill="#00ACD7" d="M186.2,154.6c-9.1-0.2-17.4-2.8-24.4-8.8c-5.9-5.1-9.6-11.6-10.8-19.3c-1.8-11.3,1.3-21.3,8.1-30.2c7.3-9.6,16.1-14.6,28-16.7c10.2-1.8,19.8-0.8,28.5,5.1c7.9,5.4,12.8,12.7,14.1,22.3c1.7,13.5-2.2,24.5-11.5,33.9c-6.6,6.7-14.7,10.9-24,12.8C191.5,154.2,188.8,154.3,186.2,154.6z M210,114.2c-0.1-1.3-0.1-2.3-0.3-3.3c-1.8-9.9-10.9-15.5-20.4-13.3c-9.3,2.1-15.3,8-17.5,17.4c-1.8,7.8,2,15.7,9.2,18.9c5.5,2.4,11,2.1,16.3-0.6C205.2,129.2,209.5,122.8,210,114.2z" />
+    </svg>
+);
+const FolderIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style={{ marginRight: '6px', opacity: 0.7 }}>
+        <path d="M14 4H8L7 3H2v10h12V4zm-1 8H3V5h10v7z" />
+    </svg>
+);
+
+export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, isOpen, activeView = 'search' }) {
+    const { visitedIds } = useProgress();
     const navigate = useNavigate();
+
+    // Load expanded categories from localStorage or default to empty (all collapsed)
+    const [expandedCategories, setExpandedCategories] = useState(() => {
+        try {
+            const saved = localStorage.getItem('sidebar_expanded_categories');
+            return saved ? JSON.parse(saved) : {};
+        } catch {
+            return {};
+        }
+    });
+
+    const [isProjectExpanded, setIsProjectExpanded] = useState(() => {
+        try {
+            const saved = localStorage.getItem('sidebar_project_expanded');
+            return saved !== null ? JSON.parse(saved) : true;
+        } catch {
+            return true;
+        }
+    });
+
+    const [searchQuery, setSearchQuery] = useState('');
 
     // Group topics by category (preserving order)
     const categorizedTopics = useMemo(() => {
@@ -25,340 +67,287 @@ export default function Sidebar({ topics = [], currentTopicId, onSelectTopic, is
                     name: catName,
                     topics: []
                 });
-                // Initialize expanded state for new categories (default open)
-                if (expandedCategories[catName] === undefined) {
-                    // This side-effect in render is not ideal but standard workaround
-                    // Better to just treat undefined as true in isExpanded
-                }
             }
             const group = groups.find(g => g.name === catName);
             group.topics.push(topic);
         });
 
-        // Sort topics within each group by displayIndex
         groups.forEach(group => {
             group.topics.sort((a, b) => (a.displayIndex || 0) - (b.displayIndex || 0));
         });
 
-        // Sort groups based on CATEGORY_ORDER
         groups.sort((a, b) => {
             const indexA = CATEGORY_ORDER.indexOf(a.name);
             const indexB = CATEGORY_ORDER.indexOf(b.name);
 
-            // If both are in the list, sort by index
             if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-            // If only A is in list, comes first
             if (indexA !== -1) return -1;
-            // If only B is in list, comes first
             if (indexB !== -1) return 1;
-            // If neither, sort alphabetically
             return a.name.localeCompare(b.name);
         });
 
         return groups;
-    }, [topics]); // Re-calculate when topics change (important for async Firestore data)
+    }, [topics]);
 
-    // Toggle category expansion
-    const toggleCategory = (catName) => {
+    // Save expanded categories to localStorage whenever they change
+    useEffect(() => {
+        try {
+            localStorage.setItem('sidebar_expanded_categories', JSON.stringify(expandedCategories));
+        } catch { /* ignore */ }
+    }, [expandedCategories]);
+
+    // Save project expanded state to localStorage
+    useEffect(() => {
+        try {
+            localStorage.setItem('sidebar_project_expanded', JSON.stringify(isProjectExpanded));
+        } catch { /* ignore */ }
+    }, [isProjectExpanded]);
+
+    // Auto-expand the category of the currently selected topic
+    useEffect(() => {
+        if (currentTopicId && topics.length > 0) {
+            const selectedTopic = topics.find(t => t.id === currentTopicId);
+            if (selectedTopic) {
+                const category = selectedTopic.category || 'Uncategorized';
+                // Only expand if not already expanded
+                if (expandedCategories[category] !== true) {
+                    setExpandedCategories(prev => ({
+                        ...prev,
+                        [category]: true
+                    }));
+                }
+                // Also expand the project section if it's collapsed
+                if (!isProjectExpanded) {
+                    setIsProjectExpanded(true);
+                }
+            }
+        }
+    }, [currentTopicId, topics]);
+
+    // Filter topics based on search query
+    const filteredTopics = useMemo(() => {
+        if (!searchQuery) return null; // null means show full tree
+        return topics.filter(t =>
+            t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            t.description?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [topics, searchQuery]);
+
+    const toggleCategory = (catName, e) => {
+        e.stopPropagation();
         setExpandedCategories(prev => ({
             ...prev,
-            [catName]: prev[catName] === undefined ? false : !prev[catName]
+            [catName]: !prev[catName]
         }));
     };
 
+    // Check if a category is expanded (default to COLLAPSED if not explicitly set)
     const isExpanded = (catName) => {
-        return expandedCategories[catName] !== false; // Default Open
+        return expandedCategories[catName] === true;
     };
 
-    const filteredTopics = topics.filter(topic =>
-        topic.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Style helpers
+    const sidebarHeaderStyle = {
+        padding: '10px 20px',
+        fontSize: '11px',
+        fontWeight: 'bold',
+        color: 'var(--vscode-sideBar-fg)',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        textTransform: 'uppercase',
+        letterSpacing: '1px'
+    };
+
+    const sectionHeaderStyle = {
+        padding: '4px 0',
+        paddingLeft: '2px',
+        cursor: 'pointer',
+        fontSize: '11px',
+        fontWeight: 'bold',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        display: 'flex',
+        alignItems: 'center',
+        color: 'var(--vscode-sideBarSectionHeader-fg)'
+    };
+
+    const treeItemStyle = (isActive) => ({
+        padding: '3px 0',
+        cursor: 'pointer',
+        fontSize: '13px',
+        color: isActive ? 'var(--vscode-list-activeSelectionFg)' : 'var(--vscode-sideBar-fg)',
+        backgroundColor: isActive ? 'var(--vscode-list-activeSelectionBg)' : 'transparent',
+        display: 'flex',
+        alignItems: 'center',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+    });
+
+    // Collapse all categories
+    const collapseAll = () => {
+        const collapsed = {};
+        categorizedTopics.forEach(group => {
+            collapsed[group.name] = false;
+        });
+        setExpandedCategories(collapsed);
+        setIsProjectExpanded(false);
+    };
+
+    // Expand all categories
+    const expandAll = () => {
+        const expanded = {};
+        categorizedTopics.forEach(group => {
+            expanded[group.name] = true;
+        });
+        setExpandedCategories(expanded);
+        setIsProjectExpanded(true);
+    };
+
+    if (!isOpen) return null;
 
     return (
-        <>
-            {/* Mobile Overlay */}
-            <div
-                className={`sidebar-overlay ${isOpen ? 'open' : ''}`}
-                onClick={() => setIsOpen(false)}
-            />
-
-            <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
-                <div className="sidebar-header">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
-                        <img src="/logo.png" alt="Go Guru Logo" className="brand-logo" />
-                        <h1 className="brand-title" style={{ fontSize: '1.5rem', margin: 0 }}>
-                            Go Guru
-                        </h1>
-                    </div>
-                    <button
-                        className="btn-icon"
-                        onClick={toggleTheme}
-                        aria-label="Toggle theme"
-                        title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        <div className="vscode-sidebar" style={{
+            width: '250px',
+            backgroundColor: 'var(--vscode-sideBar-bg)',
+            borderRight: '1px solid var(--vscode-sideBar-border)',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            flexShrink: 0
+        }}>
+            {/* VIEW HEADER */}
+            <div style={sidebarHeaderStyle}>
+                <span>GO GURU</span>
+                <div style={{ display: 'flex', gap: '4px' }}>
+                    <span
+                        className="material-icons"
+                        style={{ fontSize: '16px', cursor: 'pointer', opacity: 0.7 }}
+                        title="Expand All"
+                        onClick={expandAll}
                     >
-                        {theme === 'dark' ? '☀️' : '🌙'}
-                    </button>
+                        unfold_more
+                    </span>
+                    <span
+                        className="material-icons"
+                        style={{ fontSize: '16px', cursor: 'pointer', opacity: 0.7 }}
+                        title="Collapse All"
+                        onClick={collapseAll}
+                    >
+                        unfold_less
+                    </span>
                 </div>
+            </div>
 
-                <div className="sidebar-search">
+            {/* SEARCH BOX */}
+            <div style={{ padding: '8px 10px' }}>
+                <div style={{ position: 'relative' }}>
+                    <span className="material-icons" style={{
+                        position: 'absolute',
+                        left: '8px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        fontSize: '16px',
+                        color: '#888'
+                    }}>search</span>
                     <input
                         type="text"
                         placeholder="Search topics..."
-                        className="search-input"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        style={{
+                            width: '100%',
+                            padding: '6px 6px 6px 30px',
+                            backgroundColor: 'var(--vscode-input-bg)',
+                            color: 'var(--vscode-input-fg)',
+                            border: '1px solid var(--vscode-input-border, #3c3c3c)',
+                            outline: 'none',
+                            fontSize: '12px'
+                        }}
                     />
                 </div>
+            </div>
 
-                {/* Battle Direct Link */}
-                <div style={{ padding: '0 var(--spacing-sm) var(--spacing-sm)' }}>
-                    <button
-                        onClick={() => {
-                            setIsOpen(false);
-                            navigate('/battle');
-                        }}
-                        className="nav-item battle-mode-btn"
-                        style={{
-                            width: '100%',
-                            justifyContent: 'center',
-                            background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)',
-                            border: 'none',
-                            color: '#ffffff',
-                            fontWeight: 800,
-                            boxShadow: '0 4px 15px rgba(168, 85, 247, 0.4)',
-                            marginTop: '8px',
-                            transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.05em',
-                            fontSize: '0.9rem',
-                            position: 'relative',
-                            overflow: 'hidden',
-                            height: '48px',
-                            display: 'flex',
-                            alignItems: 'center'
-                        }}
-                    >
-                        {/* Clashing Swords Container */}
-                        <div className="battle-icon-container">
-                            <span className="sword sword-left">🗡️</span>
-                            <span className="sword sword-right">🗡️</span>
+            {/* FILE TREE / SEARCH RESULTS */}
+            <div style={{ flex: 1, overflowY: 'auto' }}>
+
+                {/* If searching, show filtered results */}
+                {filteredTopics !== null ? (
+                    <div style={{ padding: '0 10px' }}>
+                        <div style={{ fontSize: '11px', color: '#888', marginBottom: '8px' }}>
+                            {filteredTopics.length} results
+                        </div>
+                        {filteredTopics.map(topic => (
+                            <div
+                                key={topic.id}
+                                style={{ ...treeItemStyle(currentTopicId === topic.id), paddingLeft: '5px' }}
+                                onClick={() => onSelectTopic(topic.id)}
+                            >
+                                <FileIcon />
+                                <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                                    <span>{topic.title}</span>
+                                    <span style={{ fontSize: '10px', color: '#888' }}>{topic.category}</span>
+                                </div>
+                            </div>
+                        ))}
+                        {filteredTopics.length === 0 && (
+                            <div style={{ color: '#888', fontStyle: 'italic', fontSize: '12px' }}>No results found.</div>
+                        )}
+                    </div>
+                ) : (
+                    /* Show full file tree */
+                    <>
+                        <div style={sectionHeaderStyle} onClick={() => setIsProjectExpanded(!isProjectExpanded)}>
+                            {isProjectExpanded ? <ChevronDown /> : <ChevronRight />}
+                            <span>TOPICS</span>
                         </div>
 
-                        <span style={{ position: 'relative', zIndex: 1, textShadow: '0 2px 4px rgba(0,0,0,0.3)', marginLeft: '8px' }}>
-                            Battle Mode
-                        </span>
-
-                        {/* Sparkles */}
-                        <span className="star star-1">✨</span>
-                        <span className="star star-2">✨</span>
-                        <span className="star star-3">✦</span>
-                    </button>
-
-                    <style>{`
-                        .battle-mode-btn:hover {
-                            transform: translateY(-2px) scale(1.02);
-                            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.6) !important;
-                            background: linear-gradient(135deg, #9333ea 0%, #2563eb 100%) !important;
-                        }
-
-                        .battle-icon-container {
-                            position: relative;
-                            width: 24px;
-                            height: 24px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                        }
-
-                        .sword {
-                            position: absolute;
-                            font-size: 1.2rem;
-                            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
-                        }
-
-                        .sword-left {
-                            transform: translate(-2px, 0) rotate(0deg);
-                            left: 0;
-                            z-index: 2;
-                        }
-
-                        .sword-right {
-                            transform: translate(2px, 0) scaleX(-1) rotate(0deg);
-                            right: 0;
-                            z-index: 1;
-                        }
-
-                        /* Hover Animation: Clash */
-                        .battle-mode-btn:hover .sword-left {
-                            animation: clash-left 0.6s ease-in-out infinite;
-                        }
-                        .battle-mode-btn:hover .sword-right {
-                            animation: clash-right 0.6s ease-in-out infinite;
-                        }
-
-                        @keyframes clash-left {
-                            0% { transform: translate(-2px, 0) rotate(0deg); }
-                            25% { transform: translate(-8px, -5px) rotate(-45deg); } /* Pull back */
-                            50% { transform: translate(4px, 2px) rotate(20deg); } /* Strike */
-                            75% { transform: translate(0, 0) rotate(0deg); }
-                            100% { transform: translate(-2px, 0) rotate(0deg); }
-                        }
-
-                        @keyframes clash-right {
-                            0% { transform: translate(2px, 0) scaleX(-1) rotate(0deg); }
-                            25% { transform: translate(8px, -5px) scaleX(-1) rotate(-45deg); } /* Pull back */
-                            50% { transform: translate(-4px, 2px) scaleX(-1) rotate(20deg); } /* Strike */
-                            75% { transform: translate(0, 0) scaleX(-1) rotate(0deg); }
-                            100% { transform: translate(2px, 0) scaleX(-1) rotate(0deg); }
-                        }
-
-                        /* Sparkles */
-                        .star {
-                            position: absolute;
-                            font-size: 10px;
-                            color: #ffff80; /* Light yellow tint */
-                            opacity: 0;
-                            pointer-events: none;
-                        }
-                        
-                        .battle-mode-btn:hover .star {
-                             animation: twinkle 1s infinite;
-                        }
-
-                        .star-1 { top: 5px; right: 20px; animation-delay: 0s; }
-                        .star-2 { bottom: 8px; left: 15px; animation-delay: 0.3s; font-size: 8px; }
-                        .star-3 { top: 10px; left: 45%; animation-delay: 0.6s; font-size: 12px; color: white; }
-                        
-                        @keyframes twinkle {
-                            0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-                            50% { opacity: 1; transform: scale(1.4) rotate(180deg); text-shadow: 0 0 5px white; }
-                            100% { opacity: 0; transform: scale(0.5) rotate(360deg); }
-                        }
-                    `}</style>
-                </div>
-
-                <nav className="sidebar-nav">
-                    {/* Search Mode: Flat List */}
-                    {searchTerm && (
-                        <>
-                            {filteredTopics.length === 0 && (
-                                <div style={{ padding: 'var(--spacing-md)', color: 'var(--text-tertiary)', fontSize: '0.9rem', textAlign: 'center' }}>
-                                    No matching topics
+                        {isProjectExpanded && (
+                            <div>
+                                <div style={{ ...treeItemStyle(window.location.pathname.includes('/battle')), paddingLeft: '20px' }} onClick={() => navigate('/battle')}>
+                                    <span className="material-icons" style={{ fontSize: '16px', marginRight: '6px' }}>sports_kabaddi</span>
+                                    <span>battle_mode.go</span>
                                 </div>
-                            )}
-                            {filteredTopics.map((topic) => (
-                                <button
-                                    key={topic.id}
-                                    onClick={() => onSelectTopic(topic.id)}
-                                    className={`nav-item ${currentTopicId === topic.id ? 'active' : ''}`}
-                                >
-                                    <span className="nav-index">
-                                        {topic.displayIndex?.toString().padStart(2, '0') || '00'}
-                                    </span>
-                                    {topic.title}
-                                    {visitedIds.includes(topic.id) && (
-                                        <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', color: 'var(--primary)' }} title="Completed">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </span>
-                                    )}
-                                </button>
-                            ))}
-                        </>
-                    )}
-
-                    {/* Category Mode: Grouped List */}
-                    {!searchTerm && (
-                        categorizedTopics.map(group => (
-                            <div key={group.name} className="nav-group">
-                                <button
-                                    className="nav-group-header"
-                                    onClick={() => toggleCategory(group.name)}
-                                >
-                                    <span className="group-title">{group.name}</span>
-                                    <span className="group-toggle">
-                                        {isExpanded(group.name) ? '−' : '+'}
-                                    </span>
-                                </button>
-
-                                {isExpanded(group.name) && (
-                                    <div className="nav-group-items">
-                                        {group.topics.map(topic => (
-                                            <button
-                                                key={topic.id}
-                                                onClick={() => onSelectTopic(topic.id)}
-                                                className={`nav-item ${currentTopicId === topic.id ? 'active' : ''}`}
-                                            >
-                                                <span className="nav-index">
-                                                    {topic.displayIndex?.toString().padStart(2, '0') || '00'}
-                                                </span>
-                                                {topic.title}
-                                                {visitedIds.includes(topic.id) && (
-                                                    <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', color: 'var(--primary)' }} title="Completed">
-                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                                        </svg>
-                                                    </span>
-                                                )}
-                                            </button>
-                                        ))}
+                                {categorizedTopics.map(group => (
+                                    <div key={group.name}>
+                                        <div
+                                            style={{ ...treeItemStyle(false), paddingLeft: '10px', fontWeight: 'bold' }}
+                                            onClick={(e) => toggleCategory(group.name, e)}
+                                            title={group.name}
+                                        >
+                                            {isExpanded(group.name) ? <ChevronDown /> : <ChevronRight />}
+                                            <FolderIcon />
+                                            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, minWidth: 0 }}>{group.name}</span>
+                                        </div>
+                                        {isExpanded(group.name) && (
+                                            <div>
+                                                {group.topics.map(topic => (
+                                                    <div
+                                                        key={topic.id}
+                                                        style={{ ...treeItemStyle(currentTopicId === topic.id), paddingLeft: '32px' }}
+                                                        onClick={() => onSelectTopic(topic.id)}
+                                                        title={`${topic.title}.go`}
+                                                    >
+                                                        <FileIcon />
+                                                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, minWidth: 0 }}>
+                                                            {topic.title}.go
+                                                        </span>
+                                                        {visitedIds.includes(topic.id) && (
+                                                            <span style={{ marginLeft: '5px', color: '#4ec9b0', fontSize: '12px', flexShrink: 0 }}>✓</span>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
-                                )}
+                                ))}
                             </div>
-                        ))
-                    )}
-                </nav>
-
-                <div className="sidebar-footer">
-                    <a
-                        href="https://www.linkedin.com/in/ismael-osuna"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-link"
-                    >
-                        <span>🔗</span> LinkedIn
-                    </a>
-                    <a
-                        href="https://buymeacoffee.com/ismaelosuna"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-link"
-                    >
-                        <span>☕</span> Buy Me a Coffee
-                    </a>
-                    <a
-                        href="https://github.com/ismaelosuna7824/go-guru"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-link"
-                    >
-                        <span>🐙</span> GitHub Repo
-                    </a>
-                    <button
-                        onClick={() => {
-                            if (window.confirm('¿Estás seguro de borrar todo tu progreso?')) {
-                                resetProgress();
-                                onSelectTopic(topics[0].id); // Reset view to first topic
-                            }
-                        }}
-                        style={{
-                            marginTop: 'var(--spacing-sm)',
-                            background: 'transparent',
-                            border: '1px solid var(--border-subtle)',
-                            color: 'var(--text-tertiary)',
-                            padding: '2px var(--spacing-sm)',
-                            borderRadius: 'var(--radius-sm)',
-                            fontSize: '0.75rem',
-                            width: '100%',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        Reset Progress
-                    </button>
-                </div>
-            </aside>
-        </>
+                        )}
+                    </>
+                )}
+            </div>
+        </div>
     );
 }
