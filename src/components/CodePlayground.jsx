@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
 import { executeCode, validateCode } from '../services/goExecutorService';
+import { useTheme } from '../context/ThemeContext';
 
 export default function CodePlayground({ initialCode, expectedOutput }) {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+
     const [code, setCode] = useState(initialCode ? initialCode.replace(/\\n/g, '\n') : '');
     const [output, setOutput] = useState('');
     const [isRunning, setIsRunning] = useState(false);
     const [status, setStatus] = useState('');
-    const [validationResult, setValidationResult] = useState(null); // { success: boolean, message: string }
+    const [validationResult, setValidationResult] = useState(null);
     const [executionTime, setExecutionTime] = useState(null);
 
     const handleEditorChange = (value) => {
@@ -15,7 +19,6 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
     };
 
     const runCode = async () => {
-        // Pre-flight validation
         const localValidation = validateCode(code);
         if (!localValidation.valid) {
             setOutput(localValidation.error);
@@ -32,7 +35,6 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
         const startTime = performance.now();
 
         try {
-            // Call the execution service
             const result = await executeCode(code, expectedOutput);
 
             const endTime = performance.now();
@@ -45,7 +47,6 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
                 setStatus('Finished');
                 setOutput(result.output || 'No output');
 
-                // If expectedOutput was provided, the backend returns 'correct' flag
                 if (expectedOutput) {
                     setValidationResult({
                         success: result.correct,
@@ -54,7 +55,6 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
                 }
             } else {
                 setStatus('Failed');
-                // Handle different error types from the service
                 if (result.stderr) {
                     setOutput(`Error:\n${result.stderr}`);
                 } else {
@@ -74,11 +74,24 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
         }
     };
 
+    // Theme-aware colors
+    const colors = {
+        headerBg: isDark ? 'var(--vscode-editorGroupHeader-tabsBg)' : '#f5f5f5',
+        headerBorder: isDark ? '#111' : '#d4d4d4',
+        badgeBg: isDark ? '#37373d' : '#e0e0e0',
+        badgeColor: isDark ? '#fff' : '#333',
+        consoleBg: isDark ? '#1e1e1e' : '#f8f8f8',
+        consoleBorder: isDark ? '#333' : '#d4d4d4',
+        consoleHeaderBg: isDark ? '#252526' : '#ececec',
+        consoleText: isDark ? '#cccccc' : '#333333',
+        placeholderText: isDark ? '#666' : '#999'
+    };
+
     return (
         <div className="code-playground" style={{
-            marginTop: 'var(--spacing-md)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: 'var(--radius-md)',
+            marginTop: '16px',
+            border: `1px solid ${isDark ? 'var(--vscode-focusBorder)' : '#d4d4d4'}`,
+            borderRadius: '6px',
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column'
@@ -87,18 +100,18 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                padding: 'var(--spacing-sm) var(--spacing-md)',
-                background: '#1e1e1e', // Matches VS Code dark header
-                borderBottom: '1px solid #333'
+                padding: '8px 16px',
+                background: colors.headerBg,
+                borderBottom: `1px solid ${colors.headerBorder}`
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#cccccc' }}>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--vscode-editor-fg)' }}>
                         main.go
                     </span>
                     <span style={{
                         fontSize: '0.7rem',
-                        background: '#37373d',
-                        color: '#fff',
+                        background: colors.badgeBg,
+                        color: colors.badgeColor,
                         padding: '2px 6px',
                         borderRadius: '3px'
                     }}>
@@ -108,10 +121,13 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
                 <button
                     onClick={runCode}
                     disabled={isRunning}
-                    className="btn-primary"
                     style={{
+                        backgroundColor: isRunning ? '#666' : 'var(--vscode-button-bg)',
+                        color: 'var(--vscode-button-fg)',
+                        border: 'none',
                         fontSize: '0.85rem',
-                        padding: '0.3rem 1rem',
+                        padding: '4px 12px',
+                        borderRadius: '4px',
                         opacity: isRunning ? 0.7 : 1,
                         cursor: isRunning ? 'wait' : 'pointer',
                         display: 'flex',
@@ -139,21 +155,21 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
                 </button>
             </div>
 
-            <div style={{ height: '300px', position: 'relative' }}>
+            <div style={{ height: '400px', position: 'relative' }}>
                 <Editor
                     height="100%"
                     defaultLanguage="go"
                     defaultValue={initialCode ? initialCode.replace(/\\n/g, '\n') : ''}
                     value={code}
                     onChange={handleEditorChange}
-                    theme="vs-dark"
+                    theme={isDark ? 'vs-dark' : 'light'}
                     options={{
                         minimap: { enabled: false },
                         scrollBeyondLastLine: false,
                         fontSize: 14,
                         fontFamily: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
                         tabSize: 4,
-                        insertSpaces: false, // Go uses tabs
+                        insertSpaces: false,
                         automaticLayout: true,
                         padding: { top: 16, bottom: 16 },
                         lineNumbers: 'on',
@@ -167,7 +183,7 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
                     }}
                     loading={
                         <div style={{
-                            color: '#aaa',
+                            color: colors.placeholderText,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -180,22 +196,22 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
             </div>
 
             <div className="output-console" style={{
-                borderTop: '1px solid #333',
-                background: '#1a1a1a',
-                color: '#f0f0f0',
+                borderTop: `1px solid ${colors.consoleBorder}`,
+                background: colors.consoleBg,
+                color: colors.consoleText,
                 fontFamily: "'JetBrains Mono', monospace",
                 fontSize: '0.9rem'
             }}>
                 <div style={{
-                    padding: 'var(--spacing-xs) var(--spacing-md)',
-                    background: '#252526',
-                    color: '#aaa',
+                    padding: '4px 16px',
+                    background: colors.consoleHeaderBg,
+                    color: isDark ? '#aaa' : '#666',
                     fontSize: '0.8rem',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                     display: 'flex',
                     justifyContent: 'space-between',
-                    borderBottom: '1px solid #333'
+                    borderBottom: `1px solid ${colors.consoleBorder}`
                 }}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         TERMINAL {status && <span style={{
@@ -206,11 +222,11 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
                         }} />}
                     </span>
                     {executionTime && (
-                        <span style={{ color: '#888' }}>⏱ {executionTime}ms</span>
+                        <span style={{ color: isDark ? '#888' : '#666' }}>⏱ {executionTime}ms</span>
                     )}
                 </div>
                 <pre style={{
-                    padding: 'var(--spacing-md)',
+                    padding: '16px',
                     margin: 0,
                     whiteSpace: 'pre-wrap',
                     overflowX: 'auto',
@@ -219,7 +235,7 @@ export default function CodePlayground({ initialCode, expectedOutput }) {
                     fontFamily: 'inherit',
                     lineHeight: '1.5'
                 }}>
-                    {output || (isRunning ? <span style={{ color: '#666' }}>Compiling and executing...</span> : <span style={{ color: '#444' }}>// Execution output will appear here</span>)}
+                    {output || (isRunning ? <span style={{ color: colors.placeholderText }}>Compiling and executing...</span> : <span style={{ color: colors.placeholderText }}>// Execution output will appear here</span>)}
                 </pre>
 
                 {validationResult && (

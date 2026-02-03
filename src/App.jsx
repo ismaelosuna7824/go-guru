@@ -1,8 +1,10 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Outlet, useLocation, useOutletContext } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
+import ActivityBar from './components/ActivityBar';
+import StatusBar from './components/StatusBar';
 import SEO from './components/SEO';
-import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { useProgress } from './context/ProgressContext';
 import { useTopics } from './hooks/useTopics';
 
@@ -10,51 +12,31 @@ import { useTopics } from './hooks/useTopics';
 const TopicViewer = lazy(() => import('./components/TopicViewer'));
 const BattlePage = lazy(() => import('./components/Battle/BattlePage'));
 
-function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
-
-  return (
-    <button
-      className="toggle-theme-btn"
-      onClick={toggleTheme}
-      aria-label="Toggle theme"
-      title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-    >
-      {theme === 'dark' ? '☀️' : '🌙'}
-    </button>
-  );
-}
-
-// Layout Component (Formerly Home logic for structure)
-// Handles Sidebar and Main Content wrapper
+// Layout Component
 function Layout() {
   const { lastTopicId, updateCurrentTopic } = useProgress();
   const { topics, loading: topicsLoading, error: topicsError } = useTopics();
   const [currentTopicId, setCurrentTopicId] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [activeView, setActiveView] = useState('search');
+
+  // Multi-tab state: array of topic IDs
+  const [openTabs, setOpenTabs] = useState(() => {
+    try {
+      const saved = localStorage.getItem('openTabs');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Save open tabs to localStorage
   useEffect(() => {
-    if (currentTopicId && location.pathname === '/') {
-      updateCurrentTopic(currentTopicId);
-    }
-  }, [currentTopicId, updateCurrentTopic, location.pathname]);
-
-  useEffect(() => {
-    if (lastTopicId === null && topics.length > 0) {
-      setCurrentTopicId(topics[0].id);
-    }
-  }, [lastTopicId, topics]);
-
-  // Context-like prop passing for the specific topic viewer case
-  // When we are at root '/', we want to show the TopicViewer.
-  // The Sidebar needs to know about currentTopicId.
-  // We can pass context via Outlet, but easier to just manage state here if Sidebar controls it.
-
-  // NOTE: If we are in /battle, currentTopicId might be irrelevant for the view, 
-  // but Sidebar still highlights it. Maybe we deselect if not in topic mode?
-  // Let's keep it simple.
+    localStorage.setItem('openTabs', JSON.stringify(openTabs));
+  }, [openTabs]);
 
   useEffect(() => {
     if (currentTopicId && location.pathname === '/') {
@@ -68,189 +50,136 @@ function Layout() {
     }
   }, [lastTopicId, topics]);
 
+  // Add topic to tabs when navigating
+  const handleOpenTopic = (id) => {
+    if (!openTabs.includes(id)) {
+      setOpenTabs(prev => [...prev, id]);
+    }
+    navigate(`/${id}`);
+    // Close sidebar on mobile after selecting
+    if (window.innerWidth <= 768) {
+      setIsSidebarOpen(false);
+    }
+  };
 
-  // Show error state if topics failed to load
+  const handleCloseTab = (id, e) => {
+    e.stopPropagation();
+    const newTabs = openTabs.filter(tabId => tabId !== id);
+    setOpenTabs(newTabs);
+
+    // If closing current tab, navigate to last remaining tab or first topic
+    if (location.pathname === `/${id}`) {
+      if (newTabs.length > 0) {
+        navigate(`/${newTabs[newTabs.length - 1]}`);
+      } else if (topics.length > 0) {
+        navigate(`/${topics[0].id}`);
+      }
+    }
+  };
+
+  const handleCloseAllTabs = () => {
+    setOpenTabs([]);
+    if (topics.length > 0) {
+      navigate(`/${topics[0].id}`);
+    }
+  };
+
   if (topicsError) {
     return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        background: 'var(--bg-primary)',
-        color: 'var(--text-primary)',
-        padding: '20px',
-        textAlign: 'center'
-      }}>
-        <h2>❌ Error al cargar topics</h2>
-        <p style={{ color: 'var(--text-secondary)', marginTop: '10px' }}>
-          {topicsError.message || 'No se pudieron cargar los temas'}
-        </p>
-        <button
-          onClick={() => window.location.reload()}
-          style={{
-            marginTop: '20px',
-            padding: '10px 20px',
-            background: 'var(--accent)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer'
-          }}
-        >
-          Reintentar
-        </button>
-      </div>
-    );
-  }
-
-  // Show loading state while topics are being fetched
-  if (topicsLoading) {
-    return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        background: 'var(--bg-primary)',
-        color: 'var(--text-primary)',
-        gap: '24px'
-      }}>
-        {/* Animated Logo Container */}
-        <div style={{
-          position: 'relative',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          {/* Pulse Ring */}
-          <div style={{
-            position: 'absolute',
-            width: '120px',
-            height: '120px',
-            borderRadius: '50%',
-            border: '3px solid var(--primary)',
-            opacity: '0.3',
-            animation: 'pulse 2s ease-in-out infinite'
-          }} />
-
-          {/* Logo */}
-          <img
-            src="/logo.png"
-            alt="Go Guru"
-            style={{
-              width: '80px',
-              height: '80px',
-              borderRadius: '50%',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
-              animation: 'float 3s ease-in-out infinite',
-              position: 'relative',
-              zIndex: 1
-            }}
-          />
-        </div>
-
-        {/* Loading Text with Dots Animation */}
-        <div style={{
-          fontSize: '1.2rem',
-          fontWeight: '500',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px'
-        }}>
-          <span>Cargando topics</span>
-          <span style={{ display: 'inline-flex', width: '30px' }}>
-            <span style={{ animation: 'dot1 1.4s infinite' }}>.</span>
-            <span style={{ animation: 'dot2 1.4s infinite' }}>.</span>
-            <span style={{ animation: 'dot3 1.4s infinite' }}>.</span>
-          </span>
-        </div>
-
-        {/* CSS Animations */}
-        <style>{`
-          @keyframes pulse {
-            0%, 100% {
-              transform: scale(1);
-              opacity: 0.3;
-            }
-            50% {
-              transform: scale(1.3);
-              opacity: 0.1;
-            }
-          }
-
-          @keyframes float {
-            0%, 100% {
-              transform: translateY(0px) rotate(0deg);
-            }
-            33% {
-              transform: translateY(-10px) rotate(5deg);
-            }
-            66% {
-              transform: translateY(-5px) rotate(-5deg);
-            }
-          }
-
-          @keyframes dot1 {
-            0%, 20%, 100% { opacity: 0; }
-            40% { opacity: 1; }
-          }
-
-          @keyframes dot2 {
-            0%, 40%, 100% { opacity: 0; }
-            60% { opacity: 1; }
-          }
-
-          @keyframes dot3 {
-            0%, 60%, 100% { opacity: 0; }
-            80% { opacity: 1; }
-          }
-        `}</style>
-      </div>
+      <div style={{ padding: 20, color: 'red' }}>Error loading topics</div>
     );
   }
 
   const currentTopic = topics.find(t => t.id === currentTopicId);
 
   return (
-    <div className="app-layout">
+    <div className="vscode-layout">
       <SEO />
-      <Sidebar
-        topics={topics}
-        currentTopicId={currentTopicId}
-        onSelectTopic={(id) => {
-          // Navigate to the topic URL
-          navigate(`/${id}`);
-          setIsSidebarOpen(false);
-        }}
-        isOpen={isSidebarOpen}
-        setIsOpen={setIsSidebarOpen}
-      />
 
-      <main className="main-content">
-        {/* We can remove the local header button since it's in Sidebar now */}
-        {/* Render the matching child route */}
-        <Suspense fallback={<div className="p-8 text-center" style={{ color: 'var(--text-secondary)' }}>Cargando...</div>}>
-          {/* Pass props to outlet if needed, e.g. currentTopic */}
-          <Outlet context={{ topics, currentTopic, setIsSidebarOpen }} />
-        </Suspense>
-      </main>
+      {/* Mobile Menu Button */}
+      <button
+        className="mobile-menu-btn"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        style={{
+          position: 'fixed',
+          top: '8px',
+          left: '8px',
+          zIndex: 200,
+          background: 'var(--vscode-button-bg)',
+          color: 'var(--vscode-button-fg)',
+          border: 'none',
+          borderRadius: '4px',
+          padding: '8px',
+          cursor: 'pointer',
+          display: 'none', // Hidden by default, shown via CSS on mobile
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <span className="material-icons" style={{ fontSize: '20px' }}>menu</span>
+      </button>
+
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0,0,0,0.5)',
+            zIndex: 99,
+            display: 'none' // Hidden by default, shown via CSS on mobile when sidebar is open
+          }}
+        />
+      )}
+
+      {/* Workbench Area (ActivityBar + Sidebar + Editor) */}
+      <div className="workbench">
+        <ActivityBar
+          activeView={activeView}
+          onViewChange={setActiveView}
+          isSidebarOpen={isSidebarOpen}
+          onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+
+        <Sidebar
+          topics={topics}
+          currentTopicId={currentTopicId}
+          onSelectTopic={handleOpenTopic}
+          isOpen={isSidebarOpen}
+          activeView={activeView}
+        />
+
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative', minWidth: 0 }}>
+          {topicsLoading ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#888' }}>
+              Loading...
+            </div>
+          ) : (
+            <Suspense fallback={<div style={{ padding: '20px', color: '#888' }}>Loading Editor...</div>}>
+              <Outlet context={{ topics, currentTopic, setIsSidebarOpen, openTabs, setOpenTabs, handleCloseTab, handleCloseAllTabs }} />
+            </Suspense>
+          )}
+        </main>
+      </div>
+
+      <StatusBar />
     </div>
   );
 }
 
-// Wrapper for TopicViewer to consume URL params
+
 import { useParams, Navigate } from 'react-router-dom';
 
 function TopicViewerRoute() {
   const { topicId } = useParams();
   const { updateCurrentTopic } = useProgress();
-  // Get topics from context, defaulting to empty array if undefined to prevent crash
   const { topics = [], setIsSidebarOpen } = useOutletContext() || {};
 
-  // Find the topic based on URL param
   const topic = topics ? topics.find(t => t.id === topicId) : null;
 
   useEffect(() => {
@@ -259,9 +188,8 @@ function TopicViewerRoute() {
     }
   }, [topicId, topic, updateCurrentTopic]);
 
-  if (!topics || topics.length === 0) return <div>Cargando...</div>;
+  if (!topics || topics.length === 0) return null;
 
-  // If we are at root / and have topics, redirect to the first one
   if (!topicId) {
     if (topics.length > 0) {
       return <Navigate to={`/${topics[0].id}`} replace />;
@@ -269,7 +197,7 @@ function TopicViewerRoute() {
   }
 
   if (topicId && !topic) {
-    return <div>Tema no encontrado</div>;
+    return <div style={{ padding: '20px', color: '#888' }}>File not found.</div>;
   }
 
   return <TopicViewer topic={topic} onOpenSidebar={() => setIsSidebarOpen(true)} />;

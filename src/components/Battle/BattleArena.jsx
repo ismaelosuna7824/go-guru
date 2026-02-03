@@ -2,8 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { battleService } from '../../services/battleService';
 import { executeCode } from '../../services/goExecutorService';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function BattleArena({ roomId, playerId, player, roomState, isHost }) {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
     const [code, setCode] = useState('// Waiting for challenge...');
     const [output, setOutput] = useState('');
     const [status, setStatus] = useState('idle'); // idle, running, success, failed
@@ -140,10 +143,12 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
             display: 'grid',
             gridTemplateColumns: '350px 1fr',
             gridTemplateRows: '1fr',
-            gap: 'var(--spacing-md)',
-            padding: 'var(--spacing-md)',
+            gap: '16px',
+            padding: '16px',
             maxWidth: '1920px',
             margin: '0 auto',
+            backgroundColor: 'var(--vscode-editor-bg)',
+            color: 'var(--vscode-editor-fg)',
             '@media (max-width: 1024px)': {
                 gridTemplateColumns: '250px 1fr'
             },
@@ -166,7 +171,10 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                     display: 'flex',
                     flexDirection: 'column',
                     overflow: 'hidden', // Contain inner scroll
-                    minHeight: '0' // flex bug fix
+                    minHeight: '0', // flex bug fix
+                    backgroundColor: 'var(--vscode-sideBar-bg)',
+                    border: '1px solid var(--vscode-sideBar-border)',
+                    borderRadius: '0'
                 }}>
                     <div style={{ marginBottom: 'var(--spacing-md)', flexShrink: 0 }}>
                         <span style={{
@@ -181,7 +189,7 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                         <h2 style={{
                             fontSize: '1.5rem',
                             fontWeight: 700,
-                            color: 'var(--accent-amber-text)',
+                            color: 'var(--vscode-editor-fg)',
                             marginTop: '4px',
                             lineHeight: 1.2
                         }}>
@@ -197,12 +205,12 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                     }}>
                         <div style={{
                             fontSize: '0.95rem',
-                            color: 'var(--text-secondary)',
+                            color: 'var(--vscode-editor-fg)',
                             lineHeight: 1.6,
-                            background: 'rgba(255,255,255,0.03)',
+                            background: 'var(--vscode-editor-bg)',
                             padding: '12px',
-                            borderRadius: 'var(--radius-sm)',
-                            marginBottom: 'var(--spacing-md)'
+                            border: '1px solid var(--vscode-editor-layoutBorder)',
+                            marginBottom: '16px'
                         }}>
                             <p style={{ whiteSpace: 'pre-line' }}>{challenge?.description || 'The host is generating a challenge...'}</p>
                         </div>
@@ -222,12 +230,12 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {challenge?.testCases?.map((tc, i) => (
                                     <div key={i} style={{
-                                        background: 'var(--bg-code)',
-                                        borderRadius: '6px',
+                                        background: 'var(--vscode-textBlockQuote-background)',
+                                        borderRadius: '0',
                                         padding: '10px',
                                         fontSize: '0.85rem',
                                         fontFamily: 'var(--font-mono)',
-                                        border: '1px solid var(--border-subtle)'
+                                        border: '1px solid var(--vscode-textBlockQuote-border)'
                                     }}>
                                         <div style={{ display: 'flex', gap: '8px', marginBottom: '4px' }}>
                                             <span style={{ color: 'var(--text-tertiary)', width: '30px' }}>In:</span>
@@ -260,8 +268,9 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                         gap: '8px',
                         position: 'sticky',
                         top: 0,
-                        background: 'var(--bg-card)', // Match card bg to cover scroll
-                        zIndex: 1
+                        background: 'var(--vscode-sideBar-bg)', // Match card bg to cover scroll
+                        zIndex: 1,
+                        color: 'var(--vscode-sideBarTitle-foreground)'
                     }}>
                         <span>🏆</span> Leaderboard
                     </h3>
@@ -271,10 +280,11 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                padding: '10px',
-                                borderRadius: 'var(--radius-sm)',
-                                background: i === 0 ? 'rgba(251, 191, 36, 0.1)' : 'rgba(255,255,255,0.03)',
-                                border: i === 0 ? '1px solid rgba(251, 191, 36, 0.2)' : '1px solid transparent'
+                                padding: '6px 10px',
+                                borderRadius: '0',
+                                background: i === 0 ? 'var(--vscode-list-activeSelectionBg)' : 'transparent',
+                                border: i === 0 ? '1px solid var(--vscode-focusBorder)' : '1px solid transparent',
+                                color: i === 0 ? 'var(--vscode-list-activeSelectionForeground)' : 'var(--vscode-foreground)'
                             }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                     <span style={{
@@ -293,16 +303,19 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                     {isHost && (
                         <button
                             onClick={handleEndGame}
-                            className="btn-secondary" // Use a danger/secondary styled button
                             style={{
-                                marginTop: 'var(--spacing-lg)',
+                                marginTop: '16px',
                                 width: '100%',
-                                padding: '10px',
-                                background: 'rgba(239, 68, 68, 0.1)',
-                                color: '#ef4444',
-                                border: '1px solid rgba(239, 68, 68, 0.2)',
-                                fontSize: '0.9rem'
+                                padding: '8px',
+                                background: 'var(--vscode-button-secondaryBackground)',
+                                color: 'var(--vscode-button-secondaryForeground)',
+                                border: '1px solid var(--vscode-button-border)',
+                                fontSize: '0.9rem',
+                                cursor: 'pointer',
+                                borderRadius: '2px'
                             }}
+                            onMouseEnter={(e) => e.target.style.background = 'var(--vscode-button-secondaryHoverBackground)'}
+                            onMouseLeave={(e) => e.target.style.background = 'var(--vscode-button-secondaryBackground)'}
                         >
                             End Game
                         </button>
@@ -316,34 +329,32 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                 flexDirection: 'column',
                 height: '100%',
                 overflow: 'hidden',
-                borderRadius: 'var(--radius-lg)',
-                border: '1px solid var(--border-subtle)',
-                background: '#1e1e1e', // Editor base
-                boxShadow: '0 10px 30px -10px rgba(0,0,0,0.5)'
+                borderRadius: '0',
+                border: '1px solid var(--vscode-editorGroup-border)',
+                background: 'var(--vscode-editor-bg)'
             }}>
                 {/* Editor Toolbar */}
                 <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    padding: '12px 16px',
-                    background: '#18181b', // Slightly darker than editor
-                    borderBottom: '1px solid #333'
+                    padding: '8px 16px',
+                    background: 'var(--vscode-editorGroupHeader-tabsBg)',
+                    borderBottom: '1px solid var(--vscode-editorGroup-border)'
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <span style={{ fontSize: '1.2rem' }}>📄</span>
-                            <span style={{ fontWeight: 600, color: '#e4e4e7', fontSize: '0.9rem' }}>main.go</span>
+                            <span style={{ fontWeight: 600, color: 'var(--vscode-tab-activeForeground)', fontSize: '0.9rem' }}>main.go</span>
                         </div>
                         {status === 'success' ? (
                             <span style={{
                                 padding: '2px 8px',
-                                background: 'rgba(74, 222, 128, 0.1)',
-                                color: '#4ade80',
-                                borderRadius: '4px',
+                                background: 'transparent',
+                                color: 'var(--vscode-gitDecoration-addedResourceForeground, #4ade80)',
                                 fontSize: '0.75rem',
                                 fontWeight: 600,
-                                border: '1px solid rgba(74, 222, 128, 0.2)'
+                                border: '1px solid var(--vscode-gitDecoration-addedResourceForeground, #4ade80)'
                             }}>
                                 SOLVED
                             </span>
@@ -365,23 +376,36 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                         <button
                             onClick={handleRun}
                             disabled={status === 'running' || status === 'success'}
-                            className="btn-primary"
                             style={{
-                                padding: '6px 16px',
+                                padding: '6px 12px',
                                 fontSize: '0.9rem',
-                                background: status === 'success' ? '#15803d' : undefined,
-                                opacity: (status === 'running') ? 0.7 : 1
+                                background: status === 'success' ? 'var(--vscode-gitDecoration-addedResourceForeground)' : 'var(--vscode-button-bg)',
+                                color: 'var(--vscode-button-fg)',
+                                border: 'none',
+                                cursor: (status === 'running' || status === 'success') ? 'default' : 'pointer',
+                                opacity: (status === 'running') ? 0.7 : 1,
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                borderRadius: '2px'
+                            }}
+                            onMouseEnter={(e) => {
+                                if (status !== 'running' && status !== 'success') e.currentTarget.style.backgroundColor = 'var(--vscode-button-hoverBackground)';
+                            }}
+                            onMouseLeave={(e) => {
+                                if (status !== 'running' && status !== 'success') e.currentTarget.style.backgroundColor = 'var(--vscode-button-bg)';
                             }}
                         >
                             {status === 'running' ? (
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <>
                                     <span className="spinner" style={{ width: '14px', height: '14px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></span>
                                     Running...
-                                </span>
+                                </>
                             ) : (
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                    ▶ Run Code
-                                </span>
+                                <>
+                                    <span className="material-icons" style={{ fontSize: '16px' }}>play_arrow</span>
+                                    Run Code
+                                </>
                             )}
                         </button>
                     </div>
@@ -392,14 +416,14 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                     <Editor
                         height="100%"
                         defaultLanguage="go"
-                        theme="vs-dark"
+                        theme={isDark ? 'vs-dark' : 'light'}
                         value={code}
                         onChange={setCode}
                         options={{
                             minimap: { enabled: false },
                             scrollBeyondLastLine: false,
                             fontSize: 14,
-                            fontFamily: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
+                            fontFamily: "'Consolas', 'Monaco', 'Courier New', monospace",
                             padding: { top: 20, bottom: 20 },
                             lineNumbers: 'on',
                             renderLineHighlight: 'all',
@@ -413,28 +437,28 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                     height: '220px',
                     display: 'flex',
                     flexDirection: 'column',
-                    borderTop: '1px solid #333',
-                    background: '#1a1a1a'
+                    borderTop: '1px solid var(--vscode-panel-border)',
+                    background: 'var(--vscode-panel-bg)'
                 }}>
                     <div style={{
                         padding: '8px 16px',
-                        background: '#27272a',
+                        background: 'var(--vscode-panel-bg)',
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        borderBottom: '1px solid #333'
+                        borderBottom: '1px solid var(--vscode-panel-border)'
                     }}>
                         <span style={{
-                            fontFamily: 'var(--font-mono)',
+                            fontFamily: 'var(--font-sans)',
                             fontSize: '0.8rem',
                             fontWeight: 600,
-                            color: '#a1a1aa',
+                            color: 'var(--vscode-panelTitle-activeForeground)',
                             textTransform: 'uppercase'
                         }}>
                             Terminal Output
                         </span>
                         {status !== 'idle' && (
-                            <span style={{ fontSize: '0.75rem', color: status === 'failed' ? '#f87171' : '#4ade80' }}>
+                            <span style={{ fontSize: '0.75rem', color: status === 'failed' ? 'var(--vscode-errorForeground)' : 'var(--vscode-testing-iconPassed)' }}>
                                 {status === 'failed' ? 'Process exited with error' : 'Success'}
                             </span>
                         )}
@@ -444,13 +468,13 @@ export default function BattleArena({ roomId, playerId, player, roomState, isHos
                         padding: '16px',
                         margin: 0,
                         overflowY: 'auto',
-                        fontFamily: "'JetBrains Mono', monospace",
+                        fontFamily: "'Consolas', 'Monaco', 'Courier New', monospace",
                         fontSize: '0.9rem',
                         lineHeight: 1.5,
-                        color: status === 'failed' ? '#fca5a5' : '#e4e4e7',
+                        color: status === 'failed' ? 'var(--vscode-errorForeground)' : 'var(--vscode-editor-fg)',
                         whiteSpace: 'pre-wrap'
                     }}>
-                        {output || <span style={{ color: '#52525b' }}>// Output will appear here after running...</span>}
+                        {output || <span style={{ color: 'var(--vscode-descriptionForeground)' }}>// Output will appear here after running...</span>}
                     </pre>
                 </div>
             </div>

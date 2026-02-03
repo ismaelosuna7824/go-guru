@@ -1,125 +1,136 @@
-/* Fonts moved to index.html for performance */
-
+/* VS Code Theme - Dark Modern */
 :root {
   /* Fonts */
-  --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
+
+  /* Colors - Base */
+  --vscode-bg: #1e1e1e;
+  --vscode-fg: #cccccc;
+  --vscode-focusBorder: #007fd4;
+
+  /* Activity Bar */
+  --vscode-activityBar-bg: #333333;
+  --vscode-activityBar-fg: #ffffff;
+  --vscode-activityBar-inactiveFg: rgba(255, 255, 255, 0.4);
+  --vscode-activityBar-border: #2b2b2b;
+  --vscode-activityBarBadge-bg: #007acc;
+  --vscode-activityBarBadge-fg: #ffffff;
+
+  /* Sidebar */
+  --vscode-sideBar-bg: #252526;
+  --vscode-sideBar-fg: #cccccc;
+  --vscode-sideBar-border: #2b2b2b;
+  --vscode-sideBarSectionHeader-bg: #252526;
+  --vscode-sideBarSectionHeader-fg: #cccccc;
+
+  /* List / Tree */
+  --vscode-list-hoverBg: #2a2d2e;
+  --vscode-list-activeSelectionBg: #37373d;
+  --vscode-list-activeSelectionFg: #ffffff;
+  --vscode-list-inactiveSelectionBg: #37373d;
+
+  /* Editor */
+  --vscode-editor-bg: #1e1e1e;
+  --vscode-editor-fg: #d4d4d4;
+  --vscode-editorGroupHeader-tabsBg: #252526;
+  --vscode-editorLineNumber-fg: #858585;
+  --vscode-editorLineNumber-activeFg: #c6c6c6;
+
+  /* Tabs */
+  --vscode-tab-activeBg: #1e1e1e;
+  --vscode-tab-activeFg: #ffffff;
+  --vscode-tab-inactiveBg: #2d2d2d;
+  --vscode-tab-inactiveFg: #969696;
+  --vscode-tab-border: #252526;
+
+  /* Status Bar */
+  --vscode-statusBar-bg: #007acc;
+  --vscode-statusBar-fg: #ffffff;
+  --vscode-statusBar-item-hoverBg: rgba(255, 255, 255, 0.12);
+
+  /* Scrollbar */
+  --vscode-scrollbarSlider-bg: rgba(121, 121, 121, 0.4);
+  --vscode-scrollbarSlider-hoverBg: rgba(100, 100, 100, 0.7);
+  --vscode-scrollbarSlider-activeBg: rgba(191, 191, 191, 0.4);
+
+  /* Common UI */
+  --vscode-input-bg: #3c3c3c;
+  --vscode-input-fg: #cccccc;
+  --vscode-input-border: #3c3c3c;
+  --vscode-button-bg: #0e639c;
+  --vscode-button-fg: #ffffff;
+  --vscode-button-hoverBg: #1177bb;
+
+  /* Legacy / Compatibility map */
+  --bg-app: var(--vscode-editor-bg);
+  --text-primary: var(--vscode-editor-fg);
+  --text-secondary: #9d9d9d;
+  --primary: var(--vscode-focusBorder);
+  --bg-code: #1e1e1e;
 
   /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-
-  /* Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-full: 9999px;
-
-  /* Transitions */
-  --transition-fast: 200ms ease;
-  --transition-normal: 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
 }
 
-/* Light Mode (Refined) */
-[data-theme='light'] {
-  --bg-app: #ffffff;
-  /* Pure White */
-  --bg-sidebar: #f8f9fa;
-  /* Very Light Gray */
-  --bg-card: #ffffff;
-  /* White */
-  --bg-code: #f3f4f6;
-  /* Cool Gray */
+/* Light Theme - VS Code Light+ */
+[data-theme="light"] {
+  --vscode-bg: #f5f5f5;
+  --vscode-fg: #1f1f1f;
+  --vscode-focusBorder: #0078d4;
 
-  --text-primary: #111827;
-  /* Gray 900 */
-  --text-secondary: #4b5563;
-  /* Gray 600 */
-  --text-tertiary: #9ca3af;
-  /* Gray 400 */
+  --vscode-activityBar-bg: #e8e8e8;
+  --vscode-activityBar-fg: #424242;
+  --vscode-activityBar-inactiveFg: rgba(66, 66, 66, 0.5);
+  --vscode-activityBar-border: #d4d4d4;
 
-  --border-subtle: #e5e7eb;
-  /* Gray 200 */
-  --border-focus: #d1d5db;
-  /* Gray 300 */
+  --vscode-sideBar-bg: #f5f5f5;
+  --vscode-sideBar-fg: #1f1f1f;
+  --vscode-sideBar-border: #d4d4d4;
+  --vscode-sideBarSectionHeader-bg: #e8e8e8;
+  --vscode-sideBarSectionHeader-fg: #1f1f1f;
 
-  --primary: #6366f1;
-  /* Indigo 500 */
-  --primary-glow: rgba(99, 102, 241, 0.2);
+  --vscode-list-hoverBg: #e4e4e4;
+  --vscode-list-activeSelectionBg: #cce5ff;
+  --vscode-list-activeSelectionFg: #000000;
+  --vscode-list-inactiveSelectionBg: #e4e6e8;
 
-  /* Vibrant Accents */
-  --accent-blue-bg: #eff6ff;
-  --accent-blue-text: #1d4ed8;
-  --accent-blue-border: #bfdbfe;
+  --vscode-editor-bg: #ffffff;
+  --vscode-editor-fg: #1f1f1f;
+  --vscode-editorGroupHeader-tabsBg: #f5f5f5;
+  --vscode-editorLineNumber-fg: #6e7681;
+  --vscode-editorLineNumber-activeFg: #1f1f1f;
 
-  --accent-green-bg: #ecfdf5;
-  --accent-green-text: #047857;
-  --accent-green-border: #a7f3d0;
+  --vscode-tab-activeBg: #ffffff;
+  --vscode-tab-activeFg: #1f1f1f;
+  --vscode-tab-inactiveBg: #ececec;
+  --vscode-tab-inactiveFg: #5f6368;
+  --vscode-tab-border: #d4d4d4;
 
-  --accent-amber-bg: #fffbeb;
-  --accent-amber-text: #b45309;
-  --accent-amber-border: #fde68a;
+  --vscode-statusBar-bg: #0078d4;
+  --vscode-statusBar-fg: #ffffff;
 
-  --inline-code-bg: var(--bg-code);
-  --inline-code-text: var(--accent-amber-text);
+  --vscode-scrollbarSlider-bg: rgba(100, 100, 100, 0.3);
+  --vscode-scrollbarSlider-hoverBg: rgba(100, 100, 100, 0.5);
+  --vscode-scrollbarSlider-activeBg: rgba(100, 100, 100, 0.6);
 
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --vscode-input-bg: #ffffff;
+  --vscode-input-fg: #1f1f1f;
+  --vscode-input-border: #d4d4d4;
+  --vscode-button-bg: #0078d4;
+  --vscode-button-fg: #ffffff;
+  --vscode-button-hoverBg: #006cbd;
+
+  --bg-app: var(--vscode-editor-bg);
+  --text-primary: var(--vscode-editor-fg);
+  --text-secondary: #5f6368;
+  --bg-code: #f8f8f8;
 }
 
-/* Dark Mode */
-[data-theme='dark'] {
-  --bg-app: #0f172a;
-  /* Slate 900 */
-  --bg-sidebar: #1e293b;
-  /* Slate 800 */
-  --bg-card: #1e293b;
-  /* Slate 800 */
-  --bg-code: #020617;
-  /* Slate 950 */
-
-  --text-primary: #f1f5f9;
-  /* Slate 100 */
-  --text-secondary: #94a3b8;
-  /* Slate 400 */
-  --text-tertiary: #64748b;
-  /* Slate 500 */
-
-  --border-subtle: #334155;
-  /* Slate 700 */
-  --border-focus: #475569;
-  /* Slate 600 */
-
-  --primary: #818cf8;
-  /* Indigo 400 */
-  --primary-glow: rgba(129, 140, 248, 0.15);
-
-  --accent-blue-bg: rgba(37, 99, 235, 0.1);
-  --accent-blue-text: #60a5fa;
-  --accent-blue-border: rgba(37, 99, 235, 0.2);
-
-  --accent-green-bg: rgba(22, 163, 74, 0.1);
-  --accent-green-text: #4ade80;
-  --accent-green-border: rgba(22, 163, 74, 0.2);
-
-  --accent-amber-bg: rgba(217, 119, 6, 0.1);
-  --accent-amber-text: #fbbf24;
-  --accent-amber-border: rgba(217, 119, 6, 0.2);
-
-  --inline-code-bg: rgba(255, 255, 255, 0.1);
-  --inline-code-text: #ffca28;
-
-  --shadow-sm: none;
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3);
-}
-
-/* Global Reset & Base */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -127,21 +138,23 @@
 }
 
 body {
+  background-color: var(--vscode-bg);
+  color: var(--vscode-fg);
   font-family: var(--font-sans);
-  background-color: var(--bg-app);
-  color: var(--text-primary);
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.4;
   -webkit-font-smoothing: antialiased;
-  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow: hidden;
+  /* App handles scrolling */
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--text-primary);
+a {
+  color: #3794ff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 code,
@@ -149,516 +162,158 @@ pre {
   font-family: var(--font-mono);
 }
 
-
-/* Utility Classes */
-.btn-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-sm);
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
-  background: var(--bg-code);
-  /* Subtle background for better visibility */
-  border: 1px solid var(--border-subtle);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  width: 40px;
-  height: 40px;
-  font-size: 1.2rem;
-}
-
-.btn-icon:hover {
-  background: var(--bg-app);
-  border-color: var(--primary);
-  color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-}
-
-.brand-logo {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-subtle);
-}
-
-.card {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-subtle);
-  padding: var(--spacing-xl);
-  box-shadow: var(--shadow-sm);
-  transition: border-color var(--transition-normal);
-}
-
-/* Layout */
-.app-layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  padding: var(--spacing-lg);
-  transition: padding var(--transition-normal);
-  width: 100%;
-}
-
-@media (min-width: 769px) {
-  .main-content {
-    margin-left: 280px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .main-content {
-    padding: var(--spacing-2xl) var(--spacing-xl);
-  }
-}
-
-.toggle-theme-btn {
-  /* ... (removed, keeping placeholder if needed or just empty as it's not used in CSS anymore?) */
-  /* Actually the class might still be referenced in old code if I missed something? No I removed it from App.jsx */
-  /* But let's just keep the .toggle-theme-btn block empty/removed or cleaner. */
-  display: none;
-}
-
-/* Scrollbar */
+/* Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--vscode-scrollbarSlider-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--vscode-scrollbarSlider-hoverBg);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: var(--vscode-scrollbarSlider-activeBg);
 }
 
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--border-subtle);
-  border-radius: var(--radius-full);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
-}
-
-
-/* Sidebar Components */
-.sidebar {
-  width: 280px;
-  background-color: var(--bg-sidebar);
-  border-right: 1px solid var(--border-subtle);
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  transition: transform var(--transition-normal);
-  z-index: 40;
-}
-
-.sidebar-header {
-  padding: var(--spacing-lg);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.sidebar-search {
-  padding: 0 var(--spacing-lg) var(--spacing-md);
-}
-
-.search-input {
-  width: 100%;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--bg-code);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
-  transition: all var(--transition-fast);
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px var(--primary-glow);
-}
-
-.brand-title {
-  font-size: 1.25rem;
-  background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-}
-
-.sidebar-nav {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0 var(--spacing-md) var(--spacing-xl);
-}
-
-.nav-item {
-  width: 100%;
-  text-align: left;
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
+::-webkit-scrollbar-corner {
   background: transparent;
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin-bottom: 2px;
-  transition: all var(--transition-fast);
-  border: 1px solid transparent;
+}
+
+/* Layout Classes */
+.vscode-layout {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-}
-
-.nav-item:hover {
-  background-color: var(--bg-app);
-  color: var(--text-primary);
-}
-
-.nav-item.active {
-  background-color: var(--bg-app);
-  color: var(--primary);
-  border-color: var(--border-subtle);
-  box-shadow: var(--shadow-sm);
-}
-
-/* ... existing code ... */
-.nav-index {
-  font-size: 0.75rem;
-  font-family: var(--font-mono);
-  opacity: 0.5;
-  min-width: 24px;
-}
-
-.sidebar-footer {
-  padding: var(--spacing-md);
-  border-top: 1px solid var(--border-subtle);
-  background: var(--bg-sidebar);
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: 500;
-  transition: color var(--transition-fast);
-  padding: 2px 0;
-  opacity: 0.8;
-}
-
-.social-link:hover {
-  color: var(--primary);
-  opacity: 1;
-}
-
-/* Mobile Sidebar Overlay */
-.sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  z-index: 30;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition-normal);
-}
-
-.sidebar-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Mobile Sidebar Logic */
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    left: 0;
-    transform: translateX(-100%);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .sidebar.open {
-    transform: translateX(0);
-  }
-}
-
-/* Topic Viewer Components */
-.topic-container {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
+  height: 100vh;
+  width: 100vw;
   flex-direction: column;
-  gap: var(--spacing-xl);
 }
 
-.topic-header {
-  /* Removed bottom margin as the gap handles it, or keep small one for extra spacing */
-  text-align: center;
+.workbench {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
 }
 
-
-.testing-grid {
-  display: grid;
-  gap: var(--spacing-lg);
-  grid-template-columns: 1fr;
+/* Tabs container - hide scrollbar but keep scrollable */
+.tabs-container {
+  scrollbar-width: thin;
+  scrollbar-color: var(--vscode-scrollbarSlider-bg) transparent;
 }
 
-.topic-title {
-  font-size: 2.5rem;
-  margin-bottom: var(--spacing-md);
-  background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.tabs-container::-webkit-scrollbar {
+  height: 3px;
 }
 
-.topic-desc {
-  font-size: 1.125rem;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
+.tabs-container::-webkit-scrollbar-thumb {
+  background-color: var(--vscode-scrollbarSlider-bg);
 }
 
-.mobile-menu-btn {
-  display: none;
-  position: fixed;
-  top: var(--spacing-md);
-  left: var(--spacing-md);
-  z-index: 50;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  padding: var(--spacing-sm);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
+/* Utility to hide/show elements */
+.hidden {
+  display: none !important;
 }
 
+/* Topic/Content Styles - Markdown override */
+.markdown-content h1 {
+  font-size: 2em;
+  font-weight: normal;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #333;
+}
+
+.markdown-content h2 {
+  font-size: 1.5em;
+  font-weight: normal;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-content h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-content p {
+  margin-bottom: 1em;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+.markdown-code-block {
+  background: var(--bg-code);
+  padding: 10px;
+  border: 1px solid #333;
+  margin-bottom: 1em;
+}
+
+[data-theme="light"] .markdown-code-block {
+  border-color: #ddd;
+}
+
+[data-theme="light"] .markdown-content h1 {
+  border-bottom-color: #ddd;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .mobile-menu-btn {
-    display: flex;
+  .vscode-sidebar {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    bottom: 22px;
+    /* StatusBar height */
+    z-index: 100;
+    width: 85% !important;
+    max-width: 320px;
   }
 
-  .topic-title {
-    font-size: 2rem;
-    margin-top: var(--spacing-xl);
-  }
-
-  /* Hide menu button when sidebar is open to prevent logo overlap */
-  .sidebar.open+.main-content .mobile-menu-btn {
+  /* Hide ActivityBar on mobile */
+  .workbench>div:first-child {
     display: none;
   }
-}
 
-/* Variant Cards */
-.card-variant-blue {
-  background: var(--accent-blue-bg);
-  border-color: var(--accent-blue-border);
-}
+  /* Show mobile menu button */
+  .mobile-menu-btn {
+    display: flex !important;
+  }
 
-.card-variant-green {
-  background: var(--accent-green-bg);
-  border-color: var(--accent-green-border);
-}
+  /* Show overlay when sidebar is open */
+  .sidebar-overlay {
+    display: block !important;
+  }
 
-.card-variant-amber {
-  background: var(--accent-amber-bg);
-  border-color: var(--accent-amber-border);
-}
+  /* Adjust main content padding for mobile */
+  #editor-content-area {
+    padding: 20px 16px !important;
+  }
 
-.variant-title {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  font-size: 1.25rem;
-  margin-bottom: var(--spacing-md);
-}
-
-.text-blue {
-  color: var(--accent-blue-text);
-}
-
-.text-green {
-  color: var(--accent-green-text);
-}
-
-.text-amber {
-  color: var(--accent-amber-text);
-}
-
-/* Code Blocks */
-.code-container {
-  position: relative;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-code);
-  margin-top: var(--spacing-md);
-}
-
-.code-content {
-  padding: var(--spacing-lg);
-  font-size: 0.9rem;
-  overflow-x: auto;
-  color: var(--text-primary);
-}
-
-.inline-code {
-  background: var(--inline-code-bg);
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-  color: var(--inline-code-text);
-}
-
-.code-badge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  background: var(--border-subtle);
-  color: var(--text-secondary);
-  border-bottom-left-radius: var(--radius-md);
-}
-
-.challenge-input {
-  width: 100%;
-  min-height: 150px;
-  padding: var(--spacing-md);
-  background: var(--bg-code);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  resize: vertical;
-}
-
-.challenge-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px var(--primary-glow);
-}
-
-.btn-primary {
-  background-color: var(--primary);
-  color: white;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  margin-top: var(--spacing-md);
-  transition: all var(--transition-fast);
-}
-
-.btn-primary:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.explanation-grid {
-  display: grid;
-  gap: var(--spacing-xl);
-}
-
-.explanation-item {
-  display: grid;
-  gap: var(--spacing-md);
-}
-
-@media (min-width: 1024px) {
-  .explanation-item {
-    grid-template-columns: 1fr 1.2fr;
-    align-items: start;
-    gap: var(--spacing-xl);
+  /* Make tabs scrollable on mobile */
+  .tabs-container {
+    overflow-x: auto;
   }
 }
 
-/* Sidebar Category Groups */
-.nav-group {
-  margin-bottom: var(--spacing-sm);
-}
+@media (min-width: 769px) {
+  .mobile-menu-btn {
+    display: none !important;
+  }
 
-.nav-group-header {
-  width: 100%;
-  text-align: left;
-  padding: var(--spacing-md);
-  color: var(--text-primary);
-  background: transparent;
-  font-size: 0.85rem;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.7;
-  transition: all var(--transition-fast);
-}
-
-.nav-group-header:hover {
-  opacity: 1;
-  background: var(--bg-code);
-}
-
-.group-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  color: var(--text-tertiary);
-}
-
-.nav-group-items {
-  padding-left: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-/* Adjust nested items */
-.nav-group-items .nav-item {
-  padding-left: var(--spacing-xl);
-  font-size: 0.9rem;
-  border-left: 2px solid transparent;
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  margin-bottom: 0;
-  opacity: 0.9;
-}
-
-.nav-group-items .nav-item:hover {
-  opacity: 1;
-  background: var(--bg-code);
-}
-
-.nav-group-items .nav-item.active {
-  background: linear-gradient(90deg, var(--bg-code) 0%, transparent 100%);
-  border-left-color: var(--primary);
-  box-shadow: none;
-  color: var(--primary);
-  opacity: 1;
+  .sidebar-overlay {
+    display: none !important;
+  }
 }
