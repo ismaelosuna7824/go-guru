@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useProgress } from '../context/ProgressContext';
+import ProgressDashboard from './ProgressDashboard';
 
 // SVG Icons for social links
 const GitHubIcon = () => (
@@ -19,9 +21,12 @@ const CoffeeIcon = () => (
     </svg>
 );
 
-export default function StatusBar() {
+export default function StatusBar({ totalTopics = 0 }) {
+    const { stats, streakData } = useProgress();
+    const [showDashboard, setShowDashboard] = useState(false);
+
     const barStyle = {
-        height: '22px',
+        height: '26px',
         backgroundColor: 'var(--vscode-statusBar-bg)',
         color: 'var(--vscode-statusBar-fg)',
         display: 'flex',
@@ -45,47 +50,129 @@ export default function StatusBar() {
         cursor: 'pointer'
     };
 
+    const progressItemStyle = {
+        ...itemStyle,
+        background: 'rgba(0, 212, 170, 0.1)',
+        borderRadius: '4px',
+        margin: '2px 4px',
+        padding: '0 10px',
+        border: '1px solid rgba(0, 212, 170, 0.2)',
+        transition: 'all 0.2s ease'
+    };
+
     return (
-        <div style={barStyle}>
-            <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
-                <div style={{ ...itemStyle, cursor: 'default' }} title="Git Branch">
-                    <span style={{ fontSize: '12px' }}></span>
-                    main
+        <>
+            <div style={barStyle}>
+                {/* Left Section - Progress Info */}
+                <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
+                    {/* Level & XP Button */}
+                    <button
+                        onClick={() => setShowDashboard(true)}
+                        style={{
+                            ...itemStyle,
+                            background: 'none',
+                            border: 'none',
+                            color: '#00d4aa'
+                        }}
+                        title="Ver tu progreso"
+                    >
+                        <span style={{ fontSize: '12px' }}>⭐</span>
+                        <span style={{ fontWeight: 600 }}>Nivel {stats.level}</span>
+                        <span style={{ color: '#5ee6c2', marginLeft: '4px', fontWeight: 500 }}>
+                            {stats.xp} XP
+                        </span>
+                    </button>
+
+                    {/* Pipe Separator */}
+                    <span style={{ color: '#555', margin: '0 4px' }}>|</span>
+
+                    {/* Streak */}
+                    {streakData.currentStreak > 0 && (
+                        <>
+                            <div
+                                style={{
+                                    ...itemStyle,
+                                    cursor: 'default',
+                                    color: '#ff8c5a'
+                                }}
+                                title={`Racha de ${streakData.currentStreak} días`}
+                            >
+                                <span style={{ fontSize: '12px' }}>🔥</span>
+                                <span style={{ fontWeight: 600 }}>{streakData.currentStreak}</span>
+                                <span style={{ color: '#ffb899', fontWeight: 500 }}>días</span>
+                            </div>
+                            <span style={{ color: '#555', margin: '0 4px' }}>|</span>
+                        </>
+                    )}
+
+                    {/* Topics Progress */}
+                    {totalTopics > 0 && (
+                        <>
+                            <div
+                                style={{
+                                    ...itemStyle,
+                                    cursor: 'default',
+                                    color: '#ffd700'
+                                }}
+                                title="Temas completados"
+                            >
+                                <span style={{ fontSize: '12px' }}>📚</span>
+                                <span style={{ fontWeight: 600 }}>
+                                    {stats.completedTopics}<span style={{ color: '#ffe066' }}>/</span>{totalTopics}
+                                </span>
+                            </div>
+                            <span style={{ color: '#555', margin: '0 4px' }}>|</span>
+                        </>
+                    )}
+
+                    {/* Branch */}
+                    <div style={{ ...itemStyle, cursor: 'default' }} title="Git Branch">
+                        <span style={{ fontSize: '12px' }}></span>
+                        main
+                    </div>
+                </div>
+
+                {/* Right Section - Social Links */}
+                <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
+                    <a
+                        href="https://www.linkedin.com/in/ismael-osuna"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={itemStyle}
+                        title="LinkedIn"
+                    >
+                        <LinkedInIcon />
+                        <span>LinkedIn</span>
+                    </a>
+                    <a
+                        href="https://buymeacoffee.com/ismaelosuna"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={itemStyle}
+                        title="Buy Me a Coffee"
+                    >
+                        <CoffeeIcon />
+                        <span>Buy Me a Coffee</span>
+                    </a>
+                    <a
+                        href="https://github.com/ismaelosuna7824/go-guru"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={itemStyle}
+                        title="GitHub Repository"
+                    >
+                        <GitHubIcon />
+                        <span>GitHub</span>
+                    </a>
                 </div>
             </div>
-            <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
-                <a
-                    href="https://www.linkedin.com/in/ismael-osuna"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={itemStyle}
-                    title="LinkedIn"
-                >
-                    <LinkedInIcon />
-                    <span>LinkedIn</span>
-                </a>
-                <a
-                    href="https://buymeacoffee.com/ismaelosuna"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={itemStyle}
-                    title="Buy Me a Coffee"
-                >
-                    <CoffeeIcon />
-                    <span>Buy Me a Coffee</span>
-                </a>
-                <a
-                    href="https://github.com/ismaelosuna7824/go-guru"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={itemStyle}
-                    title="GitHub Repository"
-                >
-                    <GitHubIcon />
-                    <span>GitHub</span>
-                </a>
-            </div>
-        </div>
+
+            {/* Progress Dashboard Modal */}
+            <ProgressDashboard
+                isOpen={showDashboard}
+                onClose={() => setShowDashboard(false)}
+                totalTopics={totalTopics}
+            />
+        </>
     );
 }
-

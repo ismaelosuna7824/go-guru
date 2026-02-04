@@ -6,6 +6,7 @@ import { useProgress } from '../context/ProgressContext';
 import { useTheme } from '../context/ThemeContext';
 import CodePlayground from './CodePlayground';
 import CodeViewer from './CodeViewer';
+import Quiz from './Quiz';
 
 const parseFormattedText = (text) => {
     if (!text) return null;
@@ -605,6 +606,83 @@ export default function TopicViewer({ topic, onOpenSidebar }) {
                         </div>
                     )}
 
+                    {/* Completion Footer */}
+                    <div style={{
+                        marginTop: '32px',
+                        padding: '24px',
+                        background: visitedIds.includes(topic.id)
+                            ? 'linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(0, 212, 170, 0.05) 100%)'
+                            : 'rgba(255, 255, 255, 0.03)',
+                        borderRadius: '12px',
+                        border: visitedIds.includes(topic.id)
+                            ? '1px solid rgba(0, 212, 170, 0.3)'
+                            : '1px solid rgba(255, 255, 255, 0.1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '16px'
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <span style={{ fontSize: '32px' }}>
+                                {visitedIds.includes(topic.id) ? '' : ''}
+                            </span>
+                            <div>
+                                <div style={{
+                                    color: visitedIds.includes(topic.id) ? '#00d4aa' : '#ffffff',
+                                    fontSize: '16px',
+                                    fontWeight: 600
+                                }}>
+                                    {visitedIds.includes(topic.id)
+                                        ? '¡Tema Completado!'
+                                        : '¿Terminaste de leer?'}
+                                </div>
+                                <div style={{
+                                    color: '#8b9dc3',
+                                    fontSize: '13px',
+                                    marginTop: '4px'
+                                }}>
+                                    {visitedIds.includes(topic.id)
+                                        ? 'Has ganado XP por este tema'
+                                        : 'Marca este tema como completado y gana +25 XP'}
+                                </div>
+                            </div>
+                        </div>
+
+                        {!visitedIds.includes(topic.id) && (
+                            <button
+                                onClick={() => markAsCompleted(topic.id)}
+                                style={{
+                                    background: 'linear-gradient(135deg, #00d4aa 0%, #00b894 100%)',
+                                    border: 'none',
+                                    color: '#0d1b2a',
+                                    padding: '12px 24px',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    fontSize: '14px',
+                                    fontWeight: 600,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    boxShadow: '0 4px 16px rgba(0, 212, 170, 0.3)',
+                                    transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 212, 170, 0.4)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 212, 170, 0.3)';
+                                }}
+                            >
+                                <span className="material-icons" style={{ fontSize: '18px' }}>check_circle</span>
+                                Marcar Completado
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Interactive Quiz Section */}
+                    <Quiz topicId={topic.id} />
 
                     {/* Spacer at bottom */}
                     <div style={{ height: '100px' }}></div>
