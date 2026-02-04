@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useNavigate, Outlet, useLocation, useOutl
 import Sidebar from './components/Sidebar';
 import ActivityBar from './components/ActivityBar';
 import StatusBar from './components/StatusBar';
+import AchievementNotification from './components/AchievementNotification';
 import SEO from './components/SEO';
 import { ThemeProvider } from './context/ThemeContext';
 import { useProgress } from './context/ProgressContext';
@@ -11,6 +12,7 @@ import { useTopics } from './hooks/useTopics';
 // Lazy load components
 const TopicViewer = lazy(() => import('./components/TopicViewer'));
 const BattlePage = lazy(() => import('./components/Battle/BattlePage'));
+const LearningPathSelector = lazy(() => import('./components/LearningPathSelector'));
 
 // Layout Component
 function Layout() {
@@ -172,7 +174,8 @@ function Layout() {
         </main>
       </div>
 
-      <StatusBar />
+      <StatusBar totalTopics={topics.length} />
+      <AchievementNotification />
     </div>
   );
 }
@@ -208,12 +211,54 @@ function TopicViewerRoute() {
   return <TopicViewer topic={topic} onOpenSidebar={() => setIsSidebarOpen(true)} />;
 }
 
+function LearningPathsRoute() {
+  const navigate = useNavigate();
+  const { setOpenTabs, openTabs } = useOutletContext() || {};
+
+  const handleSelectTopic = (topicId) => {
+    // Add to tabs if not already open
+    if (setOpenTabs && !openTabs?.includes(topicId)) {
+      setOpenTabs(prev => [topicId, ...prev]);
+    }
+    navigate(`/${topicId}`);
+  };
+
+  const handleOpenPathTopics = (topics) => {
+    if (!setOpenTabs || !topics?.length) return;
+
+    // Add all topics from the path to tabs (in order)
+    setOpenTabs(prev => {
+      const newTabs = [...topics];
+      // Add any existing tabs that aren't in this path
+      prev.forEach(tab => {
+        if (!newTabs.includes(tab)) {
+          newTabs.push(tab);
+        }
+      });
+      return newTabs;
+    });
+
+    // Navigate to first uncompleted topic
+    navigate(`/${topics[0]}`);
+  };
+
+  return (
+    <div style={{ flex: 1, overflow: 'auto', background: 'var(--vscode-editor-bg)' }}>
+      <LearningPathSelector
+        onSelectTopic={handleSelectTopic}
+        onOpenPathTopics={handleOpenPathTopics}
+      />
+    </div>
+  );
+}
+
 function AppContent() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* Index route redirects to first topic in TopicViewerRoute logic or we can be explicit */}
         <Route index element={<TopicViewerRoute />} />
+        <Route path="learning-paths" element={<LearningPathsRoute />} />
         <Route path=":topicId" element={<TopicViewerRoute />} />
       </Route>
       {/* 

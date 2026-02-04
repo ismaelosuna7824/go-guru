@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useProgress } from '../context/ProgressContext';
 
 export default function ActivityBar({ activeView, onViewChange, isSidebarOpen, onToggleSidebar }) {
+    const navigate = useNavigate();
     const { theme, themeLabel, themeIcon, cycleTheme, fontSize, cycleFontSize } = useTheme();
     const { resetProgress, visitedIds } = useProgress();
     const [showConfirm, setShowConfirm] = useState(false);
@@ -21,6 +23,7 @@ export default function ActivityBar({ activeView, onViewChange, isSidebarOpen, o
 
     const topItems = [
         { id: 'search', icon: 'menu', label: 'Menu' },
+        { id: 'paths', icon: 'route', label: 'Rutas de Aprendizaje', navigateTo: '/learning-paths' },
     ];
 
     const bottomItems = [
@@ -32,6 +35,12 @@ export default function ActivityBar({ activeView, onViewChange, isSidebarOpen, o
     const handleItemClick = (item) => {
         if (item.action) {
             item.action();
+            return;
+        }
+
+        // Handle navigation items
+        if (item.navigateTo) {
+            navigate(item.navigateTo);
             return;
         }
 
