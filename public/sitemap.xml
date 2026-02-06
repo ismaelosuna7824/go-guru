@@ -1,602 +1,602 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://goguru.com/</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://goguru.com/advanced-topics</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/advanced-topics</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/arrays</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/arrays</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/atomic-counters</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/atomic-counters</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/base64-encoding</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/base64-encoding</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/binary-operators</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/binary-operators</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/channel-buffering</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/channel-buffering</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/channel-directions</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/channel-directions</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/channel-synchronization</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/channel-synchronization</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/channels</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/channels</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/closing-channels</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/closing-channels</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/closures</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/closures</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/code-quality</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/code-quality</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/command-line-arguments</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/command-line-arguments</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/command-line-flags</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/command-line-flags</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/command-line-subcommands</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/command-line-subcommands</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/constants</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/constants</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://goguru.com/context</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/context</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/custom-errors</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/custom-errors</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/data-types</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/data-types</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://goguru.com/defer</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/defer</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/dependency-injection</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/dependency-injection</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/deployment-tooling</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/deployment-tooling</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/directories</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/directories</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/embed-directive</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/embed-directive</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/enums</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/enums</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/environment-variables</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/environment-variables</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/epoch</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/epoch</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/errors</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/errors</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/execing-processes</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/execing-processes</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/exit</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/exit</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/file-paths</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/file-paths</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/for</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/for</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://goguru.com/functions</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/functions</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/generics</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/generics</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/gorm</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/gorm</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/goroutines</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/goroutines</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/hello-world</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/hello-world</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://goguru.com/http-client</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/http-client</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/http-server</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/http-server</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/if-else</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/if-else</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://goguru.com/installation</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/installation</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://goguru.com/interfaces</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/interfaces</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/json</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/json</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/line-filters</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/line-filters</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/linters</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/linters</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/logging</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/logging</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/make</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/make</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/maps</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/maps</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/methods</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/methods</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/multiple-return-values</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/multiple-return-values</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/mutexes</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/mutexes</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/non-blocking-channel-operations</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/non-blocking-channel-operations</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/number-parsing</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/number-parsing</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/panic</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/panic</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/performance-debugging</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/performance-debugging</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/pointers</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/pointers</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://goguru.com/random-numbers</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/random-numbers</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/range-over-built-in-types</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/range-over-built-in-types</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/range-over-channels</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/range-over-channels</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/range-over-iterators</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/range-over-iterators</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/rate-limiting</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/rate-limiting</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/reading-files</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/reading-files</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/realtime-communication</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/realtime-communication</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/recover</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/recover</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/recursion</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/recursion</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/regular-expressions</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/regular-expressions</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/security</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/security</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/select</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/select</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/sha256-hashes</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/sha256-hashes</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/signals</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/signals</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/slices</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/slices</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/sorting</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/sorting</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/sorting-by-functions</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/sorting-by-functions</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/spawning-processes</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/spawning-processes</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/stateful-goroutines</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/stateful-goroutines</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/string-formatting</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/string-formatting</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/string-functions</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/string-functions</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/strings-and-runes</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/strings-and-runes</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://goguru.com/struct-embedding</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/struct-embedding</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/structs</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/structs</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/switch</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/switch</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://goguru.com/tcp-server</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/tcp-server</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/temporary-files-and-directories</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/temporary-files-and-directories</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/testing-and-benchmarking</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/testing-and-benchmarking</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/text-templates</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/text-templates</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/third-party-modules</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/third-party-modules</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/tickers</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/tickers</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/time</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/time</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/time-formatting-parsing</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/time-formatting-parsing</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/timeouts</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/timeouts</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/timers</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/timers</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/url-parsing</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/url-parsing</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/variables</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/variables</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://goguru.com/variadic-functions</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/variadic-functions</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/wait-groups</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/wait-groups</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/web-frameworks</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/web-frameworks</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/worker-pools</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/worker-pools</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/writing-files</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/writing-files</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://goguru.com/xml</loc>
-    <lastmod>2026-02-03</lastmod>
+    <loc>https://goguru.dev/xml</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

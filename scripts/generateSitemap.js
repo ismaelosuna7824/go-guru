@@ -15,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Your production URL - UPDATE THIS!
-const SITE_URL = 'https://goguru.com'; // TODO: Update with your actual production URL
+const SITE_URL = 'https://goguru.dev';
 
 // Load environment variables from .env.local
 const envPath = join(__dirname, '../.env.local');

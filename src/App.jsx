@@ -244,6 +244,11 @@ function LearningPathsRoute() {
 
   return (
     <div style={{ flex: 1, overflow: 'auto', background: 'var(--vscode-editor-bg)' }}>
+      <SEO
+        title="Rutas de Aprendizaje"
+        description="Explora caminos estructurados para aprender Go (Golang) desde principiante hasta experto."
+        width="100%"
+      />
       <LearningPathSelector
         onSelectTopic={handleSelectTopic}
         onOpenPathTopics={handleOpenPathTopics}

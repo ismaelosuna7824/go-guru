@@ -6,7 +6,7 @@ Allow: /
 
 # Sitemap location
 # TODO: Update with your production URL
-Sitemap: https://goguru.com/sitemap.xml
+Sitemap: https://goguru.dev/sitemap.xml
 
 # Crawl-delay to be respectful to search engines
 Crawl-delay: 1
